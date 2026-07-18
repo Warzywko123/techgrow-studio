@@ -39,6 +39,17 @@
   <script>
     gtag('js', new Date());
     gtag('config', 'G-C57C89N57B');
+
+    // Konwersje: kliknięcia w telefon i e-mail (delegacja — łapie wszystkie linki tel:/mailto:)
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href^="mailto:"]') : null;
+      if (!a) return;
+      var isTel = a.getAttribute('href').indexOf('tel:') === 0;
+      gtag('event', isTel ? 'phone_click' : 'mail_click', {
+        link_url: a.getAttribute('href'),
+        page_path: location.pathname
+      });
+    });
   </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
