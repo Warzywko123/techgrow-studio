@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechGrow Studio | Nowoczesne strony internetowe dla lokalnych firm</title>
+  <meta name="description" content="TechGrow Studio projektuje, buduje i wdraża nowoczesne strony internetowe, które przyciągają klientów do lokalnych firm.">
+  <meta property="og:title" content="TechGrow Studio">
+  <meta property="og:description" content="Nowoczesne strony internetowe dla lokalnych firm. Od projektu po wdrożenie i SEO.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://techgrowstudio.pl/">
+  <link rel="canonical" href="https://techgrowstudio.pl/">
+  <meta property="og:image" content="https://techgrowstudio.pl/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TechGrow Studio — strona, która pracuje na Twoją firmę">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://techgrowstudio.pl/img/og-image.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#DCE8F7',
+            ink: '#0F1B33',
+            inkmuted: '#3D537A',
+            bp: '#1D4ED8',
+            bpbright: '#0891B2',
+            gold: '#C77E10',
+            goldhover: '#A96A0C',
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.23/dist/lenis.css">
+  <script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.170.0/build/three.module.js" } }
+  </script>
+
+  <style>
+    html { background: #DCE8F7; }
+    body { background: #DCE8F7; color: #0F1B33; }
+    ::selection { background: rgba(199, 126, 16, .28); color: #0F1B33; }
+
+    .noise-overlay {
+      position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .022;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .hero-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 45% at 68% 42%, rgba(29, 78, 216, .09), transparent 70%),
+        radial-gradient(ellipse 45% 35% at 25% 75%, rgba(8, 145, 178, .06), transparent 70%),
+        radial-gradient(ellipse 40% 30% at 84% 12%, rgba(29, 78, 216, .07), transparent 70%),
+        radial-gradient(ellipse 42% 28% at 12% 18%, rgba(8, 145, 178, .05), transparent 70%);
+    }
+
+    .btn-primary {
+      transition: background-color .3s ease;
+    }
+    .btn-primary:active { transform: scale(.98); }
+    .btn-primary .btn-orb {
+      transition: transform .5s cubic-bezier(.32, .72, 0, 1);
+    }
+    .btn-primary:hover .btn-orb { transform: translate(3px, -1px) scale(1.05); }
+
+    .btn-ghost { transition: background-color .3s ease, border-color .3s ease; }
+    .btn-ghost:active { transform: scale(.98); }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -3px; height: 1px; width: 100%;
+      background: #C77E10; transform: scaleX(0); transform-origin: left;
+      transition: transform .45s cubic-bezier(.32, .72, 0, 1);
+    }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .nav-link.active { color: #0F1B33; }
+    .nav-link.active::after { transform: scaleX(1); }
+
+    .phase-label { opacity: 0; visibility: hidden; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #A96A0C; outline-offset: 3px; border-radius: 4px;
+    }
+
+    .contact-link { transition: color .3s ease; }
+
+    /* Karty uslug: podwojna obwoluta (shell + core) w stylu papieru technicznego */
+    .svc-card {
+      transition: transform .55s cubic-bezier(.32, .72, 0, 1), box-shadow .55s cubic-bezier(.32, .72, 0, 1);
+    }
+    .svc-card:hover { transform: translateY(-4px); }
+    .svc-core {
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75);
+    }
+    .card-grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(29, 78, 216, .06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .06) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    /* Tlo sekcji ponizej hero: papier milimetrowy + poswiaty + szkice blueprint */
+    .paper-field { isolation: isolate; }
+    .paper-bg { position: absolute; inset: 0; pointer-events: none; z-index: -1; }
+    .paper-grid {
+      background-image:
+        linear-gradient(to right, rgba(29, 78, 216, .028) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .028) 1px, transparent 1px),
+        linear-gradient(to right, rgba(29, 78, 216, .05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .05) 1px, transparent 1px);
+      background-size: 22px 22px, 22px 22px, 110px 110px, 110px 110px;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 7%, black 93%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, black 7%, black 93%, transparent);
+    }
+    .paper-glow {
+      background:
+        radial-gradient(ellipse 42% 22% at 12% 8%, rgba(29, 78, 216, .08), transparent 70%),
+        radial-gradient(ellipse 38% 20% at 88% 42%, rgba(8, 145, 178, .055), transparent 70%),
+        radial-gradient(ellipse 46% 24% at 16% 84%, rgba(29, 78, 216, .06), transparent 70%);
+    }
+    .bp-accent { pointer-events: none; }
+    .paper-lamp {
+      position: absolute; top: -310px; left: -310px; z-index: -1;
+      width: 620px; height: 620px; border-radius: 9999px;
+      pointer-events: none; opacity: 0; will-change: transform;
+      background: radial-gradient(circle, rgba(255, 255, 255, .55) 0%, rgba(219, 234, 254, 0) 65%);
+    }
+
+    /* Fallback bez WebGL: gradientowe tlo zamiast sceny */
+    body.no-webgl #scene-canvas { display: none; }
+    body.no-webgl .hero-glow {
+      background:
+        radial-gradient(ellipse 70% 55% at 65% 40%, rgba(29, 78, 216, .16), transparent 70%),
+        radial-gradient(ellipse 50% 40% at 25% 80%, rgba(8, 145, 178, .08), transparent 70%);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-paper font-body antialiased overflow-x-hidden w-full max-w-full">
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Cienka linia postepu scrolla -->
+  <div id="scroll-progress" class="fixed top-0 left-0 w-full h-[3px] bg-gold z-[60] origin-left" style="transform: scaleX(0)" aria-hidden="true"></div>
+
+  <!-- Plywajacy przycisk telefonu (pojawia sie po zjechaniu ponizej hero) -->
+  <a href="tel:+48730393493" id="float-call"
+     class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-gold hover:bg-goldhover text-white shadow-[0_8px_24px_rgba(199,126,16,0.35)]"
+     aria-label="Zadzwoń: +48 730 393 493">
+    <i class="ph-light ph-phone-call text-2xl" aria-hidden="true"></i>
+  </a>
+
+  <!-- ==================== NAWIGACJA: plywajaca szklana pigulka ==================== -->
+  <a href="index.html" class="fixed top-[30px] left-[30px] md:top-9 md:left-12 z-50 flex items-center whitespace-nowrap">
+    <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
+  </a>
+
+  <a href="tel:+48730393493"
+     class="btn-primary fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 hidden min-[1700px]:inline-flex items-center gap-3 rounded-full bg-gold hover:bg-goldhover pl-6 pr-2 py-2 text-white font-semibold text-[18px] whitespace-nowrap">
+    Zadzwoń i umów bezpłatną konsultację
+    <span class="btn-orb inline-flex items-center justify-center w-9 h-9 rounded-full bg-black/15 text-ink text-base" aria-hidden="true">&rarr;</span>
+  </a>
+
+  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden min-[1500px]:block">
+    <nav class="flex items-center gap-12 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-9 py-[15px]"
+         aria-label="Nawigacja główna">
+      <a href="index.html" class="nav-link active font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
+      <a href="oferta.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
+      <a href="jak-pracujemy.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
+      <a href="realizacje.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
+      <a href="o-nas.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
+      <a href="kontakt.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
+    </nav>
+  </header>
+
+  <!-- Hamburger (mobile/tablet) -->
+  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 min-[1500px]:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
+    <i class="ph-light ph-list text-2xl text-ink" aria-hidden="true"></i>
+  </button>
+
+  <div id="mobile-menu" class="fixed inset-0 z-[70] min-[1500px]:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
+    <div class="absolute inset-0 bg-ink/50 backdrop-blur-sm" data-menu-close></div>
+    <div class="mobile-panel absolute top-0 right-0 h-full w-[82%] max-w-[380px] bg-paper shadow-2xl flex flex-col px-8 pt-10 pb-10 translate-x-full transition-transform duration-[400ms]" style="transition-timing-function: cubic-bezier(.32,.72,0,1)">
+      <button data-menu-close class="self-end w-11 h-11 rounded-full flex items-center justify-center hover:bg-ink/5" aria-label="Zamknij menu">
+        <i class="ph-light ph-x text-2xl text-ink" aria-hidden="true"></i>
+      </button>
+      <nav class="mt-8 flex flex-col gap-1" aria-label="Nawigacja mobilna">
+        <a href="index.html" class="nav-link active py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Start</a>
+        <a href="oferta.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Oferta</a>
+        <a href="jak-pracujemy.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Jak pracujemy</a>
+        <a href="realizacje.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Realizacje</a>
+        <a href="o-nas.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">O nas</a>
+        <a href="kontakt.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Kontakt</a>
+      </nav>
+      <a href="tel:+48730393493" class="btn-primary mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-gold hover:bg-goldhover px-6 py-3 text-white font-semibold text-[18px]">
+        <i class="ph-light ph-phone-call text-xl" aria-hidden="true"></i>
+        Zadzwoń: 730 393 493
+      </a>
+    </div>
+  </div>
+
+  <main class="w-full max-w-full overflow-x-hidden">
+
+    <!-- ==================== HERO: przypieta scena 3D blueprint ==================== -->
+    <section id="hero" class="relative min-h-[100dvh] w-full overflow-hidden" aria-label="TechGrow Studio, jak powstaje strona internetowa">
+      <div class="paper-bg paper-grid" aria-hidden="true"></div>
+      <canvas id="scene-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <!-- Tresc hero: lewa kolumna -->
+      <div id="hero-copy" class="relative z-10 flex flex-col justify-center min-h-[100dvh] px-6 md:px-14 lg:px-20 max-w-[1400px] mx-auto pointer-events-none">
+        <div class="max-w-2xl pointer-events-auto">
+          <h1 class="font-display font-bold tracking-tight leading-[1.04] text-ink text-[clamp(2.5rem,5.4vw,4.4rem)]">
+            Strona, która <span id="hero-rotator" class="text-bp">pracuje na&nbsp;Twoją firmę.</span>
+          </h1>
+          <p class="mt-6 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[46ch]">
+            Projektujemy, budujemy i wdrażamy nowoczesne strony internetowe oraz aplikacje, które przyciągają klientów do lokalnych firm.
+          </p>
+          <div class="mt-9 flex flex-wrap items-center gap-4">
+            <a href="tel:+48730393493"
+               class="btn-primary group inline-flex items-center gap-3 rounded-full bg-gold hover:bg-goldhover pl-6 pr-2 py-2 text-white font-semibold text-[18px]">
+              Umów rozmowę
+              <span class="btn-orb inline-flex items-center justify-center w-9 h-9 rounded-full bg-black/15 text-ink text-base" aria-hidden="true">&rarr;</span>
+            </a>
+            <a href="oferta.html"
+               class="btn-ghost inline-flex items-center rounded-full border border-ink/20 hover:border-ink/40 hover:bg-white/50 px-6 py-3 text-ink font-medium text-[18px]">
+              Zobacz, co robimy
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Etykiety faz animacji (HUD) -->
+      <div class="absolute bottom-12 md:bottom-14 left-6 md:left-14 lg:left-20 z-10 pointer-events-none" aria-hidden="true">
+        <div class="relative h-32 md:h-36 lg:h-40 w-[300px] sm:w-[380px] md:w-[440px] lg:w-[500px]">
+          <div id="phase-1" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
+            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-gold font-semibold">FAZA 01 / 04</span>
+            <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Projekt i architektura</h2>
+            <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Każdy projekt zaczynamy od przemyślanej struktury strony.</p>
+          </div>
+          <div id="phase-2" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
+            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-gold font-semibold">FAZA 02 / 04</span>
+            <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Budowa interfejsu</h2>
+            <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Elementy trafiają dokładnie tam, gdzie będą pracować.</p>
+          </div>
+          <div id="phase-3" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
+            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-gold font-semibold">FAZA 03 / 04</span>
+            <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Animacje i treść</h2>
+            <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Projekt nabiera koloru, ruchu i charakteru.</p>
+          </div>
+          <div id="phase-4" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
+            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-gold font-semibold">FAZA 04 / 04</span>
+            <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Wdrożenie i SEO</h2>
+            <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Strona trafia do sieci, szybka i widoczna w Google.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pionowa szyna postepu (desktop) -->
+      <div class="hidden md:block absolute right-8 lg:right-12 top-1/2 -translate-y-1/2 z-10 pointer-events-none" aria-hidden="true">
+        <div class="relative h-52 w-px bg-ink/15">
+          <div id="progress-fill" class="absolute top-0 left-0 w-px bg-gold" style="height: 0%"></div>
+          <div class="progress-tick absolute -left-[2.5px] w-1.5 h-1.5 rounded-full bg-ink/25" style="top: 0%"></div>
+          <div class="progress-tick absolute -left-[2.5px] w-1.5 h-1.5 rounded-full bg-ink/25" style="top: 33%"></div>
+          <div class="progress-tick absolute -left-[2.5px] w-1.5 h-1.5 rounded-full bg-ink/25" style="top: 66%"></div>
+          <div class="progress-tick absolute -left-[2.5px] w-1.5 h-1.5 rounded-full bg-ink/25" style="top: 100%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== POLE PAPIERU: wspolne tlo sekcji uslug i kontaktu ==================== -->
+    <div class="paper-field relative">
+      <div class="paper-bg paper-grid" aria-hidden="true"></div>
+      <div class="paper-bg paper-glow" aria-hidden="true"></div>
+      <div id="paper-lamp" class="paper-lamp" aria-hidden="true"></div>
+
+      <!-- Linia konstrukcyjna dorysowujaca sie wzdluz scrolla -->
+      <svg id="construction-line" class="paper-bg w-full h-full" viewBox="0 0 1000 2000" preserveAspectRatio="none" fill="none" aria-hidden="true">
+        <path id="construction-path"
+              d="M 80 130 V 560 H 500 V 980 H 920 V 1450 H 260 V 1870"
+              stroke="#1D4ED8" stroke-width="1.5" vector-effect="non-scaling-stroke" opacity="0.22"/>
+      </svg>
+
+      <!-- Szkice blueprint w tle (delikatny parallax) -->
+      <svg class="bp-accent hidden md:block absolute right-[5%] top-[4%] w-80 opacity-[0.28]" viewBox="0 0 200 90" fill="none" aria-hidden="true" data-speed="-22">
+        <g stroke="#1D4ED8" stroke-width="1.4">
+          <rect x="30" y="10" width="150" height="70"/>
+          <line x1="30" y1="26" x2="180" y2="26"/>
+          <circle cx="39" cy="18" r="2.3"/><circle cx="48" cy="18" r="2.3"/><circle cx="57" cy="18" r="2.3"/>
+          <line x1="10" y1="10" x2="10" y2="80" stroke-dasharray="4 4"/>
+          <line x1="6" y1="10" x2="14" y2="10"/><line x1="6" y1="80" x2="14" y2="80"/>
+        </g>
+      </svg>
+      <svg class="bp-accent hidden md:block absolute left-[3%] top-[46%] w-64 opacity-[0.24]" viewBox="0 0 160 90" fill="none" aria-hidden="true" data-speed="18">
+        <g stroke="#1D4ED8" stroke-width="1.4">
+          <rect x="10" y="10" width="140" height="70"/>
+          <line x1="10" y1="10" x2="150" y2="80"/><line x1="150" y1="10" x2="10" y2="80"/>
+        </g>
+      </svg>
+      <svg class="bp-accent hidden md:block absolute right-[7%] top-[75%] w-72 opacity-[0.26]" viewBox="0 0 200 60" fill="none" aria-hidden="true" data-speed="-14">
+        <g stroke="#1D4ED8" stroke-width="1.4">
+          <line x1="10" y1="30" x2="190" y2="30" stroke-dasharray="6 5"/>
+          <line x1="10" y1="20" x2="10" y2="40"/>
+          <line x1="190" y1="20" x2="190" y2="40"/>
+        </g>
+      </svg>
+
+    <!-- ==================== CO ROBIMY (skrot uslug) ==================== -->
+    <section id="co-robimy" class="relative py-20 md:py-28 px-6" aria-label="Co robimy">
+      <div class="max-w-[1400px] mx-auto">
+        <div class="corobimy-head max-w-3xl">
+          <h2 class="word-reveal font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
+            Wszystko, czego Twoja firma potrzebuje w&nbsp;sieci.
+          </h2>
+          <p class="mt-5 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[52ch]">
+            Strony, aplikacje, rezerwacje wizyt, grafiki, SEO i reklamy — w jednym miejscu, u jednej osoby.
+          </p>
+        </div>
+
+        <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+          <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
+            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+              <i class="ph-light ph-browsers pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
+              <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                <i class="ph-light ph-browsers text-[24px]"></i>
+              </span>
+              <h3 class="mt-4 font-display font-semibold text-base md:text-lg text-ink">Strony internetowe</h3>
+              <p class="mt-2 text-inkmuted text-[15px] leading-relaxed">Szybkie, responsywne witryny, które budują zaufanie i&nbsp;pozyskują klientów.</p>
+              <span class="mt-auto pt-5 flex justify-end text-bp/40 group-hover:text-bp transition-colors duration-300">
+                <i class="ph-light ph-arrow-right text-[20px] transition-transform duration-300 group-hover:translate-x-1"></i>
+              </span>
+            </div>
+          </a>
+          <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
+            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+              <i class="ph-light ph-magic-wand pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
+              <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                <i class="ph-light ph-magic-wand text-[24px]"></i>
+              </span>
+              <h3 class="mt-4 font-display font-semibold text-base md:text-lg text-ink">Grafiki i branding</h3>
+              <p class="mt-2 text-inkmuted text-[15px] leading-relaxed">Logo, kolory i spójny styl, po którym zapamiętają Twoją markę.</p>
+              <span class="mt-auto pt-5 flex justify-end text-bp/40 group-hover:text-bp transition-colors duration-300">
+                <i class="ph-light ph-arrow-right text-[20px] transition-transform duration-300 group-hover:translate-x-1"></i>
+              </span>
+            </div>
+          </a>
+          <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
+            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+              <i class="ph-light ph-map-pin pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
+              <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                <i class="ph-light ph-map-pin text-[24px]"></i>
+              </span>
+              <h3 class="mt-4 font-display font-semibold text-base md:text-lg text-ink">SEO i wizytówka Google</h3>
+              <p class="mt-2 text-inkmuted text-[15px] leading-relaxed">Wyższa pozycja w Google i widoczność na mapach w Twojej okolicy.</p>
+              <span class="mt-auto pt-5 flex justify-end text-bp/40 group-hover:text-bp transition-colors duration-300">
+                <i class="ph-light ph-arrow-right text-[20px] transition-transform duration-300 group-hover:translate-x-1"></i>
+              </span>
+            </div>
+          </a>
+          <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
+            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+              <i class="ph-light ph-chart-line-up pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
+              <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                <i class="ph-light ph-chart-line-up text-[24px]"></i>
+              </span>
+              <h3 class="mt-4 font-display font-semibold text-base md:text-lg text-ink">Kampanie Google Ads</h3>
+              <p class="mt-2 text-inkmuted text-[15px] leading-relaxed">Reklamy, które docierają do klientów dokładnie wtedy, gdy szukają.</p>
+              <span class="mt-auto pt-5 flex justify-end text-bp/40 group-hover:text-bp transition-colors duration-300">
+                <i class="ph-light ph-arrow-right text-[20px] transition-transform duration-300 group-hover:translate-x-1"></i>
+              </span>
+            </div>
+          </a>
+          <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
+            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+              <i class="ph-light ph-app-window pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
+              <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                <i class="ph-light ph-app-window text-[24px]"></i>
+              </span>
+              <h3 class="mt-4 font-display font-semibold text-base md:text-lg text-ink">Aplikacje internetowe</h3>
+              <p class="mt-2 text-inkmuted text-[15px] leading-relaxed">Panele, kalkulatory i narzędzia szyte pod potrzeby Twojej firmy.</p>
+              <span class="mt-auto pt-5 flex justify-end text-bp/40 group-hover:text-bp transition-colors duration-300">
+                <i class="ph-light ph-arrow-right text-[20px] transition-transform duration-300 group-hover:translate-x-1"></i>
+              </span>
+            </div>
+          </a>
+          <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
+            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+              <i class="ph-light ph-calendar-check pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
+              <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                <i class="ph-light ph-calendar-check text-[24px]"></i>
+              </span>
+              <h3 class="mt-4 font-display font-semibold text-base md:text-lg text-ink">Rezerwacje wizyt online</h3>
+              <p class="mt-2 text-inkmuted text-[15px] leading-relaxed">Klienci umawiają się sami, całą dobę — bez telefonów i&nbsp;maili.</p>
+              <span class="mt-auto pt-5 flex justify-end text-bp/40 group-hover:text-bp transition-colors duration-300">
+                <i class="ph-light ph-arrow-right text-[20px] transition-transform duration-300 group-hover:translate-x-1"></i>
+              </span>
+            </div>
+          </a>
+        </div>
+
+        <a href="oferta.html" class="mt-10 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-5 py-2.5 font-mono text-[18px] text-bp transition-colors duration-300">
+          Zobacz pełną ofertę i cennik &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== REALIZACJE (skrot) ==================== -->
+    <section id="realizacje-teaser" class="relative py-20 md:py-28 px-6" aria-label="Realizacje">
+      <div class="max-w-[1400px] mx-auto">
+        <div class="realizacje-head max-w-3xl">
+          <h2 class="word-reveal font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
+            Te strony już pracują.
+          </h2>
+          <p class="mt-5 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[52ch]">
+            Kilka projektów zrealizowanych dla lokalnych firm z Piły. Każdy możesz obejrzeć na żywo.
+          </p>
+        </div>
+
+        <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1400px]">
+          <a href="realizacje.html" class="teaser-chip group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
+            <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+              <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="ml-3 font-mono text-[15.84px] text-inkmuted">psychoterapeuta-pila.pl</span>
+              </div>
+              <img src="img/portfolio/dard.jpg" width="1280" height="800" loading="lazy"
+                   alt="Strona główna gabinetu psychoterapii DARD"
+                   class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+            </div>
+          </a>
+          <a href="realizacje.html" class="teaser-chip group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
+            <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+              <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="ml-3 font-mono text-[15.84px] text-inkmuted">ksiegowosc-pila.pl</span>
+              </div>
+              <img src="img/portfolio/lauterbach.jpg" width="1280" height="800" loading="lazy"
+                   alt="Strona główna Biura Rachunkowego Lauterbach"
+                   class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+            </div>
+          </a>
+          <a href="realizacje.html" class="teaser-chip group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
+            <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+              <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                <span class="ml-3 font-mono text-[15.84px] text-inkmuted">biurorachunkowe-pila.pl</span>
+              </div>
+              <img src="img/portfolio/baginski.jpg" width="1280" height="800" loading="lazy"
+                   alt="Strona główna biura rachunkowego Bagiński"
+                   class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+            </div>
+          </a>
+        </div>
+
+        <a href="realizacje.html" class="mt-10 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-5 py-2.5 font-mono text-[18px] text-bp transition-colors duration-300">
+          Zobacz wszystkie realizacje &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== O MNIE (skrot) ==================== -->
+    <section id="o-mnie-teaser" class="relative py-20 md:py-28 px-6" aria-label="O mnie">
+      <div class="max-w-[1400px] mx-auto grid md:grid-cols-12 gap-10 md:gap-14 items-center">
+        <div class="about-el md:col-span-4">
+          <div class="rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 max-w-[320px]">
+            <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+              <img src="img/tymon.jpg" width="1856" height="2304" loading="lazy"
+                   alt="Tymon Grochowski w granatowej marynarce, uśmiechnięty, na tle jasnego wnętrza biurowego"
+                   class="block w-full h-auto">
+            </div>
+          </div>
+        </div>
+        <div class="md:col-span-8">
+          <h2 class="word-reveal font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
+            Poznajmy się.
+          </h2>
+          <p class="about-el mt-5 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[58ch]">
+            Nazywam się Tymon Grochowski. Studiuję informatykę na Politechnice Poznańskiej i buduję
+            strony internetowe dla firm z Piły i okolic. Każdy projekt prowadzę osobiście, od pierwszej
+            rozmowy po wdrożenie i opiekę po starcie.
+          </p>
+          <a href="o-nas.html" class="about-el mt-6 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-5 py-2.5 font-mono text-[18px] text-bp transition-colors duration-300">
+            Poznaj mnie bliżej &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== KONTAKT (CTA koncowe) ==================== -->
+    <section id="kontakt-teaser" class="relative py-20 md:py-28 px-6" aria-label="Kontakt">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="word-reveal font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
+          Gotowy na stronę, która pracuje dla Ciebie?
+        </h2>
+        <p class="mt-5 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed">
+          Zadzwoń lub napisz — porozmawiamy o Twoim projekcie, bez zobowiązań.
+        </p>
+        <div class="mt-9 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4">
+          <a href="tel:+48730393493"
+             class="btn-primary group inline-flex items-center gap-3 rounded-full bg-gold hover:bg-goldhover pl-6 pr-2.5 py-2.5 text-white font-semibold text-[19.2px] md:text-[21.6px]">
+            <i class="ph-light ph-phone-call text-[22px]" aria-hidden="true"></i>
+            +48 730 393 493
+            <span class="btn-orb inline-flex items-center justify-center w-9 h-9 rounded-full bg-black/15 text-white" aria-hidden="true">&rarr;</span>
+          </a>
+          <a href="kontakt.html"
+             class="btn-ghost inline-flex items-center gap-3 rounded-full border border-ink/25 hover:border-ink/45 hover:bg-white/60 px-6 py-3 text-ink font-medium text-[19.2px] md:text-[21.6px]">
+            Pełne dane kontaktowe
+          </a>
+        </div>
+      </div>
+    </section>
+
+    </div><!-- /paper-field -->
+
+  </main>
+
+  <footer class="relative py-14 px-6 border-t border-ink/10">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="flex flex-wrap items-center justify-between gap-6">
+        <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
+        <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
+          <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
+          <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
+          <a href="jak-pracujemy.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
+          <a href="realizacje.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
+          <a href="o-nas.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
+          <a href="kontakt.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
+        </nav>
+      </div>
+      <div class="mt-8 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-3">
+        <span class="font-mono text-[16.56px] text-inkmuted">&copy; 2026 TechGrow Studio</span>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <span class="font-mono text-[15.84px] text-inkmuted">Piła i okolice</span>
+          <a href="polityka-prywatnosci.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MENU MOBILNE ==================== -->
+  <script>
+    (function () {
+      var btn = document.getElementById('mobile-menu-btn');
+      var menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      var panel = menu.querySelector('.mobile-panel');
+      function openMenu() {
+        menu.classList.remove('invisible', 'opacity-0');
+        requestAnimationFrame(function () { panel.classList.remove('translate-x-full'); });
+        btn.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMenu() {
+        panel.classList.add('translate-x-full');
+        menu.classList.add('opacity-0');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        setTimeout(function () { menu.classList.add('invisible'); }, 400);
+      }
+      btn.addEventListener('click', function () {
+        menu.classList.contains('invisible') ? openMenu() : closeMenu();
+      });
+      menu.querySelectorAll('[data-menu-close], a').forEach(function (el) {
+        el.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    })();
+  </script>
+
+  <!-- ==================== ANIMACJE WEJSCIA SEKCJI USLUG ==================== -->
+  <script>
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!window.gsap || !window.ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.from('#co-robimy .corobimy-head p', {
+        opacity: 0, y: 28, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: '#co-robimy', start: 'top 80%', once: true },
+      });
+      gsap.utils.toArray('.svc-card').forEach(function (card, i) {
+        gsap.from(card, {
+          opacity: 0, y: 36, duration: 0.9, ease: 'power3.out', delay: (i % 2) * 0.1,
+          scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+        });
+      });
+      gsap.from('#realizacje-teaser .realizacje-head p', {
+        opacity: 0, y: 28, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: '#realizacje-teaser', start: 'top 80%', once: true },
+      });
+      gsap.utils.toArray('#realizacje-teaser .teaser-chip').forEach(function (chip, i) {
+        gsap.from(chip, {
+          opacity: 0, y: 36, duration: 0.9, ease: 'power3.out', delay: (i % 2) * 0.1,
+          scrollTrigger: { trigger: chip, start: 'top 88%', once: true },
+        });
+      });
+      gsap.utils.toArray('#o-mnie-teaser .about-el').forEach(function (el, i) {
+        gsap.from(el, {
+          opacity: 0, y: 30, duration: 0.9, ease: 'power3.out', delay: i * 0.1,
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        });
+      });
+      gsap.from('#kontakt-teaser p, #kontakt-teaser .btn-primary, #kontakt-teaser .btn-ghost', {
+        opacity: 0, y: 24, duration: 0.8, ease: 'power3.out', stagger: 0.12,
+        scrollTrigger: { trigger: '#kontakt-teaser', start: 'top 75%', once: true },
+      });
+
+      // Uwaga: podswietlanie nav, pasek postepu, naglowki "word-reveal", parallax zdjecia
+      // i plywajacy telefon zaleza od finalnej (dlugiej) wysokosci strony po przypieciu
+      // hero w scenie 3D - ich kod znajduje sie w drugim skrypcie (module), uruchamianym
+      // po ustawieniu pina, zeby ScrollTrigger liczyl pozycje na poprawnym layoucie.
+
+      var hoverFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      if (hoverFine) {
+        // ---------- Magnetyczne przyciski CTA ----------
+        gsap.utils.toArray('.btn-primary').forEach(function (btn) {
+          var qx = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power3' });
+          var qy = gsap.quickTo(btn, 'y', { duration: 0.4, ease: 'power3' });
+          btn.addEventListener('mousemove', function (e) {
+            var r = btn.getBoundingClientRect();
+            qx((e.clientX - (r.left + r.width / 2)) * 0.25);
+            qy((e.clientY - (r.top + r.height / 2)) * 0.35);
+          });
+          btn.addEventListener('mouseleave', function () { qx(0); qy(0); });
+        });
+
+        // ---------- Tilt 3D na kartach uslug i cennika ----------
+        gsap.utils.toArray('.svc-card .svc-core').forEach(function (core) {
+          var card = core.closest('.svc-card');
+          if (!card) return;
+          gsap.set(core, { transformPerspective: 700 });
+          var qrx = gsap.quickTo(core, 'rotationX', { duration: 0.6, ease: 'power3' });
+          var qry = gsap.quickTo(core, 'rotationY', { duration: 0.6, ease: 'power3' });
+          card.addEventListener('mousemove', function (e) {
+            var r = core.getBoundingClientRect();
+            var px = (e.clientX - r.left) / r.width - 0.5;
+            var py = (e.clientY - r.top) / r.height - 0.5;
+            qrx(-py * 8);
+            qry(px * 8);
+          });
+          card.addEventListener('mouseleave', function () { qrx(0); qry(0); });
+        });
+      }
+
+
+      // Szkice blueprint w tle dryfuja odrobine wolniej niz scroll (parallax)
+      gsap.utils.toArray('.bp-accent').forEach(function (el) {
+        var speed = parseFloat(el.dataset.speed || '18');
+        gsap.to(el, {
+          y: speed * 3, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1.2 },
+        });
+      });
+
+      // 1. Szkice kresla sie same przy wejsciu w viewport (jak tusz na desce kreslarskiej)
+      if (window.innerWidth >= 768) {
+        gsap.utils.toArray('.bp-accent').forEach(function (svg) {
+          var solid = [], dashed = [];
+          svg.querySelectorAll('rect, line, circle').forEach(function (s) {
+            (s.hasAttribute('stroke-dasharray') ? dashed : solid).push(s);
+          });
+          solid.forEach(function (s) {
+            var len = s.getTotalLength();
+            s.style.strokeDasharray = len;
+            s.style.strokeDashoffset = len;
+          });
+          dashed.forEach(function (s) { s.style.opacity = 0; });
+          var tl = gsap.timeline({ scrollTrigger: { trigger: svg, start: 'top 90%', once: true } });
+          if (solid.length) tl.to(solid, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', stagger: 0.15 });
+          if (dashed.length) tl.to(dashed, { opacity: 1, duration: 0.7 }, '-=0.5');
+        });
+      }
+
+      // 2. Lampa kreslarska podazajaca za kursorem (tylko desktop z myszka)
+      var field = document.querySelector('.paper-field');
+      var lamp = document.getElementById('paper-lamp');
+      if (field && lamp && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        var lampX = gsap.quickTo(lamp, 'x', { duration: 0.5, ease: 'power3' });
+        var lampY = gsap.quickTo(lamp, 'y', { duration: 0.5, ease: 'power3' });
+        field.addEventListener('pointermove', function (e) {
+          var r = field.getBoundingClientRect();
+          lampX(e.clientX - r.left);
+          lampY(e.clientY - r.top);
+          gsap.to(lamp, { opacity: 1, duration: 0.4, overwrite: 'auto' });
+        }, { passive: true });
+        field.addEventListener('pointerleave', function () {
+          gsap.to(lamp, { opacity: 0, duration: 0.6, overwrite: 'auto' });
+        });
+      }
+
+      // 3. Linia konstrukcyjna dorysowuje sie w miare scrollowania przez sekcje
+      var cpath = document.getElementById('construction-path');
+      if (cpath) {
+        var clen = cpath.getTotalLength();
+        cpath.style.strokeDasharray = clen;
+        cpath.style.strokeDashoffset = clen;
+        gsap.to(cpath, {
+          strokeDashoffset: 0, ease: 'none',
+          scrollTrigger: { trigger: '.paper-field', start: 'top 75%', end: 'bottom 95%', scrub: 1 },
+        });
+      }
+
+      // Sekwencja wejscia tresci hero (tylko przy starcie od gory strony)
+      if (window.scrollY < 50) {
+        var introCopy = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        introCopy.from('header nav', { autoAlpha: 0, y: -16, duration: 0.6 }, 0.05)
+          .from('#hero-copy h1', { autoAlpha: 0, y: 36, duration: 0.9 }, 0.15)
+          .from('#hero-copy p', { autoAlpha: 0, y: 24, duration: 0.7 }, '-=0.45')
+          .from('#hero-copy .btn-primary, #hero-copy .btn-ghost', { autoAlpha: 0, y: 18, duration: 0.6, stagger: 0.12 }, '-=0.35');
+      }
+
+      // Rotujaca koncowka naglowka: kazda wersja to inna korzysc dla klienta
+      var rotator = document.getElementById('hero-rotator');
+      if (rotator) {
+        var phrases = [
+          'pracuje na Twoją firmę.',
+          'przyciąga nowych klientów.',
+          'jest widoczna w Google.',
+          'sprzedaje, kiedy Ty śpisz.',
+          'rośnie w aplikację, kiedy jej potrzebujesz.',
+        ];
+        var phraseIndex = 0;
+        setInterval(function () {
+          gsap.to(rotator, {
+            autoAlpha: 0, duration: 0.38, ease: 'power2.in', overwrite: 'auto',
+            onComplete: function () {
+              phraseIndex = (phraseIndex + 1) % phrases.length;
+              rotator.textContent = phrases[phraseIndex];
+              gsap.to(rotator, { autoAlpha: 1, duration: 0.55, ease: 'power2.out', overwrite: 'auto' });
+            },
+          });
+        }, 3600);
+      }
+
+    })();
+  </script>
+
+  <!-- ==================== SCENA 3D + CHOREOGRAFIA SCROLLA ==================== -->
+  <script type="module">
+    import * as THREE from 'three';
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth < 768;
+
+    // ---------- Paleta sceny ----------
+    const COL = {
+      bg: 0xDCE8F7,
+      line: 0x1D4ED8,       // kobaltowa kreska na blekitnym papierze
+      lineBright: 0x0891B2, // zywszy cyjan po "ozywieniu" (faza C)
+      grid: 0xA8C4E8,
+      fillBlue: 0x1D4ED8,
+      fillGold: 0xC77E10,
+      frame: 0x47597A,
+      ring: 0xC77E10,
+    };
+
+    // ---------- Renderer (z fallbackiem gdy brak WebGL) ----------
+    const canvas = document.getElementById('scene-canvas');
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    } catch (e) {
+      document.body.classList.add('no-webgl');
+    }
+
+    if (renderer) {
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.Fog(COL.bg, 26, 46);
+
+      const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+
+      // Kamera i cel patrzenia sterowane przez proxy (GSAP tweenuje te obiekty)
+      const pageX = isMobile ? 0 : 2.3;      // strona 3D przesunieta w prawo na desktopie
+      const camPos = { x: isMobile ? 0 : 0.9, y: 2.6, z: isMobile ? 26 : 24 };
+      const camLook = { x: isMobile ? 0 : 1.9, y: 0.4 };
+
+      // Grupa nadrzedna (parallax myszy obraca cala scene)
+      const world = new THREE.Group();
+      scene.add(world);
+
+      // ---------- Siatka konstrukcyjna (podloga) ----------
+      const grid = new THREE.GridHelper(70, 46, COL.grid, COL.grid);
+      grid.position.y = -5.0;
+      grid.material.transparent = true;
+      grid.material.opacity = 0.0;
+      world.add(grid);
+
+      // ---------- Grupa strony (blueprint skladanej witryny) ----------
+      const pageGroup = new THREE.Group();
+      pageGroup.position.x = pageX;
+      if (isMobile) pageGroup.scale.setScalar(0.62);
+      world.add(pageGroup);
+
+      // Material linii: wspoldzielony kolor (lerpowany w fazie C)
+      const lineMats = [];
+      function makeLineMat(opacity = 0.95) {
+        // Zwykly blending: na jasnym tle linie maja byc kreska tuszem, nie poswiata
+        const m = new THREE.LineBasicMaterial({
+          color: COL.line, transparent: true, opacity,
+          blending: THREE.NormalBlending, depthWrite: false,
+        });
+        lineMats.push(m);
+        return m;
+      }
+
+      // Pomocnik: krawedzie prostokata jako pary punktow (dla LineSegments)
+      function rectSegments(cx, cy, w, h) {
+        const x0 = cx - w / 2, x1 = cx + w / 2, y0 = cy - h / 2, y1 = cy + h / 2;
+        return [
+          x0, y0, 0, x1, y0, 0,
+          x1, y0, 0, x1, y1, 0,
+          x1, y1, 0, x0, y1, 0,
+          x0, y1, 0, x0, y0, 0,
+        ];
+      }
+      function lineSegment(x0, y0, x1, y1) {
+        return [x0, y0, 0, x1, y1, 0];
+      }
+      function buildLines(positions, mat) {
+        const g = new THREE.BufferGeometry();
+        g.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        return new THREE.LineSegments(g, mat);
+      }
+
+      // ---------- Szkielet strony (rysuje sie w fazie A przez drawRange) ----------
+      // Kolejnosc segmentow = kolejnosc rysowania: ramka, potem linie sekcji od gory
+      const skeletonPositions = [
+        ...rectSegments(0, 0, 11, 8.4),                 // ramka strony
+        ...lineSegment(-5.5, 3.3, 5.5, 3.3),            // pod navbarem
+        ...lineSegment(-5.5, 0.45, 5.5, 0.45),          // pod hero
+        ...lineSegment(-5.5, -2.35, 5.5, -2.35),        // pod kartami
+      ];
+      const skeletonMat = makeLineMat(0.9);
+      const skeleton = buildLines(skeletonPositions, skeletonMat);
+      skeleton.geometry.setDrawRange(0, 0);
+      const skeletonVertexCount = skeletonPositions.length / 3;
+      pageGroup.add(skeleton);
+
+      // ---------- Fragmenty UI (dokuja w fazie B) ----------
+      // Kazdy fragment: outer (GSAP tweenuje z rozrzutu do zera) > inner (dryf w rAF) > ksztalty
+      const fragments = [];
+      const rng = (min, max) => min + Math.random() * (max - min);
+
+      function makeFragment(shapes, fill) {
+        const outer = new THREE.Group();
+        const inner = new THREE.Group();
+        outer.add(inner);
+        shapes.forEach(s => inner.add(s));
+
+        let fillMesh = null;
+        if (fill) {
+          const fg = new THREE.PlaneGeometry(fill.w, fill.h);
+          const fm = new THREE.MeshBasicMaterial({
+            color: fill.color, transparent: true, opacity: 0,
+            blending: THREE.NormalBlending, depthWrite: false, side: THREE.DoubleSide,
+          });
+          fillMesh = new THREE.Mesh(fg, fm);
+          fillMesh.position.set(fill.x, fill.y, -0.02);
+          inner.add(fillMesh);
+        }
+
+        // Rozrzut poczatkowy w przestrzeni (szerszy na panoramicznych ekranach)
+        const spread = isMobile ? 0.55 : 1;
+        const spreadX = isMobile ? 1 : Math.min(1.7, Math.max(1, (window.innerWidth / window.innerHeight) * 0.62));
+        // X przesuniete od tekstu: mniej fragmentow zalewa lewa kolumne z naglowkiem
+        outer.position.set(rng(isMobile ? -8 : -3, 8) * spread * spreadX, rng(-6.2, 7.4) * spread, rng(-6, 2.5));
+        outer.rotation.set(rng(-0.5, 0.5), rng(-0.7, 0.7), rng(-0.45, 0.45));
+
+        const frag = {
+          outer, inner, fillMesh,
+          scatter: outer.position.clone(),
+          driftSpeed: rng(0.5, 1.1),
+          driftPhase: rng(0, Math.PI * 2),
+          driftAmp: rng(0.1, 0.22),
+        };
+        fragments.push(frag);
+        pageGroup.add(outer);
+        return frag;
+      }
+
+      // 1. Navbar
+      makeFragment([
+        buildLines([
+          ...rectSegments(0, 3.72, 10.4, 0.62),
+          ...rectSegments(-4.55, 3.72, 0.5, 0.32),
+          ...lineSegment(2.9, 3.72, 3.45, 3.72),
+          ...lineSegment(3.75, 3.72, 4.3, 3.72),
+          ...lineSegment(4.6, 3.72, 5.05, 3.72),
+        ], makeLineMat()),
+      ], { x: 0, y: 3.72, w: 10.4, h: 0.62, color: COL.fillBlue });
+
+      // 2. Naglowek linia 1 (podwojna linia = "gruby" tekst)
+      makeFragment([
+        buildLines([
+          ...lineSegment(-4.9, 2.76, -0.1, 2.76),
+          ...lineSegment(-4.9, 2.64, -0.1, 2.64),
+        ], makeLineMat()),
+      ], null);
+
+      // 3. Naglowek linia 2
+      makeFragment([
+        buildLines([
+          ...lineSegment(-4.9, 2.21, -1.3, 2.21),
+          ...lineSegment(-4.9, 2.09, -1.3, 2.09),
+        ], makeLineMat()),
+      ], null);
+
+      // 4. Przycisk CTA
+      makeFragment([
+        buildLines([
+          ...rectSegments(-3.8, 1.35, 2.2, 0.65),
+          ...lineSegment(-4.5, 1.35, -3.1, 1.35),
+        ], makeLineMat()),
+      ], { x: -3.8, y: 1.35, w: 2.2, h: 0.65, color: COL.fillGold });
+
+      // 5. Ramka obrazu hero (z przekatnymi)
+      makeFragment([
+        buildLines([
+          ...rectSegments(2.55, 2.0, 4.4, 2.4),
+          ...lineSegment(0.35, 0.8, 4.75, 3.2),
+          ...lineSegment(0.35, 3.2, 4.75, 0.8),
+        ], makeLineMat()),
+      ], { x: 2.55, y: 2.0, w: 4.4, h: 2.4, color: COL.fillBlue });
+
+      // 6-8. Trzy karty tresci
+      [-3.55, 0, 3.55].forEach(cx => {
+        makeFragment([
+          buildLines([
+            ...rectSegments(cx, -0.95, 3.3, 2.2),
+            ...rectSegments(cx, -0.45, 2.9, 0.9),
+            ...lineSegment(cx - 1.3, -1.35, cx + 1.3, -1.35),
+            ...lineSegment(cx - 1.3, -1.65, cx + 0.6, -1.65),
+          ], makeLineMat()),
+        ], { x: cx, y: -0.95, w: 3.3, h: 2.2, color: COL.fillBlue });
+      });
+
+      // 9. Stopka
+      makeFragment([
+        buildLines([
+          ...rectSegments(-4.5, -3.3, 1.4, 0.5),
+          ...lineSegment(-3.4, -3.3, -1.6, -3.3),
+          ...rectSegments(4.2, -3.3, 1.6, 0.55),
+        ], makeLineMat()),
+      ], { x: 4.2, y: -3.3, w: 1.6, h: 0.55, color: COL.fillGold });
+
+      // Luzne szkice "budowlane": wypelniaja przestrzen na starcie,
+      // rozplywaja sie, gdy strona sie sklada (faza B)
+      const debris = [];
+      if (!isMobile) {
+        const debrisShapes = [
+          [...rectSegments(0, 0, 1.7, 0.55)],
+          [...lineSegment(-1.4, 0.15, 1.4, 0.15), ...lineSegment(-1.4, -0.15, 0.9, -0.15)],
+          [...rectSegments(0, 0, 2.6, 1.8), ...lineSegment(-1.3, -0.9, 1.3, 0.9)],
+          [...rectSegments(0, 0, 0.62, 0.62)],
+          [...lineSegment(-1.8, 0, 1.8, 0), ...lineSegment(-1.8, -0.18, -1.8, 0.18), ...lineSegment(1.8, -0.18, 1.8, 0.18)],
+          [...rectSegments(0, 0, 1.1, 1.1), ...lineSegment(-0.55, -0.55, 0.55, 0.55), ...lineSegment(-0.55, 0.55, 0.55, -0.55)],
+          [...lineSegment(-1.1, 0, -1.1, 0.9), ...lineSegment(-1.1, 0, -0.2, 0), ...lineSegment(1.1, 0, 1.1, -0.9), ...lineSegment(1.1, 0, 0.2, 0)],
+        ];
+        debrisShapes.forEach(function (positions) {
+          const mat = new THREE.LineBasicMaterial({
+            color: COL.line, transparent: true, opacity: 0.55,
+            blending: THREE.NormalBlending, depthWrite: false,
+          });
+          const outer = new THREE.Group();
+          const inner = new THREE.Group();
+          inner.add(buildLines(positions, mat));
+          outer.add(inner);
+          const sx = (window.innerWidth / window.innerHeight) > 1.6 ? 12 : 9;
+          outer.position.set(rng(-sx * 0.4, sx), rng(-6.8, 7.6), rng(-7, 2));
+          outer.rotation.set(rng(-0.5, 0.5), rng(-0.8, 0.8), rng(-0.5, 0.5));
+          debris.push({
+            outer, inner, mat,
+            scatter: outer.position.clone(),
+            driftSpeed: rng(0.4, 1.0), driftPhase: rng(0, Math.PI * 2), driftAmp: rng(0.12, 0.26),
+          });
+          pageGroup.add(outer);
+        });
+      }
+
+      // ---------- Czasteczki plynace wzdluz krawedzi (faza C) ----------
+      let particleSystem = null;
+      let particleData = [];
+      if (!isMobile && !prefersReduced) {
+        const PARTICLE_COUNT = 240;
+        // Sciezki = segmenty szkieletu
+        const paths = [];
+        for (let i = 0; i < skeletonPositions.length; i += 6) {
+          paths.push({
+            ax: skeletonPositions[i],     ay: skeletonPositions[i + 1],
+            bx: skeletonPositions[i + 3], by: skeletonPositions[i + 4],
+          });
+        }
+        const pPos = new Float32Array(PARTICLE_COUNT * 3);
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          const seg = paths[Math.floor(Math.random() * paths.length)];
+          const t = Math.random();
+          particleData.push({ seg, t, speed: rng(0.08, 0.3) });
+          pPos[i * 3] = seg.ax + (seg.bx - seg.ax) * t;
+          pPos[i * 3 + 1] = seg.ay + (seg.by - seg.ay) * t;
+          pPos[i * 3 + 2] = 0.03;
+        }
+        const pg = new THREE.BufferGeometry();
+        pg.setAttribute('position', new THREE.BufferAttribute(pPos, 3).setUsage(THREE.DynamicDrawUsage));
+        const pm = new THREE.PointsMaterial({
+          color: COL.lineBright, size: 0.07, transparent: true, opacity: 0,
+          blending: THREE.NormalBlending, depthWrite: false, sizeAttenuation: true,
+        });
+        particleSystem = new THREE.Points(pg, pm);
+        particleSystem.userData.paths = paths;
+        pageGroup.add(particleSystem);
+      }
+
+      // ---------- Ramka przegladarki + pierscien publikacji (faza D) ----------
+      const browserGroup = new THREE.Group();
+      const browserMat = new THREE.LineBasicMaterial({
+        color: COL.frame, transparent: true, opacity: 0, depthWrite: false,
+      });
+      browserGroup.add(buildLines([
+        ...rectSegments(0, 0.15, 12.8, 9.9),
+        ...lineSegment(-6.4, 4.35, 6.4, 4.35),
+        ...lineSegment(-2.1, 4.72, 2.1, 4.72),
+      ], browserMat));
+      const dotMat = new THREE.MeshBasicMaterial({ color: COL.frame, transparent: true, opacity: 0 });
+      [-5.95, -5.6, -5.25].forEach(dx => {
+        const dot = new THREE.Mesh(new THREE.CircleGeometry(0.08, 20), dotMat);
+        dot.position.set(dx, 4.72, 0);
+        browserGroup.add(dot);
+      });
+      browserGroup.position.x = pageX;
+      if (isMobile) browserGroup.scale.setScalar(0.62);
+      world.add(browserGroup);
+
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: COL.ring, transparent: true, opacity: 0,
+        blending: THREE.NormalBlending, depthWrite: false, side: THREE.DoubleSide,
+      });
+      const ring = new THREE.Mesh(new THREE.RingGeometry(5.6, 5.68, 96), ringMat);
+      ring.position.set(pageX, 0.15, 0.4);
+      world.add(ring);
+
+      // ---------- Parallax myszy ----------
+      const mouse = { x: 0, y: 0 };
+      if (!prefersReduced) {
+        window.addEventListener('pointermove', (e) => {
+          mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+          mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
+        }, { passive: true });
+      }
+
+      // ---------- Petla renderowania (na tickerze GSAP) ----------
+      const clock = new THREE.Clock();
+      let timelineProgress = 0;
+      let particlesOn = true; // drobinki plyna od startu (widocznosc steruje opacity materialu)
+
+      function render() {
+        const t = clock.getElapsedTime();
+        const dt = Math.min(clock.getDelta ? 0.016 : 0.016, 0.05);
+
+        // Dryf fragmentow: wygasa w miare dokowania (do ~28% osi czasu)
+        const driftFactor = Math.max(0, 1 - timelineProgress / 0.28);
+        if (driftFactor > 0.001) {
+          fragments.forEach(f => {
+            f.inner.position.y = Math.sin(t * f.driftSpeed + f.driftPhase) * f.driftAmp * driftFactor;
+            f.inner.rotation.z = Math.sin(t * f.driftSpeed * 0.7 + f.driftPhase) * 0.03 * driftFactor;
+          });
+        } else {
+          fragments.forEach(f => { f.inner.position.y = 0; f.inner.rotation.z = 0; });
+        }
+
+        // Dryf luznych szkicow: zyja odrobine dluzej niz fragmenty strony
+        const debrisFactor = Math.max(0, 1 - timelineProgress / 0.5);
+        if (debrisFactor > 0.001) {
+          debris.forEach(d => {
+            d.inner.position.y = Math.sin(t * d.driftSpeed + d.driftPhase) * d.driftAmp * debrisFactor;
+            d.inner.rotation.z = Math.sin(t * d.driftSpeed * 0.6 + d.driftPhase) * 0.04 * debrisFactor;
+          });
+        }
+
+        // Parallax myszy + powolna orbita calej chmury (wygasa w trakcie skladania)
+        const parallaxScale = 1 - timelineProgress * 0.65;
+        const wobble = Math.max(0, 1 - timelineProgress * 1.4);
+        world.rotation.y += ((mouse.x * 0.05 * parallaxScale + Math.sin(t * 0.16) * 0.035 * wobble) - world.rotation.y) * 0.06;
+        world.rotation.x += ((-mouse.y * 0.03 * parallaxScale + Math.cos(t * 0.13) * 0.018 * wobble) - world.rotation.x) * 0.06;
+
+        // Czasteczki plyna wzdluz krawedzi
+        if (particlesOn && particleSystem) {
+          const attr = particleSystem.geometry.getAttribute('position');
+          for (let i = 0; i < particleData.length; i++) {
+            const p = particleData[i];
+            p.t += p.speed * 0.016;
+            if (p.t > 1) {
+              p.t = 0;
+              const paths = particleSystem.userData.paths;
+              p.seg = paths[Math.floor(Math.random() * paths.length)];
+            }
+            attr.setXYZ(i, p.seg.ax + (p.seg.bx - p.seg.ax) * p.t, p.seg.ay + (p.seg.by - p.seg.ay) * p.t, 0.03);
+          }
+          attr.needsUpdate = true;
+        }
+
+        camera.position.set(camPos.x, camPos.y, camPos.z);
+        camera.lookAt(camLook.x, camLook.y, 0);
+        renderer.render(scene, camera);
+      }
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // ============================================================
+      // WARIANT STATYCZNY: prefers-reduced-motion
+      // Scena zlozona, bez pinu i bez animacji scrollem
+      // ============================================================
+      if (prefersReduced) {
+        skeleton.geometry.setDrawRange(0, skeletonVertexCount);
+        grid.material.opacity = 0.5;
+        debris.forEach(d => { d.mat.opacity = 0; });
+        fragments.forEach(f => {
+          f.outer.position.set(0, 0, 0);
+          f.outer.rotation.set(0, 0, 0);
+          if (f.fillMesh) f.fillMesh.material.opacity = 0.09;
+        });
+        lineMats.forEach(m => m.color.set(COL.lineBright));
+        camPos.x = isMobile ? 0 : 0.9; camPos.y = 0.5; camPos.z = isMobile ? 17 : 15.5;
+        camLook.x = isMobile ? 0 : 1.9; camLook.y = 0.2;
+        render();
+        window.addEventListener('resize', render);
+      } else {
+        // ============================================================
+        // PELNA CHOREOGRAFIA: Lenis + GSAP ScrollTrigger (pin + scrub)
+        // ============================================================
+        gsap.registerPlugin(ScrollTrigger);
+
+        const lenis = new Lenis({ anchors: true });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); render(); });
+        gsap.ticker.lagSmoothing(0);
+        window.lenis = lenis;
+
+        const pinLength = isMobile ? 260 : 420; // % wysokosci ekranu napedzajace scene
+
+        const drawProxy = { p: 0 };
+        const colorProxy = { t: 0 };
+        const blue = new THREE.Color(COL.line);
+        const cyan = new THREE.Color(COL.lineBright);
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#hero',
+            start: 'top top',
+            end: '+=' + pinLength + '%',
+            scrub: 1,
+            pin: true,
+            onUpdate(self) {
+              timelineProgress = self.progress;
+              const fill = document.getElementById('progress-fill');
+              if (fill) fill.style.height = (self.progress * 100) + '%';
+            },
+          },
+        });
+
+        // ---------- FAZA A (0-25): kamera wjezdza, szkielet sie kresli ----------
+        tl.to(camPos, { y: 0.9, z: isMobile ? 18 : 17, duration: 24, ease: 'power2.out' }, 0);
+        tl.to(camLook, { y: 0.3, duration: 24, ease: 'power2.out' }, 0);
+        tl.to(grid.material, { opacity: 0.55, duration: 10, ease: 'none' }, 1);
+        tl.to(drawProxy, {
+          p: 1, duration: 20, ease: 'power1.inOut',
+          onUpdate() {
+            skeleton.geometry.setDrawRange(0, Math.floor(skeletonVertexCount * drawProxy.p));
+          },
+        }, 3);
+        tl.to('#hero-copy', { autoAlpha: 0, y: -36, duration: 8, ease: 'power2.in' }, 2);
+
+        // Etykieta 1
+        tl.fromTo('#phase-1', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 6);
+        tl.to('#phase-1', { autoAlpha: 0, y: -16, duration: 3.5, ease: 'power2.in' }, 23);
+
+        // ---------- FAZA B (25-52): fragmenty dokuja ----------
+        fragments.forEach((f, i) => {
+          const at = 25 + i * 2.4;
+          tl.to(f.outer.position, { x: 0, y: 0, z: 0, duration: 7, ease: 'power3.inOut' }, at);
+          tl.to(f.outer.rotation, { x: 0, y: 0, z: 0, duration: 7, ease: 'power3.inOut' }, at);
+          if (f.fillMesh) {
+            // Impuls poswiaty w momencie zadokowania
+            tl.to(f.fillMesh.material, { opacity: 0.4, duration: 1.4, ease: 'power2.out' }, at + 6.2);
+            tl.to(f.fillMesh.material, { opacity: 0.05, duration: 2.4, ease: 'power2.in' }, at + 7.8);
+          }
+        });
+        // Luzne szkice rozplywaja sie, gdy strona sie sklada
+        debris.forEach((d, i) => {
+          tl.to(d.mat, { opacity: 0, duration: 9, ease: 'power1.in' }, 25 + i * 2);
+          tl.to(d.outer.position, {
+            x: d.scatter.x * 1.8, y: d.scatter.y * 1.8 + 1.2, z: d.scatter.z - 3,
+            duration: 20, ease: 'power1.in',
+          }, 24);
+        });
+        tl.to(camPos, { x: isMobile ? 0 : 1.1, z: isMobile ? 17 : 15.8, duration: 24, ease: 'power1.inOut' }, 26);
+
+        // Etykieta 2
+        tl.fromTo('#phase-2', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 28);
+        tl.to('#phase-2', { autoAlpha: 0, y: -16, duration: 3.5, ease: 'power2.in' }, 49);
+
+        // ---------- FAZA C (52-76): strona ozywa ----------
+        tl.to(colorProxy, {
+          t: 1, duration: 16, ease: 'power1.inOut',
+          onUpdate() {
+            const c = blue.clone().lerp(cyan, colorProxy.t);
+            lineMats.forEach(m => m.color.copy(c));
+          },
+        }, 53);
+        fragments.forEach(f => {
+          if (f.fillMesh) tl.to(f.fillMesh.material, { opacity: 0.13, duration: 12, ease: 'power1.inOut' }, 55);
+        });
+        if (particleSystem) {
+          tl.to(particleSystem.material, { opacity: 0.85, duration: 8, ease: 'power2.out' }, 55);
+        }
+        tl.to(camPos, { z: isMobile ? 16 : 14.8, y: 0.5, duration: 20, ease: 'power1.inOut' }, 54);
+
+        // Etykieta 3
+        tl.fromTo('#phase-3', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 56);
+        tl.to('#phase-3', { autoAlpha: 0, y: -16, duration: 3.5, ease: 'power2.in' }, 73);
+
+        // ---------- FAZA D (76-100): publikacja ----------
+        tl.to(browserMat, { opacity: 0.9, duration: 6, ease: 'power2.out' }, 77);
+        tl.to(dotMat, { opacity: 0.9, duration: 6, ease: 'power2.out' }, 77);
+        // Strona wskakuje w ramke przegladarki i wraca na srodek kadru
+        tl.to(pageGroup.scale, {
+          x: isMobile ? 0.44 : 0.72, y: isMobile ? 0.44 : 0.72, z: isMobile ? 0.44 : 0.72,
+          duration: 13, ease: 'power2.inOut',
+        }, 79);
+        tl.to(pageGroup.position, { x: 0, y: 0.15, duration: 13, ease: 'power2.inOut' }, 79);
+        tl.to(browserGroup.position, { x: 0, duration: 13, ease: 'power2.inOut' }, 79);
+        tl.to(browserGroup.scale, {
+          x: isMobile ? 0.62 : 1, y: isMobile ? 0.62 : 1, z: isMobile ? 0.62 : 1,
+          duration: 13, ease: 'power2.inOut',
+        }, 79);
+        tl.to(ring.position, { x: 0, duration: 13, ease: 'power2.inOut' }, 79);
+        tl.to(camPos, { x: 0, y: 0.9, z: isMobile ? 23 : 21, duration: 20, ease: 'power2.inOut' }, 79);
+        tl.to(camLook, { x: 0, y: 0.15, duration: 20, ease: 'power2.inOut' }, 79);
+        // Impuls publikacji
+        tl.fromTo(ring.scale, { x: 0.82, y: 0.82, z: 0.82 }, { x: 2.1, y: 2.1, z: 2.1, duration: 9, ease: 'power2.out' }, 89);
+        tl.to(ringMat, { opacity: 0.55, duration: 2.5, ease: 'power2.out' }, 89);
+        tl.to(ringMat, { opacity: 0, duration: 6, ease: 'power2.in' }, 92);
+        // Wyciszenie sceny na sam koniec
+        tl.to(grid.material, { opacity: 0.18, duration: 8, ease: 'power1.inOut' }, 91);
+
+        // Etykieta 4 (zostaje do konca)
+        tl.fromTo('#phase-4', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 82);
+
+        // Podswietlanie tickow szyny postepu wg fazy
+        const ticks = document.querySelectorAll('.progress-tick');
+        [6, 28, 56, 82].forEach((at, i) => {
+          if (ticks[i]) {
+            tl.to(ticks[i], { backgroundColor: '#C77E10', scale: 1.5, duration: 2 }, at);
+          }
+        });
+
+        // ---------- Sekwencja wejscia sceny: fragmenty wlatuja z glebi ----------
+        // (pomijana, gdy przegladarka przywrocila scroll w glab strony)
+        if ((window.scrollY || 0) <= 50) {
+          const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+          fragments.concat(debris).forEach((f, i) => {
+            intro.fromTo(f.outer.position,
+              { x: f.scatter.x * 2.2, y: f.scatter.y * 2.2, z: f.scatter.z - 10 },
+              { x: f.scatter.x, y: f.scatter.y, z: f.scatter.z, duration: 1.5 },
+              0.08 + (i % 7) * 0.09);
+          });
+          intro.to(grid.material, { opacity: 0.22, duration: 1.4 }, 0.5);
+          if (particleSystem) {
+            intro.to(particleSystem.material, { opacity: 0.45, duration: 1.4 }, 0.7);
+          }
+        }
+      }
+    } else {
+      // Brak WebGL: strona dziala bez sceny, zwykly scroll
+      document.body.classList.add('no-webgl');
+    }
+
+    // ==================== Funkcje zalezne od finalnej wysokosci strony ====================
+    // Uruchamiane po ewentualnym przypieciu hero (pin wydluza strone), zeby ScrollTrigger
+    // od razu liczyl pozycje na poprawnym, docelowym layoucie zamiast na skroconym.
+    if (!prefersReduced && window.gsap && window.ScrollTrigger) {
+      // ---------- Cienka linia postepu scrolla na gorze strony ----------
+      var scrollBar = document.getElementById('scroll-progress');
+      if (scrollBar) {
+        gsap.to(scrollBar, {
+          scaleX: 1, ease: 'none',
+          scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 },
+        });
+      }
+
+      // ---------- Naglowki sekcji "rysowane" slowo po slowie ----------
+      gsap.utils.toArray('.word-reveal').forEach(function (heading) {
+        var words = heading.textContent.trim().split(' ');
+        heading.innerHTML = words.map(function (w) {
+          return '<span style="display:inline-block;opacity:0;transform:translateY(16px)">' + w + '</span>';
+        }).join(' ');
+        gsap.to(heading.querySelectorAll(':scope > span'), {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.05,
+          scrollTrigger: { trigger: heading, start: 'top 85%', once: true },
+        });
+      });
+
+      // ---------- Plywajacy przycisk telefonu (widoczny po zjechaniu ponizej hero) ----------
+      var floatCall = document.getElementById('float-call');
+      if (floatCall) {
+        gsap.set(floatCall, { autoAlpha: 0 });
+        ScrollTrigger.create({
+          trigger: '#hero', start: 'bottom top',
+          onEnter: function () { gsap.to(floatCall, { autoAlpha: 1, duration: 0.4 }); },
+          onLeaveBack: function () { gsap.to(floatCall, { autoAlpha: 0, duration: 0.4 }); },
+        });
+      }
+    }
+  </script>
+</body>
+</html>

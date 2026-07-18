@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O nas | TechGrow Studio</title>
+  <meta name="description" content="Poznaj Tymona Grochowskiego — twórcę TechGrow Studio, studia budującego strony internetowe dla firm z Piły i okolic.">
+  <meta property="og:title" content="O nas | TechGrow Studio">
+  <meta property="og:description" content="Jedna osoba od A do Z, na miejscu w Pile, z najnowszymi technologiami.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://techgrowstudio.pl/o-nas.html">
+  <link rel="canonical" href="https://techgrowstudio.pl/o-nas.html">
+  <meta property="og:image" content="https://techgrowstudio.pl/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TechGrow Studio — strona, która pracuje na Twoją firmę">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://techgrowstudio.pl/img/og-image.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#DCE8F7',
+            ink: '#0F1B33',
+            inkmuted: '#3D537A',
+            bp: '#1D4ED8',
+            bpbright: '#0891B2',
+            gold: '#C77E10',
+            goldhover: '#A96A0C',
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { background: #DCE8F7; }
+    body { background: #DCE8F7; color: #0F1B33; }
+    ::selection { background: rgba(199, 126, 16, .28); color: #0F1B33; }
+
+    .noise-overlay {
+      position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .022;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .btn-primary {
+      transition: background-color .3s ease;
+    }
+    .btn-primary:active { transform: scale(.98); }
+    .btn-primary .btn-orb {
+      transition: transform .5s cubic-bezier(.32, .72, 0, 1);
+    }
+    .btn-primary:hover .btn-orb { transform: translate(3px, -1px) scale(1.05); }
+
+    .btn-ghost { transition: background-color .3s ease, border-color .3s ease; }
+    .btn-ghost:active { transform: scale(.98); }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -3px; height: 1px; width: 100%;
+      background: #C77E10; transform: scaleX(0); transform-origin: left;
+      transition: transform .45s cubic-bezier(.32, .72, 0, 1);
+    }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .nav-link.active { color: #0F1B33; }
+    .nav-link.active::after { transform: scaleX(1); }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #A96A0C; outline-offset: 3px; border-radius: 4px;
+    }
+
+    summary { list-style: none; cursor: pointer; }
+    summary::-webkit-details-marker { display: none; }
+
+    .svc-core {
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75);
+    }
+
+    .paper-field { isolation: isolate; }
+    .paper-bg { position: absolute; inset: 0; pointer-events: none; z-index: -1; }
+    .paper-grid {
+      background-image:
+        linear-gradient(to right, rgba(29, 78, 216, .028) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .028) 1px, transparent 1px),
+        linear-gradient(to right, rgba(29, 78, 216, .05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .05) 1px, transparent 1px);
+      background-size: 22px 22px, 22px 22px, 110px 110px, 110px 110px;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 7%, black 93%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, black 7%, black 93%, transparent);
+    }
+    .paper-glow {
+      background:
+        radial-gradient(ellipse 42% 22% at 12% 8%, rgba(29, 78, 216, .08), transparent 70%),
+        radial-gradient(ellipse 38% 20% at 88% 42%, rgba(8, 145, 178, .055), transparent 70%),
+        radial-gradient(ellipse 46% 24% at 16% 84%, rgba(29, 78, 216, .06), transparent 70%);
+    }
+    .bp-accent { pointer-events: none; }
+    .paper-lamp {
+      position: absolute; top: -310px; left: -310px; z-index: -1;
+      width: 620px; height: 620px; border-radius: 9999px;
+      pointer-events: none; opacity: 0; will-change: transform;
+      background: radial-gradient(circle, rgba(255, 255, 255, .55) 0%, rgba(219, 234, 254, 0) 65%);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-paper font-body antialiased overflow-x-hidden w-full max-w-full">
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <div id="scroll-progress" class="fixed top-0 left-0 w-full h-[3px] bg-gold z-[60] origin-left" style="transform: scaleX(0)" aria-hidden="true"></div>
+
+  <a href="tel:+48730393493" id="float-call"
+     class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-gold hover:bg-goldhover text-white shadow-[0_8px_24px_rgba(199,126,16,0.35)]"
+     aria-label="Zadzwoń: +48 730 393 493">
+    <i class="ph-light ph-phone-call text-2xl" aria-hidden="true"></i>
+  </a>
+
+  <a href="index.html" class="fixed top-[30px] left-[30px] md:top-9 md:left-12 z-50 flex items-center whitespace-nowrap">
+    <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
+  </a>
+
+  <a href="tel:+48730393493"
+     class="btn-primary fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 hidden min-[1700px]:inline-flex items-center gap-3 rounded-full bg-gold hover:bg-goldhover pl-6 pr-2 py-2 text-white font-semibold text-[18px] whitespace-nowrap">
+    Zadzwoń i umów bezpłatną konsultację
+    <span class="btn-orb inline-flex items-center justify-center w-9 h-9 rounded-full bg-black/15 text-ink text-base" aria-hidden="true">&rarr;</span>
+  </a>
+
+  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden min-[1500px]:block">
+    <nav class="flex items-center gap-12 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-9 py-[15px]"
+         aria-label="Nawigacja główna">
+      <a href="index.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
+      <a href="oferta.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
+      <a href="jak-pracujemy.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
+      <a href="realizacje.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
+      <a href="o-nas.html" class="nav-link active font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
+      <a href="kontakt.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
+    </nav>
+  </header>
+
+  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 min-[1500px]:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
+    <i class="ph-light ph-list text-2xl text-ink" aria-hidden="true"></i>
+  </button>
+
+  <div id="mobile-menu" class="fixed inset-0 z-[70] min-[1500px]:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
+    <div class="absolute inset-0 bg-ink/50 backdrop-blur-sm" data-menu-close></div>
+    <div class="mobile-panel absolute top-0 right-0 h-full w-[82%] max-w-[380px] bg-paper shadow-2xl flex flex-col px-8 pt-10 pb-10 translate-x-full transition-transform duration-[400ms]" style="transition-timing-function: cubic-bezier(.32,.72,0,1)">
+      <button data-menu-close class="self-end w-11 h-11 rounded-full flex items-center justify-center hover:bg-ink/5" aria-label="Zamknij menu">
+        <i class="ph-light ph-x text-2xl text-ink" aria-hidden="true"></i>
+      </button>
+      <nav class="mt-8 flex flex-col gap-1" aria-label="Nawigacja mobilna">
+        <a href="index.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Start</a>
+        <a href="oferta.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Oferta</a>
+        <a href="jak-pracujemy.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Jak pracujemy</a>
+        <a href="realizacje.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Realizacje</a>
+        <a href="o-nas.html" class="nav-link active py-3 font-mono text-[19px] text-inkmuted hover:text-ink">O nas</a>
+        <a href="kontakt.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Kontakt</a>
+      </nav>
+      <a href="tel:+48730393493" class="btn-primary mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-gold hover:bg-goldhover px-6 py-3 text-white font-semibold text-[18px]">
+        <i class="ph-light ph-phone-call text-xl" aria-hidden="true"></i>
+        Zadzwoń: 730 393 493
+      </a>
+    </div>
+  </div>
+
+  <main class="w-full max-w-full overflow-x-clip">
+
+    <div class="paper-field relative">
+      <div class="paper-bg paper-grid" aria-hidden="true"></div>
+      <div class="paper-bg paper-glow" aria-hidden="true"></div>
+      <div id="paper-lamp" class="paper-lamp" aria-hidden="true"></div>
+
+      <svg class="bp-accent hidden md:block absolute right-[5%] top-[6%] w-80 opacity-[0.28]" viewBox="0 0 200 90" fill="none" aria-hidden="true" data-speed="-22">
+        <g stroke="#1D4ED8" stroke-width="1.4">
+          <rect x="30" y="10" width="150" height="70"/>
+          <line x1="30" y1="26" x2="180" y2="26"/>
+          <circle cx="39" cy="18" r="2.3"/><circle cx="48" cy="18" r="2.3"/><circle cx="57" cy="18" r="2.3"/>
+          <line x1="10" y1="10" x2="10" y2="80" stroke-dasharray="4 4"/>
+          <line x1="6" y1="10" x2="14" y2="10"/><line x1="6" y1="80" x2="14" y2="80"/>
+        </g>
+      </svg>
+      <svg class="bp-accent hidden md:block absolute right-[6%] top-[72%] w-72 opacity-[0.26]" viewBox="0 0 200 60" fill="none" aria-hidden="true" data-speed="-14">
+        <g stroke="#1D4ED8" stroke-width="1.4">
+          <line x1="10" y1="30" x2="190" y2="30" stroke-dasharray="6 5"/>
+          <line x1="10" y1="20" x2="10" y2="40"/>
+          <line x1="190" y1="20" x2="190" y2="40"/>
+        </g>
+      </svg>
+
+      <!-- ==================== O NAS ==================== -->
+      <section id="o-nas" class="relative pt-40 md:pt-48 pb-20 md:pb-28 px-6" aria-label="O nas">
+        <div class="max-w-[1400px] mx-auto">
+          <div class="grid md:grid-cols-12 gap-10 md:gap-14 items-start">
+
+            <figure class="about-el md:col-span-5 md:sticky md:top-28">
+              <div class="rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+                <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+                  <img id="about-photo" src="img/tymon.jpg" width="1856" height="2304" loading="lazy"
+                       alt="Tymon Grochowski w granatowej marynarce, uśmiechnięty, na tle jasnego wnętrza biurowego"
+                       class="block w-full h-auto scale-[1.06]">
+                </div>
+              </div>
+              <figcaption class="mt-4 px-2">
+                <span class="block font-display font-semibold text-xl md:text-2xl text-ink">Tymon Grochowski</span>
+                <span class="block mt-1 font-mono text-[18.72px] text-inkmuted">TechGrow Studio &middot; Piła</span>
+              </figcaption>
+            </figure>
+
+            <div class="md:col-span-7">
+              <span class="font-mono text-[15.84px] tracking-[0.18em] text-gold uppercase">O nas</span>
+              <h1 class="word-reveal mt-3 font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
+                Poznajmy się.
+              </h1>
+              <p class="about-el mt-6 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[58ch]">
+                Nazywam się Tymon Grochowski. Studiuję informatykę na Politechnice Poznańskiej
+                i buduję strony internetowe dla firm z Piły i okolic. TechGrow Studio to moje
+                autorskie studio: każdy projekt prowadzę osobiście, od pierwszej rozmowy po wdrożenie
+                i opiekę po starcie.
+              </p>
+              <p class="about-el mt-4 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[58ch]">
+                To, że wciąż studiuję, to mój atut: jestem na bieżąco z najnowszymi technologiami
+                i możliwościami sieci, zanim staną się standardem. I potrafię je wykorzystać tak,
+                żeby Twoja strona wyprzedzała konkurencję, a nie ją goniła. A ponieważ jestem na
+                miejscu, zawsze możemy po prostu usiąść i porozmawiać o Twoim projekcie.
+              </p>
+
+              <h2 class="word-reveal about-el mt-14 font-display font-bold tracking-tight leading-[1.1] text-ink text-2xl md:text-3xl">
+                Dlaczego warto wybrać TechGrow Studio?
+              </h2>
+              <p class="about-el mt-3 text-inkmuted text-[19.2px] leading-relaxed max-w-[58ch]">
+                Kilka powodów, dla których lokalne firmy decydują się na współpracę ze mną.
+              </p>
+
+              <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8">
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-handshake text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Jedna osoba od A do Z</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Zawsze rozmawiasz ze mną, nie z handlowcem. Znam Twój projekt na wylot.</p>
+                </div>
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-map-trifold text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Na miejscu, w Pile</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Znam lokalny rynek i lokalnych klientów. Możemy spotkać się osobiście.</p>
+                </div>
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-cpu text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Najnowsze technologie</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Nowoczesne animacje, błyskawiczne ładowanie i aktualne standardy sieci.</p>
+                </div>
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-stack text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Wszystko w jednym miejscu</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Strona, grafiki, SEO i reklamy. Nie musisz szukać trzech wykonawców.</p>
+                </div>
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-key text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Wszystko jest Twoje</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Strona, domena, wizytówka Google i grafiki od pierwszego dnia należą do Ciebie. Na życzenie przekazuję pełny dostęp do wszystkiego.</p>
+                </div>
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-file-text text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Jasne zasady współpracy</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Każdy projekt to podpisana umowa o wykonanie strony i przejrzysta płatność: połowa zaliczki na start, reszta po publikacji.</p>
+                </div>
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-gauge text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Aplikacje, które oszczędzają czas</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Nie tylko strony. Buduję też proste narzędzia i systemy, które realnie przyspieszają pracę w Twojej firmie — mniej klikania, mniej papieru, mniej czekania.</p>
+                </div>
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-lifebuoy text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Opieka po starcie</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Nie znikam po publikacji. Poprawki, aktualizacje i pomoc, kiedy będziesz ich potrzebować.</p>
+                </div>
+                <div class="about-el border-t border-ink/10 pt-5">
+                  <i class="ph-light ph-device-mobile text-[30px] text-bp" aria-hidden="true"></i>
+                  <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Strona gotowa na telefony</h3>
+                  <p class="mt-2 text-inkmuted text-[19.2px] leading-relaxed">Wygląda i działa idealnie na telefonie, tablecie i komputerze — tam, gdzie są Twoi klienci.</p>
+                </div>
+              </div>
+
+              <div class="about-el mt-12 rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+                <div class="rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7 flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
+                  <p class="font-display font-semibold text-lg text-ink">Chcesz porozmawiać o swoim projekcie?</p>
+                  <a href="tel:+48730393493"
+                     class="btn-primary shrink-0 group inline-flex items-center gap-3 rounded-full bg-gold hover:bg-goldhover pl-6 pr-2 py-2 text-white font-semibold text-[18px] whitespace-nowrap">
+                    Zadzwoń
+                    <span class="btn-orb inline-flex items-center justify-center w-9 h-9 rounded-full bg-black/15 text-ink text-base" aria-hidden="true">&rarr;</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /paper-field -->
+
+  </main>
+
+  <footer class="relative py-14 px-6 border-t border-ink/10">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="flex flex-wrap items-center justify-between gap-6">
+        <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
+        <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
+          <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
+          <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
+          <a href="jak-pracujemy.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
+          <a href="realizacje.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
+          <a href="o-nas.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
+          <a href="kontakt.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
+        </nav>
+      </div>
+      <div class="mt-8 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-3">
+        <span class="font-mono text-[16.56px] text-inkmuted">&copy; 2026 TechGrow Studio</span>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <span class="font-mono text-[15.84px] text-inkmuted">Piła i okolice</span>
+          <a href="polityka-prywatnosci.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MENU MOBILNE ==================== -->
+  <script>
+    (function () {
+      var btn = document.getElementById('mobile-menu-btn');
+      var menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      var panel = menu.querySelector('.mobile-panel');
+      function openMenu() {
+        menu.classList.remove('invisible', 'opacity-0');
+        requestAnimationFrame(function () { panel.classList.remove('translate-x-full'); });
+        btn.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMenu() {
+        panel.classList.add('translate-x-full');
+        menu.classList.add('opacity-0');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        setTimeout(function () { menu.classList.add('invisible'); }, 400);
+      }
+      btn.addEventListener('click', function () {
+        menu.classList.contains('invisible') ? openMenu() : closeMenu();
+      });
+      menu.querySelectorAll('[data-menu-close], a').forEach(function (el) {
+        el.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    })();
+  </script>
+
+  <!-- ==================== ANIMACJE ==================== -->
+  <script>
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!window.gsap || !window.ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.to('#scroll-progress', {
+        scaleX: 1, ease: 'none',
+        scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 },
+      });
+
+      gsap.utils.toArray('.word-reveal').forEach(function (heading) {
+        var words = heading.textContent.trim().split(' ');
+        heading.innerHTML = words.map(function (w) {
+          return '<span style="display:inline-block;opacity:0;transform:translateY(16px)">' + w + '</span>';
+        }).join(' ');
+        gsap.to(heading.querySelectorAll(':scope > span'), {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.05,
+          scrollTrigger: { trigger: heading, start: 'top 85%', once: true },
+        });
+      });
+
+      gsap.utils.toArray('.about-el').forEach(function (el, i) {
+        gsap.from(el, {
+          opacity: 0, y: 30, duration: 0.9, ease: 'power3.out', delay: (i % 3) * 0.08,
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        });
+      });
+
+      var aboutPhoto = document.getElementById('about-photo');
+      if (aboutPhoto) {
+        gsap.fromTo(aboutPhoto,
+          { yPercent: -2.5 },
+          { yPercent: 2.5, ease: 'none', scrollTrigger: { trigger: '#o-nas', start: 'top bottom', end: 'bottom top', scrub: 1 } });
+      }
+
+      var hoverFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (hoverFine) {
+        gsap.utils.toArray('.btn-primary').forEach(function (btn) {
+          var qx = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power3' });
+          var qy = gsap.quickTo(btn, 'y', { duration: 0.4, ease: 'power3' });
+          btn.addEventListener('mousemove', function (e) {
+            var r = btn.getBoundingClientRect();
+            qx((e.clientX - (r.left + r.width / 2)) * 0.25);
+            qy((e.clientY - (r.top + r.height / 2)) * 0.35);
+          });
+          btn.addEventListener('mouseleave', function () { qx(0); qy(0); });
+        });
+      }
+
+      gsap.utils.toArray('.bp-accent').forEach(function (el) {
+        var speed = parseFloat(el.dataset.speed || '18');
+        gsap.to(el, {
+          y: speed * 3, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1.2 },
+        });
+      });
+
+      if (window.innerWidth >= 768) {
+        gsap.utils.toArray('.bp-accent').forEach(function (svg) {
+          var solid = [], dashed = [];
+          svg.querySelectorAll('rect, line, circle').forEach(function (s) {
+            (s.hasAttribute('stroke-dasharray') ? dashed : solid).push(s);
+          });
+          solid.forEach(function (s) {
+            var len = s.getTotalLength();
+            s.style.strokeDasharray = len;
+            s.style.strokeDashoffset = len;
+          });
+          dashed.forEach(function (s) { s.style.opacity = 0; });
+          var tl = gsap.timeline({ scrollTrigger: { trigger: svg, start: 'top 90%', once: true } });
+          if (solid.length) tl.to(solid, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', stagger: 0.15 });
+          if (dashed.length) tl.to(dashed, { opacity: 1, duration: 0.7 }, '-=0.5');
+        });
+      }
+
+      var field = document.querySelector('.paper-field');
+      var lamp = document.getElementById('paper-lamp');
+      if (field && lamp && hoverFine) {
+        var lampX = gsap.quickTo(lamp, 'x', { duration: 0.5, ease: 'power3' });
+        var lampY = gsap.quickTo(lamp, 'y', { duration: 0.5, ease: 'power3' });
+        field.addEventListener('pointermove', function (e) {
+          var r = field.getBoundingClientRect();
+          lampX(e.clientX - r.left);
+          lampY(e.clientY - r.top);
+          gsap.to(lamp, { opacity: 1, duration: 0.4, overwrite: 'auto' });
+        }, { passive: true });
+        field.addEventListener('pointerleave', function () {
+          gsap.to(lamp, { opacity: 0, duration: 0.6, overwrite: 'auto' });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

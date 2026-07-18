@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polityka prywatności i cookies | TechGrow Studio</title>
+  <meta name="description" content="Polityka prywatności i plików cookies strony TechGrow Studio — jakie dane przetwarzamy, w jakim celu i jakie masz prawa.">
+  <meta property="og:title" content="Polityka prywatności i cookies | TechGrow Studio">
+  <meta property="og:description" content="Jakie dane przetwarzamy, w jakim celu i jakie masz prawa.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://techgrowstudio.pl/polityka-prywatnosci.html">
+  <link rel="canonical" href="https://techgrowstudio.pl/polityka-prywatnosci.html">
+  <meta property="og:image" content="https://techgrowstudio.pl/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TechGrow Studio — strona, która pracuje na Twoją firmę">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://techgrowstudio.pl/img/og-image.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#DCE8F7',
+            ink: '#0F1B33',
+            inkmuted: '#3D537A',
+            bp: '#1D4ED8',
+            bpbright: '#0891B2',
+            gold: '#C77E10',
+            goldhover: '#A96A0C',
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { background: #DCE8F7; scroll-padding-top: 120px; }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+    body { background: #DCE8F7; color: #0F1B33; }
+    ::selection { background: rgba(199, 126, 16, .28); color: #0F1B33; }
+
+    .noise-overlay {
+      position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .022;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .btn-primary {
+      transition: background-color .3s ease;
+    }
+    .btn-primary:active { transform: scale(.98); }
+    .btn-primary .btn-orb {
+      transition: transform .5s cubic-bezier(.32, .72, 0, 1);
+    }
+    .btn-primary:hover .btn-orb { transform: translate(3px, -1px) scale(1.05); }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -3px; height: 1px; width: 100%;
+      background: #C77E10; transform: scaleX(0); transform-origin: left;
+      transition: transform .45s cubic-bezier(.32, .72, 0, 1);
+    }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .nav-link.active { color: #0F1B33; }
+    .nav-link.active::after { transform: scaleX(1); }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #A96A0C; outline-offset: 3px; border-radius: 4px;
+    }
+
+    .paper-field { isolation: isolate; }
+    .paper-bg { position: absolute; inset: 0; pointer-events: none; z-index: -1; }
+    .paper-grid {
+      background-image:
+        linear-gradient(to right, rgba(29, 78, 216, .028) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .028) 1px, transparent 1px),
+        linear-gradient(to right, rgba(29, 78, 216, .05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .05) 1px, transparent 1px);
+      background-size: 22px 22px, 22px 22px, 110px 110px, 110px 110px;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 7%, black 93%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, black 7%, black 93%, transparent);
+    }
+    .paper-glow {
+      background:
+        radial-gradient(ellipse 42% 22% at 12% 8%, rgba(29, 78, 216, .08), transparent 70%),
+        radial-gradient(ellipse 38% 20% at 88% 42%, rgba(8, 145, 178, .055), transparent 70%),
+        radial-gradient(ellipse 46% 24% at 16% 84%, rgba(29, 78, 216, .06), transparent 70%);
+    }
+
+    .policy h2 { scroll-margin-top: 120px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-paper font-body antialiased overflow-x-hidden w-full max-w-full">
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <div id="scroll-progress" class="fixed top-0 left-0 w-full h-[3px] bg-gold z-[60] origin-left" style="transform: scaleX(0)" aria-hidden="true"></div>
+
+  <a href="index.html" class="fixed top-[30px] left-[30px] md:top-9 md:left-12 z-50 flex items-center whitespace-nowrap">
+    <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
+  </a>
+
+  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden min-[1500px]:block">
+    <nav class="flex items-center gap-12 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-9 py-[15px]"
+         aria-label="Nawigacja główna">
+      <a href="index.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
+      <a href="oferta.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
+      <a href="jak-pracujemy.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
+      <a href="realizacje.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
+      <a href="o-nas.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
+      <a href="kontakt.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
+    </nav>
+  </header>
+
+  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 min-[1500px]:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
+    <i class="ph-light ph-list text-2xl text-ink" aria-hidden="true"></i>
+  </button>
+
+  <div id="mobile-menu" class="fixed inset-0 z-[70] min-[1500px]:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
+    <div class="absolute inset-0 bg-ink/50 backdrop-blur-sm" data-menu-close></div>
+    <div class="mobile-panel absolute top-0 right-0 h-full w-[82%] max-w-[380px] bg-paper shadow-2xl flex flex-col px-8 pt-10 pb-10 translate-x-full transition-transform duration-[400ms]" style="transition-timing-function: cubic-bezier(.32,.72,0,1)">
+      <button data-menu-close class="self-end w-11 h-11 rounded-full flex items-center justify-center hover:bg-ink/5" aria-label="Zamknij menu">
+        <i class="ph-light ph-x text-2xl text-ink" aria-hidden="true"></i>
+      </button>
+      <nav class="mt-8 flex flex-col gap-1" aria-label="Nawigacja mobilna">
+        <a href="index.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Start</a>
+        <a href="oferta.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Oferta</a>
+        <a href="jak-pracujemy.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Jak pracujemy</a>
+        <a href="realizacje.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Realizacje</a>
+        <a href="o-nas.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">O nas</a>
+        <a href="kontakt.html" class="nav-link py-3 font-mono text-[19px] text-inkmuted hover:text-ink">Kontakt</a>
+      </nav>
+      <a href="tel:+48730393493" class="btn-primary mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-gold hover:bg-goldhover px-6 py-3 text-white font-semibold text-[18px]">
+        <i class="ph-light ph-phone-call text-xl" aria-hidden="true"></i>
+        Zadzwoń: 730 393 493
+      </a>
+    </div>
+  </div>
+
+  <main class="w-full max-w-full overflow-x-hidden">
+
+    <div class="paper-field relative">
+      <div class="paper-bg paper-grid" aria-hidden="true"></div>
+      <div class="paper-bg paper-glow" aria-hidden="true"></div>
+
+      <section class="relative pt-40 md:pt-48 pb-24 px-6" aria-label="Polityka prywatności i cookies">
+        <div class="max-w-[820px] mx-auto policy">
+          <span class="font-mono text-[15.84px] tracking-[0.18em] text-gold uppercase">Dokument prawny</span>
+          <h1 class="mt-3 font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
+            Polityka prywatności i&nbsp;plików cookies.
+          </h1>
+          <p class="mt-5 text-inkmuted text-[19.2px] leading-relaxed">
+            Niniejsza polityka wyjaśnia, jakie dane przetwarzamy w związku z korzystaniem ze strony
+            TechGrow Studio, w jakim celu to robimy i jakie prawa Ci przysługują. Ostatnia aktualizacja: 2026.
+          </p>
+
+          <div class="mt-14 space-y-12 text-inkmuted text-[17.28px] leading-relaxed">
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">1. Administrator danych</h2>
+              <p class="mt-3">
+                Administratorem danych osobowych przetwarzanych w związku z niniejszą stroną internetową jest
+                Tymon Grochowski, prowadzący TechGrow Studio, z którym możesz się skontaktować:
+              </p>
+              <ul class="mt-3 space-y-1">
+                <li>e-mail: <a href="mailto:techgrowstudio@gmail.com" class="text-bp hover:text-bpbright">techgrowstudio@gmail.com</a></li>
+                <li>telefon: <a href="tel:+48730393493" class="text-bp hover:text-bpbright">+48 730 393 493</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">2. Jakie dane przetwarzamy</h2>
+              <p class="mt-3">W zależności od tego, w jaki sposób korzystasz ze strony, możemy przetwarzać:</p>
+              <ul class="mt-3 space-y-2 list-disc pl-5">
+                <li>
+                  <strong class="text-ink">Dane podane dobrowolnie przy kontakcie</strong> — jeśli zadzwonisz
+                  lub napiszesz e-mail, przetwarzamy dane, które sam nam przekażesz (np. imię, numer telefonu,
+                  adres e-mail, treść zapytania), w celu udzielenia odpowiedzi i przygotowania oferty. Strona
+                  nie zawiera formularza kontaktowego — kontakt odbywa się bezpośrednio telefonicznie lub mailowo.
+                </li>
+                <li>
+                  <strong class="text-ink">Dane zbierane automatycznie</strong> — adres IP, rodzaj urządzenia
+                  i przeglądarki, przybliżona lokalizacja, odwiedzane podstrony, czas spędzony na stronie
+                  i źródło wejścia, zbierane za pomocą Google Analytics.
+                </li>
+                <li>
+                  <strong class="text-ink">Dane związane z reklamami</strong> — informacje zbierane przez pliki
+                  cookie Google Ads, wykorzystywane do pomiaru skuteczności kampanii reklamowych i wyświetlania
+                  reklam remarketingowych osobom, które wcześniej odwiedziły stronę.
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">3. Cele i podstawy prawne przetwarzania</h2>
+              <ul class="mt-3 space-y-2 list-disc pl-5">
+                <li>Udzielenie odpowiedzi na zapytanie i przygotowanie oferty — art. 6 ust. 1 lit. b RODO (czynności zmierzające do zawarcia umowy).</li>
+                <li>Analiza ruchu na stronie i poprawa jej działania — art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes administratora).</li>
+                <li>Prowadzenie i pomiar skuteczności kampanii reklamowych — art. 6 ust. 1 lit. a RODO (zgoda wyrażona poprzez ustawienia dot. plików cookie) oraz art. 6 ust. 1 lit. f RODO.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">4. Odbiorcy danych</h2>
+              <p class="mt-3">
+                Dane zbierane automatycznie są przetwarzane przez Google LLC w ramach usług Google Analytics
+                i Google Ads. Google może przetwarzać dane na serwerach zlokalizowanych poza Europejskim Obszarem
+                Gospodarczym, z zastosowaniem odpowiednich zabezpieczeń prawnych (m.in. standardowych klauzul
+                umownych). Poza Google i podmiotami technicznie obsługującymi stronę (np. hosting) dane nie są
+                przekazywane innym odbiorcom, chyba że wymagają tego przepisy prawa.
+              </p>
+            </div>
+
+            <div id="cookies">
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">5. Pliki cookies</h2>
+              <p class="mt-3">
+                Cookies to niewielkie pliki tekstowe zapisywane w Twojej przeglądarce. Strona wykorzystuje
+                następujące rodzaje plików cookie:
+              </p>
+              <ul class="mt-3 space-y-2 list-disc pl-5">
+                <li><strong class="text-ink">Niezbędne</strong> — potrzebne do prawidłowego działania strony (np. zapamiętanie ustawień). Nie wymagają zgody.</li>
+                <li><strong class="text-ink">Analityczne (Google Analytics)</strong> — pozwalają zrozumieć, jak odwiedzający korzystają ze strony, i ją ulepszać.</li>
+                <li><strong class="text-ink">Reklamowe (Google Ads)</strong> — służą do mierzenia skuteczności reklam i wyświetlania dopasowanych reklam w sieci Google.</li>
+              </ul>
+              <p class="mt-3">
+                Cookies analityczne i reklamowe są instalowane wyłącznie po uzyskaniu Twojej zgody. Zgodę możesz
+                w każdej chwili wycofać poprzez ustawienia swojej przeglądarki — w tym usunąć już zapisane pliki
+                cookie lub zablokować ich zapisywanie w przyszłości. Zablokowanie niektórych cookies może
+                ograniczyć funkcjonalność strony.
+              </p>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">6. Google Analytics i Google Ads</h2>
+              <p class="mt-3">
+                Korzystamy z Google Analytics, aby analizować ruch na stronie, oraz z Google Ads, aby prowadzić
+                kampanie reklamowe i mierzyć ich skuteczność. Obie usługi dostarcza Google LLC. Możesz zarządzać
+                tym, jakie dane Google wykorzystuje do personalizacji reklam, w ustawieniach swojego konta Google
+                (<a href="https://myadcenter.google.com" target="_blank" rel="noopener" class="text-bp hover:text-bpbright">myadcenter.google.com</a>)
+                albo zainstalować
+                <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener" class="text-bp hover:text-bpbright">dodatek blokujący Google Analytics</a>.
+              </p>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">7. Okres przechowywania danych</h2>
+              <p class="mt-3">
+                Dane przekazane w związku z zapytaniem ofertowym przechowujemy przez czas potrzebny do
+                udzielenia odpowiedzi i, jeśli dojdzie do współpracy, przez okres jej trwania oraz okres
+                wynikający z przepisów (np. podatkowych). Dane zbierane przez Google Analytics są standardowo
+                przechowywane do 14 miesięcy, a następnie automatycznie usuwane lub anonimizowane.
+              </p>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">8. Twoje prawa</h2>
+              <p class="mt-3">Zgodnie z RODO przysługuje Ci prawo do:</p>
+              <ul class="mt-3 space-y-1 list-disc pl-5">
+                <li>dostępu do swoich danych i uzyskania ich kopii,</li>
+                <li>sprostowania (poprawienia) danych,</li>
+                <li>usunięcia danych („prawo do bycia zapomnianym"),</li>
+                <li>ograniczenia przetwarzania,</li>
+                <li>przenoszenia danych,</li>
+                <li>wniesienia sprzeciwu wobec przetwarzania,</li>
+                <li>cofnięcia zgody w dowolnym momencie (bez wpływu na zgodność z prawem przetwarzania dokonanego przed jej cofnięciem),</li>
+                <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.</li>
+              </ul>
+              <p class="mt-3">
+                Aby skorzystać z powyższych praw, napisz na adres podany w punkcie 1.
+              </p>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">9. Bezpieczeństwo danych</h2>
+              <p class="mt-3">
+                Dokładamy starań, aby przetwarzane dane były odpowiednio zabezpieczone przed nieuprawnionym
+                dostępem, utratą lub zniszczeniem, stosując rozwiązania techniczne i organizacyjne adekwatne
+                do rodzaju przetwarzanych danych.
+              </p>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">10. Zmiany polityki prywatności</h2>
+              <p class="mt-3">
+                Ta polityka może być okresowo aktualizowana, np. w związku ze zmianą przepisów albo zakresu
+                wykorzystywanych narzędzi. Aktualna wersja jest zawsze dostępna pod tym adresem.
+              </p>
+            </div>
+
+            <div>
+              <h2 class="font-display font-semibold text-xl md:text-2xl text-ink">11. Kontakt</h2>
+              <p class="mt-3">
+                Masz pytania dotyczące tej polityki albo swoich danych? Napisz na
+                <a href="mailto:techgrowstudio@gmail.com" class="text-bp hover:text-bpbright">techgrowstudio@gmail.com</a>
+                albo zadzwoń pod <a href="tel:+48730393493" class="text-bp hover:text-bpbright">+48 730 393 493</a>.
+              </p>
+            </div>
+
+          </div>
+
+          <a href="index.html"
+             class="mt-14 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-5 py-2.5 font-mono text-[18px] text-bp transition-colors duration-300">
+            &larr; Wróć na stronę główną
+          </a>
+        </div>
+      </section>
+
+    </div><!-- /paper-field -->
+
+  </main>
+
+  <footer class="relative py-14 px-6 border-t border-ink/10">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="flex flex-wrap items-center justify-between gap-6">
+        <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
+        <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
+          <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
+          <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
+          <a href="jak-pracujemy.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
+          <a href="realizacje.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
+          <a href="o-nas.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
+          <a href="kontakt.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
+        </nav>
+      </div>
+      <div class="mt-8 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-3">
+        <span class="font-mono text-[16.56px] text-inkmuted">&copy; 2026 TechGrow Studio</span>
+        <a href="polityka-prywatnosci.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MENU MOBILNE ==================== -->
+  <script>
+    (function () {
+      var btn = document.getElementById('mobile-menu-btn');
+      var menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      var panel = menu.querySelector('.mobile-panel');
+      function openMenu() {
+        menu.classList.remove('invisible', 'opacity-0');
+        requestAnimationFrame(function () { panel.classList.remove('translate-x-full'); });
+        btn.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMenu() {
+        panel.classList.add('translate-x-full');
+        menu.classList.add('opacity-0');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        setTimeout(function () { menu.classList.add('invisible'); }, 400);
+      }
+      btn.addEventListener('click', function () {
+        menu.classList.contains('invisible') ? openMenu() : closeMenu();
+      });
+      menu.querySelectorAll('[data-menu-close], a').forEach(function (el) {
+        el.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    })();
+  </script>
+
+  <!-- ==================== ANIMACJE ==================== -->
+  <script>
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!window.gsap || !window.ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.to('#scroll-progress', {
+        scaleX: 1, ease: 'none',
+        scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 },
+      });
+
+      gsap.from('.policy h1, .policy > p', {
+        opacity: 0, y: 24, duration: 0.8, ease: 'power3.out', stagger: 0.1,
+      });
+
+      var hoverFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (hoverFine) {
+        gsap.utils.toArray('.btn-primary').forEach(function (btn) {
+          var qx = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power3' });
+          var qy = gsap.quickTo(btn, 'y', { duration: 0.4, ease: 'power3' });
+          btn.addEventListener('mousemove', function (e) {
+            var r = btn.getBoundingClientRect();
+            qx((e.clientX - (r.left + r.width / 2)) * 0.25);
+            qy((e.clientY - (r.top + r.height / 2)) * 0.35);
+          });
+          btn.addEventListener('mouseleave', function () { qx(0); qy(0); });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
