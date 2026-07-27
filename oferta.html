@@ -20,10 +20,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
   <!-- Google Consent Mode v2 (domyślnie odmowa, dopóki user nie zaakceptuje cookies) -->
   <script>
@@ -62,32 +58,12 @@
     });
   </script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            paper: '#DCE8F7',
-            ink: '#0F1B33',
-            inkmuted: '#3D537A',
-            bp: '#1D4ED8',
-            bpbright: '#0891B2',
-            gold: '#C77E10',
-            goldhover: '#A96A0C',
-          },
-          fontFamily: {
-            display: ['"Space Grotesk"', 'sans-serif'],
-            body: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-        },
-      },
-    };
-  </script>
+  <!-- Arkusz stylow zbudowany lokalnie (Tailwind + kroje pisma + ikony).
+       Zrodlo: src/input.css, budowanie: npm run build:css -->
+  <link rel="stylesheet" href="css/style.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
 
   <style>
     html { background: #DCE8F7; scroll-padding-top: 120px; }
@@ -185,6 +161,228 @@
       }
     }
   </style>
+  <!-- Dane strukturalne (schema.org) — opisują firmę i stronę w formie zrozumiałej dla Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Strona główna",
+            "item": "https://techgrowstudio.pl/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Oferta i cennik",
+            "item": "https://techgrowstudio.pl/oferta.html"
+          }
+        ]
+      },
+      {
+        "@type": "OfferCatalog",
+        "@id": "https://techgrowstudio.pl/oferta.html#cennik",
+        "name": "Oferta i cennik TechGrow Studio",
+        "url": "https://techgrowstudio.pl/oferta.html",
+        "provider": {
+          "@id": "https://techgrowstudio.pl/#organizacja"
+        },
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "Usługi",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Nowoczesne strony internetowe",
+                  "description": "Projekt i budowa strony od zera — szybkiej, czytelnej na telefonie i przygotowanej pod Google.",
+                  "provider": {
+                    "@id": "https://techgrowstudio.pl/#organizacja"
+                  },
+                  "areaServed": {
+                    "@type": "City",
+                    "name": "Piła"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Grafiki nowej generacji",
+                  "description": "Logo, grafiki i materiały wizualne dopasowane do charakteru firmy.",
+                  "provider": {
+                    "@id": "https://techgrowstudio.pl/#organizacja"
+                  },
+                  "areaServed": {
+                    "@type": "City",
+                    "name": "Piła"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Pozycjonowanie i wizytówka Google",
+                  "description": "SEO lokalne i prowadzenie wizytówki Google, żeby firma była znajdowana w okolicy.",
+                  "provider": {
+                    "@id": "https://techgrowstudio.pl/#organizacja"
+                  },
+                  "areaServed": {
+                    "@type": "City",
+                    "name": "Piła"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Kampanie Google Ads",
+                  "description": "Prowadzenie płatnych kampanii w wyszukiwarce Google dla lokalnych firm.",
+                  "provider": {
+                    "@id": "https://techgrowstudio.pl/#organizacja"
+                  },
+                  "areaServed": {
+                    "@type": "City",
+                    "name": "Piła"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Aplikacje internetowe na miarę",
+                  "description": "Panele i narzędzia webowe budowane pod konkretny proces w firmie.",
+                  "provider": {
+                    "@id": "https://techgrowstudio.pl/#organizacja"
+                  },
+                  "areaServed": {
+                    "@type": "City",
+                    "name": "Piła"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Systemy rezerwacji wizyt",
+                  "description": "Rezerwacja terminów online wraz z powiadomieniami i panelem dla właściciela.",
+                  "provider": {
+                    "@id": "https://techgrowstudio.pl/#organizacja"
+                  },
+                  "areaServed": {
+                    "@type": "City",
+                    "name": "Piła"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Pakiety",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "name": "Pakiet Standard",
+                "description": "Strona z analityką i szerszym zasięgiem. Do 10 podstron, 2 koncepcje logo, Google Analytics i Search Console.",
+                "priceCurrency": "PLN",
+                "price": "1500",
+                "priceSpecification": [
+                  {
+                    "@type": "UnitPriceSpecification",
+                    "name": "Wdrożenie (jednorazowo)",
+                    "price": "1500",
+                    "priceCurrency": "PLN"
+                  },
+                  {
+                    "@type": "UnitPriceSpecification",
+                    "name": "Opieka miesięczna",
+                    "price": "300",
+                    "priceCurrency": "PLN",
+                    "billingIncrement": 1,
+                    "unitCode": "MON"
+                  }
+                ],
+                "availability": "https://schema.org/InStock",
+                "url": "https://techgrowstudio.pl/oferta.html",
+                "seller": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                }
+              },
+              {
+                "@type": "Offer",
+                "name": "Pakiet Biznes",
+                "description": "Strona z kampanią Google Ads. Do 20 podstron, 3 koncepcje logo, pełna optymalizacja SEO i wizytówki.",
+                "priceCurrency": "PLN",
+                "price": "2500",
+                "priceSpecification": [
+                  {
+                    "@type": "UnitPriceSpecification",
+                    "name": "Wdrożenie (jednorazowo)",
+                    "price": "2500",
+                    "priceCurrency": "PLN"
+                  },
+                  {
+                    "@type": "UnitPriceSpecification",
+                    "name": "Opieka miesięczna",
+                    "price": "500",
+                    "priceCurrency": "PLN",
+                    "billingIncrement": 1,
+                    "unitCode": "MON"
+                  }
+                ],
+                "availability": "https://schema.org/InStock",
+                "url": "https://techgrowstudio.pl/oferta.html",
+                "seller": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                }
+              },
+              {
+                "@type": "Offer",
+                "name": "Pakiet VIP",
+                "description": "Pełen zasięg, zero kompromisów. Do 30 podstron, 5 koncepcji logo, Google Ads na okoliczne miasta.",
+                "priceCurrency": "PLN",
+                "price": "3500",
+                "priceSpecification": [
+                  {
+                    "@type": "UnitPriceSpecification",
+                    "name": "Wdrożenie (jednorazowo)",
+                    "price": "3500",
+                    "priceCurrency": "PLN"
+                  },
+                  {
+                    "@type": "UnitPriceSpecification",
+                    "name": "Opieka miesięczna",
+                    "price": "700",
+                    "priceCurrency": "PLN",
+                    "billingIncrement": 1,
+                    "unitCode": "MON"
+                  }
+                ],
+                "availability": "https://schema.org/InStock",
+                "url": "https://techgrowstudio.pl/oferta.html",
+                "seller": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="bg-paper font-body antialiased overflow-x-hidden w-full max-w-full">
 
@@ -202,7 +400,7 @@
 
   <!-- ==================== NAWIGACJA ==================== -->
   <a href="index.html" class="fixed top-[30px] left-[30px] md:top-9 md:left-12 z-50 flex items-center whitespace-nowrap">
-    <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
+    <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
   </a>
 
   <a href="tel:+48730393493"
@@ -303,7 +501,7 @@
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-browsers text-[26px]"></i>
                 </span>
-                <h3 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Nowoczesne strony internetowe</h3>
+                <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Nowoczesne strony internetowe</h2>
                 <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[58ch]">
                   Projektujemy i budujemy strony, które dobrze wyglądają na każdym ekranie, ładują się
                   błyskawicznie i prowadzą klienta prosto do kontaktu. Od pierwszego szkicu po gotową,
@@ -317,7 +515,7 @@
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-magic-wand text-[26px]"></i>
                 </span>
-                <h3 class="mt-5 font-display font-semibold text-xl text-ink">Grafiki nowej generacji</h3>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Grafiki nowej generacji</h2>
                 <p class="mt-3 text-inkmuted text-[18px] leading-relaxed">
                   Loga, identyfikacja wizualna, grafiki na stronę, do social mediów i reklam.
                   Tworzone najnowszymi narzędziami, dopasowane do charakteru Twojej marki.
@@ -330,7 +528,7 @@
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-map-pin text-[26px]"></i>
                 </span>
-                <h3 class="mt-5 font-display font-semibold text-xl text-ink">Pozycjonowanie i wizytówka Google</h3>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Pozycjonowanie i wizytówka Google</h2>
                 <p class="mt-3 text-inkmuted text-[18px] leading-relaxed">
                   Optymalizujemy stronę i profil Google Twojej firmy tak, żeby klienci z okolicy
                   znajdowali Cię pierwsi. Lokalna widoczność to nasza specjalność.
@@ -343,7 +541,7 @@
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-chart-line-up text-[26px]"></i>
                 </span>
-                <h3 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Kampanie Google Ads</h3>
+                <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Kampanie Google Ads</h2>
                 <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[58ch]">
                   Ustawiamy i prowadzimy kampanie reklamowe, które ściągają na stronę osoby faktycznie
                   szukające Twoich usług. Budżet pod kontrolą, wyniki czarno na białym.
@@ -356,7 +554,7 @@
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-app-window text-[26px]"></i>
                 </span>
-                <h3 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Aplikacje internetowe na miarę</h3>
+                <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Aplikacje internetowe na miarę</h2>
                 <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[58ch]">
                   Gdy Excel i papierowe notatki przestają wystarczać, budujemy aplikacje, które
                   realnie usprawniają pracę w Twojej firmie — mniej ręcznej roboty, mniej pomyłek,
@@ -371,7 +569,7 @@
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-calendar-check text-[26px]"></i>
                 </span>
-                <h3 class="mt-5 font-display font-semibold text-xl text-ink">Systemy rezerwacji wizyt</h3>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Systemy rezerwacji wizyt</h2>
                 <p class="mt-3 text-inkmuted text-[18px] leading-relaxed">
                   Klienci umawiają się sami — online, o dowolnej porze. Kalendarz wolnych terminów,
                   automatyczne potwierdzenia i przypomnienia. Mniej telefonów, mniej pustych okienek
@@ -558,7 +756,7 @@
   <footer class="relative py-14 px-6 border-t border-ink/10">
     <div class="max-w-[1400px] mx-auto">
       <div class="flex flex-wrap items-center justify-between gap-6">
-        <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
+        <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
         <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
           <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
           <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>

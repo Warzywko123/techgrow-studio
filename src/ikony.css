@@ -1,0 +1,54 @@
+/* Ikony Phosphor — tylko te, których używamy (font odchudzony lokalnie).
+   Zamiast 87 KB CSS + 151 KB fontu z unpkg.com. Ikon: 31. */
+
+@font-face {
+  font-family: 'Phosphor-Light';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../fonts/phosphor-light-subset.woff2') format('woff2');
+}
+
+.ph-light {
+  font-family: 'Phosphor-Light' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ph-light.ph-app-window:before { content: "\e5da"; }
+.ph-light.ph-arrow-right:before { content: "\e06c"; }
+.ph-light.ph-briefcase:before { content: "\e0ee"; }
+.ph-light.ph-browsers:before { content: "\e0f6"; }
+.ph-light.ph-calendar-check:before { content: "\e712"; }
+.ph-light.ph-chart-line-up:before { content: "\e156"; }
+.ph-light.ph-chat-circle-text:before { content: "\e16e"; }
+.ph-light.ph-check-circle:before { content: "\e184"; }
+.ph-light.ph-clock:before { content: "\e19a"; }
+.ph-light.ph-code:before { content: "\e1bc"; }
+.ph-light.ph-cpu:before { content: "\e610"; }
+.ph-light.ph-crown:before { content: "\e614"; }
+.ph-light.ph-device-mobile:before { content: "\e1e0"; }
+.ph-light.ph-envelope-simple:before { content: "\e218"; }
+.ph-light.ph-file-text:before { content: "\e23a"; }
+.ph-light.ph-gauge:before { content: "\e628"; }
+.ph-light.ph-handshake:before { content: "\e582"; }
+.ph-light.ph-headset:before { content: "\e584"; }
+.ph-light.ph-key:before { content: "\e2d6"; }
+.ph-light.ph-lifebuoy:before { content: "\e63a"; }
+.ph-light.ph-list:before { content: "\e2f0"; }
+.ph-light.ph-magic-wand:before { content: "\e6b6"; }
+.ph-light.ph-map-pin:before { content: "\e316"; }
+.ph-light.ph-map-trifold:before { content: "\e31a"; }
+.ph-light.ph-palette:before { content: "\e6c8"; }
+.ph-light.ph-phone-call:before { content: "\e3ba"; }
+.ph-light.ph-plus:before { content: "\e3d4"; }
+.ph-light.ph-question:before { content: "\e3e8"; }
+.ph-light.ph-rocket-launch:before { content: "\e3fe"; }
+.ph-light.ph-stack:before { content: "\e466"; }
+.ph-light.ph-x:before { content: "\e4f6"; }

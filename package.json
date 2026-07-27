@@ -1,0 +1,24 @@
+{
+  "name": "techgrow-studio",
+  "version": "1.0.0",
+  "description": "Strona TechGrow Studio - statyczny HTML + Tailwind budowany lokalnie",
+  "scripts": {
+    "build:css": "tailwindcss -i src/input.css -o css/style.css --minify",
+    "watch:css": "tailwindcss -i src/input.css -o css/style.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Warzywko123/techgrow-studio.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Warzywko123/techgrow-studio/issues"
+  },
+  "homepage": "https://github.com/Warzywko123/techgrow-studio#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.5.4",
+    "postcss-import": "^16.1.1",
+    "tailwindcss": "^3.4.19"
+  },
+  "private": true
+}

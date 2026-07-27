@@ -20,10 +20,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
   <!-- Google Consent Mode v2 (domyślnie odmowa, dopóki user nie zaakceptuje cookies) -->
   <script>
@@ -62,32 +58,12 @@
     });
   </script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            paper: '#DCE8F7',
-            ink: '#0F1B33',
-            inkmuted: '#3D537A',
-            bp: '#1D4ED8',
-            bpbright: '#0891B2',
-            gold: '#C77E10',
-            goldhover: '#A96A0C',
-          },
-          fontFamily: {
-            display: ['"Space Grotesk"', 'sans-serif'],
-            body: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-        },
-      },
-    };
-  </script>
+  <!-- Arkusz stylow zbudowany lokalnie (Tailwind + kroje pisma + ikony).
+       Zrodlo: src/input.css, budowanie: npm run build:css -->
+  <link rel="stylesheet" href="css/style.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
 
   <style>
     html { background: #DCE8F7; }
@@ -176,6 +152,94 @@
       }
     }
   </style>
+  <!-- Dane strukturalne (schema.org) — opisują firmę i stronę w formie zrozumiałej dla Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Strona główna",
+            "item": "https://techgrowstudio.pl/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Realizacje",
+            "item": "https://techgrowstudio.pl/realizacje.html"
+          }
+        ]
+      },
+      {
+        "@type": "CollectionPage",
+        "url": "https://techgrowstudio.pl/realizacje.html",
+        "name": "Realizacje | TechGrow Studio",
+        "isPartOf": {
+          "@id": "https://techgrowstudio.pl/#witryna"
+        },
+        "inLanguage": "pl-PL",
+        "mainEntity": {
+          "@type": "ItemList",
+          "name": "Zrealizowane strony internetowe",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "WebSite",
+                "name": "Gabinet Psychoterapii DARD",
+                "url": "https://psychoterapeuta-pila.pl",
+                "creator": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "WebSite",
+                "name": "Biuro Rachunkowe Lauterbach",
+                "url": "https://ksiegowosc-pila.pl",
+                "creator": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "WebSite",
+                "name": "Biuro Rachunkowe Bagiński",
+                "url": "https://biurorachunkowe-pila.pl",
+                "creator": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "WebSite",
+                "name": "Księgowa Danuta Lauterbach",
+                "url": "https://pilaksiegowa.pl",
+                "creator": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="bg-paper font-body antialiased overflow-x-hidden w-full max-w-full">
 
@@ -190,7 +254,7 @@
   </a>
 
   <a href="index.html" class="fixed top-[30px] left-[30px] md:top-9 md:left-12 z-50 flex items-center whitespace-nowrap">
-    <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
+    <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
   </a>
 
   <a href="tel:+48730393493"
@@ -291,14 +355,14 @@
                     <span class="w-2 h-2 rounded-full bg-ink/15"></span>
                     <span class="ml-3 font-mono text-[15.84px] text-inkmuted">psychoterapeuta-pila.pl</span>
                   </div>
-                  <img src="img/portfolio/dard.jpg" width="1280" height="800" loading="lazy"
+                  <img src="img/portfolio/dard.webp" width="1280" height="800" loading="lazy"
                        alt="Strona główna gabinetu psychoterapii: duży nagłówek z nazwiskiem terapeutki, zdjęcie gabinetu i przycisk umówienia wizyty"
                        class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
                 </div>
               </a>
               <div>
                 <span class="font-mono text-[16.56px] text-inkmuted">Psychoterapia &middot; Piła</span>
-                <h3 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Gabinet Psychoterapii DARD</h3>
+                <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Gabinet Psychoterapii DARD</h2>
                 <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
                   Spokojna, budująca zaufanie strona gabinetu psychoterapii. Pełna oferta terapii, sekcja
                   pytań i odpowiedzi, lokalne SEO i wizytówka Google, a do tego kampania reklamowa.
@@ -327,7 +391,7 @@
                       <span class="w-2 h-2 rounded-full bg-ink/15"></span>
                       <span class="ml-3 font-mono text-[15.84px] text-inkmuted">ksiegowosc-pila.pl</span>
                     </div>
-                    <img src="img/portfolio/lauterbach.jpg" width="1280" height="800" loading="lazy"
+                    <img src="img/portfolio/lauterbach.webp" width="1280" height="800" loading="lazy"
                          alt="Strona główna biura rachunkowego: elegancki nagłówek o księgowości prowadzonej z głową i sercem oraz monogram DL"
                          class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
                   </div>
@@ -335,7 +399,7 @@
               </div>
               <div class="md:order-1">
                 <span class="font-mono text-[16.56px] text-inkmuted">Księgowość &middot; Piła</span>
-                <h3 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Biuro Rachunkowe Lauterbach</h3>
+                <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Biuro Rachunkowe Lauterbach</h2>
                 <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
                   Wielostronicowy serwis biura rachunkowego z autorskim brandingiem. Właścicielka dostała
                   stronę, która mówi jej głosem: ciepło, konkretnie i po ludzku. Eleganckie liternictwo,
@@ -363,14 +427,14 @@
                     <span class="w-2 h-2 rounded-full bg-ink/15"></span>
                     <span class="ml-3 font-mono text-[15.84px] text-inkmuted">biurorachunkowe-pila.pl</span>
                   </div>
-                  <img src="img/portfolio/baginski.jpg" width="1280" height="800" loading="lazy"
+                  <img src="img/portfolio/baginski.webp" width="1280" height="800" loading="lazy"
                        alt="Strona główna biura rachunkowego Bagiński: nagłówek o finansach w dobrych rękach i panel ze statusami rozliczeń VAT, ZUS i PIT"
                        class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
                 </div>
               </a>
               <div>
                 <span class="font-mono text-[16.56px] text-inkmuted">Księgowość &middot; Piła</span>
-                <h3 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Biuro Rachunkowe Bagiński</h3>
+                <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Biuro Rachunkowe Bagiński</h2>
                 <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
                   Biuro z historią sięgającą 1997 roku dostało nowoczesną stronę: przejrzysta oferta
                   od jednoosobowych działalności po spółki, sekcja FAQ i grafiki dopasowane do
@@ -399,7 +463,7 @@
                       <span class="w-2 h-2 rounded-full bg-ink/15"></span>
                       <span class="ml-3 font-mono text-[15.84px] text-inkmuted">pilaksiegowa.pl</span>
                     </div>
-                    <img src="img/portfolio/pilaksiegowa.jpg" width="1280" height="800" loading="lazy"
+                    <img src="img/portfolio/pilaksiegowa.webp" width="1280" height="800" loading="lazy"
                          alt="Strona główna księgowej Danuty Lauterbach: nagłówek o księgowości, na której możesz polegać, na tle otwartej księgi, poniżej doświadczenie i certyfikat Ministra Finansów"
                          class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
                   </div>
@@ -407,7 +471,7 @@
               </div>
               <div class="md:order-1">
                 <span class="font-mono text-[16.56px] text-inkmuted">Księgowość &middot; Piła</span>
-                <h3 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Księgowa Danuta Lauterbach</h3>
+                <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Księgowa Danuta Lauterbach</h2>
                 <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
                   Druga strona biura rachunkowego Lauterbach, tym razem zbudowana wokół osoby
                   właścicielki: 17 lat praktyki, certyfikat Ministra Finansów i opinie klientów
@@ -451,7 +515,7 @@
   <footer class="relative py-14 px-6 border-t border-ink/10">
     <div class="max-w-[1400px] mx-auto">
       <div class="flex flex-wrap items-center justify-between gap-6">
-        <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
+        <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
         <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
           <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
           <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>

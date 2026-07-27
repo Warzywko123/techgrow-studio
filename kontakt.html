@@ -20,10 +20,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
   <!-- Google Consent Mode v2 (domyślnie odmowa, dopóki user nie zaakceptuje cookies) -->
   <script>
@@ -62,32 +58,12 @@
     });
   </script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            paper: '#DCE8F7',
-            ink: '#0F1B33',
-            inkmuted: '#3D537A',
-            bp: '#1D4ED8',
-            bpbright: '#0891B2',
-            gold: '#C77E10',
-            goldhover: '#A96A0C',
-          },
-          fontFamily: {
-            display: ['"Space Grotesk"', 'sans-serif'],
-            body: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-        },
-      },
-    };
-  </script>
+  <!-- Arkusz stylow zbudowany lokalnie (Tailwind + kroje pisma + ikony).
+       Zrodlo: src/input.css, budowanie: npm run build:css -->
+  <link rel="stylesheet" href="css/style.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
 
   <style>
     html { background: #DCE8F7; }
@@ -172,6 +148,54 @@
       }
     }
   </style>
+  <!-- Dane strukturalne (schema.org) — opisują firmę i stronę w formie zrozumiałej dla Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Strona główna",
+            "item": "https://techgrowstudio.pl/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Kontakt",
+            "item": "https://techgrowstudio.pl/kontakt.html"
+          }
+        ]
+      },
+      {
+        "@type": "ContactPage",
+        "url": "https://techgrowstudio.pl/kontakt.html",
+        "name": "Kontakt | TechGrow Studio",
+        "isPartOf": {
+          "@id": "https://techgrowstudio.pl/#witryna"
+        },
+        "inLanguage": "pl-PL",
+        "about": {
+          "@id": "https://techgrowstudio.pl/#organizacja"
+        },
+        "mainEntity": {
+          "@id": "https://techgrowstudio.pl/#organizacja",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "obsługa klienta",
+            "telephone": "+48730393493",
+            "email": "techgrowstudio@gmail.com",
+            "areaServed": "PL",
+            "availableLanguage": "pl"
+          }
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="bg-paper font-body antialiased overflow-x-hidden w-full max-w-full">
 
@@ -186,7 +210,7 @@
   </a>
 
   <a href="index.html" class="fixed top-[30px] left-[30px] md:top-9 md:left-12 z-50 flex items-center whitespace-nowrap">
-    <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
+    <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-[45px] md:h-[90px] w-auto">
   </a>
 
   <a href="tel:+48730393493"
@@ -283,21 +307,21 @@
             <div class="rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
               <div class="svc-core card-grid-bg h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-6">
                 <i class="ph-light ph-map-pin text-[26px] text-bp" aria-hidden="true"></i>
-                <h3 class="mt-3 font-display font-semibold text-lg text-ink">Piła i okolice</h3>
+                <h2 class="mt-3 font-display font-semibold text-lg text-ink">Piła i okolice</h2>
                 <p class="mt-1.5 text-inkmuted text-[16.56px] leading-snug">Pracuję lokalnie, możemy spotkać się osobiście.</p>
               </div>
             </div>
             <div class="rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
               <div class="svc-core card-grid-bg h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-6">
                 <i class="ph-light ph-phone-call text-[26px] text-bp" aria-hidden="true"></i>
-                <h3 class="mt-3 font-display font-semibold text-lg text-ink">Rozmowa bez zobowiązań</h3>
+                <h2 class="mt-3 font-display font-semibold text-lg text-ink">Rozmowa bez zobowiązań</h2>
                 <p class="mt-1.5 text-inkmuted text-[16.56px] leading-snug">Pierwsza konsultacja telefoniczna nic nie kosztuje.</p>
               </div>
             </div>
             <div class="rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
               <div class="svc-core card-grid-bg h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-6">
                 <i class="ph-light ph-question text-[26px] text-bp" aria-hidden="true"></i>
-                <h3 class="mt-3 font-display font-semibold text-lg text-ink">Masz pytania?</h3>
+                <h2 class="mt-3 font-display font-semibold text-lg text-ink">Masz pytania?</h2>
                 <p class="mt-1.5 text-inkmuted text-[16.56px] leading-snug">
                   Sprawdź <a href="jak-pracujemy.html#faq" class="text-bp underline underline-offset-2 hover:text-bpbright">FAQ</a>
                   albo napisz do mnie bezpośrednio.
@@ -312,7 +336,7 @@
                 <div class="flex items-start gap-3">
                   <i class="ph-light ph-clock text-[26px] text-bp mt-0.5" aria-hidden="true"></i>
                   <div>
-                    <h3 class="font-display font-semibold text-lg text-ink">Godziny kontaktu</h3>
+                    <h2 class="font-display font-semibold text-lg text-ink">Godziny kontaktu</h2>
                     <p class="mt-1.5 text-inkmuted text-[16.56px] leading-snug">Odbieram telefon i odpowiadam na wiadomości przez cały tydzień.</p>
                   </div>
                 </div>
@@ -363,7 +387,7 @@
   <footer class="relative py-14 px-6 border-t border-ink/10">
     <div class="max-w-[1400px] mx-auto">
       <div class="flex flex-wrap items-center justify-between gap-6">
-        <img src="img/logo-nav.png" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
+        <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
         <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
           <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
           <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>

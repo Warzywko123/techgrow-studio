@@ -1,0 +1,12 @@
+/* Zrodlo arkusza stron TechGrow Studio.
+   Buduje sie komenda:  npm run build:css
+   Wynik trafia do css/style.css i to ten plik wczytuja strony.
+   NIE edytuj css/style.css recznie - zostanie nadpisany. */
+
+@import './fonty.css';
+@import './ikony.css';
+@import './lenis.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
