@@ -21,50 +21,52 @@
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 
 
-  <!-- Google Consent Mode v2 (domyślnie odmowa, dopóki user nie zaakceptuje cookies) -->
+<!-- Google Analytics 4 — RODO: skrypt Google wczytuje się DOPIERO po zgodzie.
+       Bez zgody przeglądarka nie nawiązuje żadnego połączenia z serwerami Google. -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+
+    // Consent Mode v2 — domyślnie wszystko odmowa.
     gtag('consent', 'default', {
       'ad_storage': 'denied',
       'ad_user_data': 'denied',
       'ad_personalization': 'denied',
       'analytics_storage': 'denied'
     });
-    if (localStorage.getItem('tg-cookie-consent') === 'granted') {
-      gtag('consent', 'default', {
-        'ad_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted',
-        'analytics_storage': 'granted'
-      });
-    }
-  </script>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C57C89N57B"></script>
-  <script>
-    gtag('js', new Date());
-    gtag('config', 'G-C57C89N57B');
 
-    // Konwersje: kliknięcia w telefon i e-mail (delegacja — łapie wszystkie linki tel:/mailto:)
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href^="mailto:"]') : null;
-      if (!a) return;
-      var isTel = a.getAttribute('href').indexOf('tel:') === 0;
-      gtag('event', isTel ? 'phone_click' : 'mail_click', {
-        link_url: a.getAttribute('href'),
-        page_path: location.pathname
-      });
-    });
+    gtag('js', new Date());
+    gtag('config', 'G-C57C89N57B', { 'anonymize_ip': true });
+
+    // Dociąga gtag.js. Polecenia powyżej czekają w dataLayer i wykonają się
+    // dopiero po wczytaniu — dlatego można je kolejkować przed pobraniem skryptu.
+    window.wczytajGoogleAnalytics = function () {
+      if (window.__gaWczytany) return;
+      window.__gaWczytany = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C57C89N57B';
+      document.head.appendChild(s);
+    };
+
+    // Zgoda z poprzedniej wizyty — wczytaj od razu, bez czekania na baner.
+    try {
+      if (localStorage.getItem('tg-cookie-consent') === 'granted') {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+        window.wczytajGoogleAnalytics();
+      }
+    } catch (e) { /* localStorage zablokowany — zostaje odmowa */ }
   </script>
 
   <!-- Arkusz stylow zbudowany lokalnie (Tailwind + kroje pisma + ikony).
        Zrodlo: src/input.css, budowanie: npm run build:css -->
   <link rel="stylesheet" href="css/style.css">
 
-  <script src="vendor/lenis.min.js"></script>
-  <script src="vendor/gsap.min.js"></script>
-  <script src="vendor/ScrollTrigger.min.js"></script>
 
   <script type="importmap">
     { "imports": { "three": "./vendor/three.module.min.js" } }
@@ -255,6 +257,7 @@
   </script>
 </head>
 <body class="bg-paper font-body antialiased overflow-x-hidden w-full max-w-full">
+  <a class="skip-link" href="#main">Przejdź do treści</a>
 
   <div class="noise-overlay" aria-hidden="true"></div>
 
@@ -317,7 +320,7 @@
     </div>
   </div>
 
-  <main class="w-full max-w-full overflow-x-hidden">
+  <main id="main" class="w-full max-w-full overflow-x-hidden">
 
     <!-- ==================== HERO: przypieta scena 3D blueprint ==================== -->
     <section id="hero" class="relative min-h-[100dvh] w-full overflow-hidden" aria-label="TechGrow Studio, jak powstaje strona internetowa">
@@ -352,22 +355,22 @@
       <div class="absolute bottom-12 md:bottom-14 left-6 md:left-14 lg:left-20 z-10 pointer-events-none" aria-hidden="true">
         <div class="relative h-32 md:h-36 lg:h-40 w-[300px] sm:w-[380px] md:w-[440px] lg:w-[500px]">
           <div id="phase-1" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
-            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-gold font-semibold">FAZA 01 / 04</span>
+            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-goldtext font-semibold">FAZA 01 / 04</span>
             <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Projekt i architektura</h2>
             <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Każdy projekt zaczynamy od przemyślanej struktury strony.</p>
           </div>
           <div id="phase-2" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
-            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-gold font-semibold">FAZA 02 / 04</span>
+            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-goldtext font-semibold">FAZA 02 / 04</span>
             <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Budowa interfejsu</h2>
             <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Elementy trafiają dokładnie tam, gdzie będą pracować.</p>
           </div>
           <div id="phase-3" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
-            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-gold font-semibold">FAZA 03 / 04</span>
+            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-goldtext font-semibold">FAZA 03 / 04</span>
             <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Animacje i treść</h2>
             <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Projekt nabiera koloru, ruchu i charakteru.</p>
           </div>
           <div id="phase-4" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
-            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-gold font-semibold">FAZA 04 / 04</span>
+            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-goldtext font-semibold">FAZA 04 / 04</span>
             <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Wdrożenie i SEO</h2>
             <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Strona trafia do sieci, szybka i widoczna w Google.</p>
           </div>
@@ -662,6 +665,12 @@
   </footer>
 
   <!-- ==================== MENU MOBILNE ==================== -->
+  <!-- Biblioteki animacji: na końcu dokumentu, żeby nie wstrzymywały
+       pierwszego renderowania. Skrypty strony leżą poniżej i liczą na to,
+       że gsap jest już dostępny — dlatego kolejność musi zostać zachowana. -->
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
   <script>
     (function () {
       var btn = document.getElementById('mobile-menu-btn');
@@ -837,7 +846,10 @@
 
       // Rotujaca koncowka naglowka: kazda wersja to inna korzysc dla klienta
       var rotator = document.getElementById('hero-rotator');
-      if (rotator) {
+      // WCAG 2.2.2 (Pause, Stop, Hide): treść zmieniająca się automatycznie dłużej
+      // niż 5 sekund musi dać się zatrzymać. Nie mamy przycisku pauzy, więc przy
+      // ustawieniu „ogranicz animacje" nagłówek zostaje statyczny.
+      if (rotator && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         var phrases = [
           'pracuje na Twoją firmę.',
           'przyciąga nowych klientów.',
@@ -1480,6 +1492,10 @@
             'ad_personalization': 'granted',
             'analytics_storage': 'granted'
           });
+        }
+        // Skrypt Google pobieramy DOPIERO tutaj — bez zgody zero kontaktu z ich serwerami.
+        if (typeof window.wczytajGoogleAnalytics === 'function') {
+          window.wczytajGoogleAnalytics();
         }
         hide();
       });

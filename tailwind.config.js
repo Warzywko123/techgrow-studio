@@ -11,8 +11,12 @@ module.exports = {
         inkmuted: '#3D537A',
         bp: '#1D4ED8',
         bpbright: '#0891B2',
-        gold: '#C77E10',
-        goldhover: '#A96A0C',
+        // #C77E10 z białym napisem dawało 3.27:1 — poniżej progu WCAG AA (4.5:1).
+        gold: '#a6690d',
+        // Tekst zlota na jasnym tle (bg-paper) potrzebuje ciemniejszego odcienia:
+        // #a6690d daje tam 3.64:1, a przy tej wielkosci pisma potrzeba 4.5:1.
+        goldtext: '#915c0b',
+        goldhover: '#8a5709',
       },
       fontFamily: {
         display: ['"Space Grotesk"', 'sans-serif'],

@@ -10,3 +10,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* --- Link „Przejdź do treści" (WCAG 2.4.1 Bypass Blocks) ---
+   Niewidoczny dopóki nie dostanie fokusu z klawiatury; wtedy wjeżdża
+   w lewy górny róg, żeby dało się pominąć nawigację jednym Tabem. */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 300;
+  padding: 0.75rem 1.25rem;
+  background: #0f1b33;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0 0 6px 0;
+}
+.skip-link:focus { left: 0; }
