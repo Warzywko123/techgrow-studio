@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#DCE8F7">
   <title>Oferta i cennik | TechGrow Studio</title>
   <meta name="description" content="Strony internetowe, aplikacje, systemy rezerwacji wizyt, grafiki, SEO i Google Ads dla lokalnych firm. Pełna oferta i przejrzysty cennik TechGrow Studio.">
   <meta property="og:title" content="Oferta i cennik | TechGrow Studio">
   <meta property="og:description" content="Strony internetowe, aplikacje, systemy rezerwacji wizyt, grafiki, SEO i Google Ads dla lokalnych firm — pełna oferta i cennik pakietów.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TechGrow Studio">
+  <meta property="og:locale" content="pl_PL">
   <meta property="og:url" content="https://techgrowstudio.pl/oferta.html">
   <link rel="canonical" href="https://techgrowstudio.pl/oferta.html">
   <meta property="og:image" content="https://techgrowstudio.pl/img/og-image.jpg">
@@ -49,23 +52,52 @@
       document.head.appendChild(s);
     };
 
+    // Jedno miejsce, które definiuje, co znaczy „odwiedzający się zgodził".
+    // Wywołują je OBIE ścieżki — kliknięcie w banerze i powrót z zapisaną zgodą —
+    // żeby nie dało się ich rozjechać (wcześniej baner dawał zgodę reklamową,
+    // a powrót na stronę już nie).
+    window.tgUdzielZgody = function () {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+      window.wczytajGoogleAnalytics();
+    };
+
     // Zgoda z poprzedniej wizyty — wczytaj od razu, bez czekania na baner.
     try {
       if (localStorage.getItem('tg-cookie-consent') === 'granted') {
-        gtag('consent', 'update', {
-          'analytics_storage': 'granted',
-          'ad_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied'
-        });
-        window.wczytajGoogleAnalytics();
+        window.tgUdzielZgody();
       }
     } catch (e) { /* localStorage zablokowany — zostaje odmowa */ }
+
+    // Konwersje: kliknięcia w telefon i e-mail (delegacja — łapie wszystkie
+    // linki tel:/mailto: na stronie). Bez zgody gtag.js w ogóle się nie wczytuje,
+    // więc zdarzenie tylko czeka w dataLayer i nigdzie nie wychodzi.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href^="mailto:"]') : null;
+      if (!a) return;
+      var isTel = a.getAttribute('href').indexOf('tel:') === 0;
+      gtag('event', isTel ? 'phone_click' : 'mail_click', {
+        link_url: a.getAttribute('href'),
+        page_path: location.pathname
+      });
+    });
   </script>
 
   <!-- Arkusz stylow zbudowany lokalnie (Tailwind + kroje pisma + ikony).
        Zrodlo: src/input.css, budowanie: npm run build:css -->
-  <link rel="stylesheet" href="css/style.css">
+  <!-- Kroje nad linią zgięcia: bez preloadu przeglądarka odkrywa je dopiero
+       po sparsowaniu arkusza, czyli o jedną rundę do serwera za późno.
+       latin-ext jest tak samo obowiązkowy jak latin — siedzą w nim polskie ą ć ę ł ń ś ź ż. -->
+  <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/space-grotesk-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/phosphor-light-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=1">
 
 
   <style>
@@ -413,24 +445,24 @@
     <span class="btn-orb inline-flex items-center justify-center w-9 h-9 rounded-full bg-black/15 text-ink text-base" aria-hidden="true">&rarr;</span>
   </a>
 
-  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden min-[1500px]:block">
-    <nav class="flex items-center gap-12 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-9 py-[15px]"
+  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden xl:block">
+    <nav class="flex items-center gap-8 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-7 py-[15px]"
          aria-label="Nawigacja główna">
-      <a href="index.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
-      <a href="oferta.html" class="nav-link active font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
-      <a href="jak-pracujemy.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
-      <a href="realizacje.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
-      <a href="o-nas.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
-      <a href="kontakt.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
+      <a href="index.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
+      <a href="oferta.html" class="nav-link active font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
+      <a href="jak-pracujemy.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
+      <a href="realizacje.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
+      <a href="o-nas.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
+      <a href="kontakt.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
     </nav>
   </header>
 
   <!-- Hamburger (mobile/tablet) -->
-  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 min-[1500px]:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
+  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 xl:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
     <i class="ph-light ph-list text-2xl text-ink" aria-hidden="true"></i>
   </button>
 
-  <div id="mobile-menu" class="fixed inset-0 z-[70] min-[1500px]:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
+  <div id="mobile-menu" class="fixed inset-0 z-[70] xl:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
     <div class="absolute inset-0 bg-ink/50 backdrop-blur-sm" data-menu-close></div>
     <div class="mobile-panel absolute top-0 right-0 h-full w-[82%] max-w-[380px] bg-paper shadow-2xl flex flex-col px-8 pt-10 pb-10 translate-x-full transition-transform duration-[400ms]" style="transition-timing-function: cubic-bezier(.32,.72,0,1)">
       <button data-menu-close class="self-end w-11 h-11 rounded-full flex items-center justify-center hover:bg-ink/5" aria-label="Zamknij menu">
@@ -487,10 +519,10 @@
           <div class="svc-head max-w-3xl">
             <span class="font-mono text-[15.84px] tracking-[0.18em] text-goldtext uppercase">Oferta</span>
             <h1 class="word-reveal mt-3 font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
-              Wszystko, czego Twoja firma potrzebuje w&nbsp;sieci.
+              Strony internetowe i&nbsp;aplikacje dla firm z&nbsp;Piły.
             </h1>
             <p class="mt-5 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[52ch]">
-              Strona to dopiero początek. Dbamy o to, żeby klienci ją znaleźli, zapamiętali i wrócili.
+              Wszystko, czego Twoja firma potrzebuje w sieci. Strona to dopiero początek — dbamy o to, żeby klienci ją znaleźli, zapamiętali i wrócili.
             </p>
             <nav class="mt-6 flex flex-wrap gap-3" aria-label="Skróty na tej stronie">
               <a href="#uslugi" class="inline-flex items-center rounded-full ring-1 ring-ink/15 hover:ring-bp/40 hover:text-bp px-4 py-2 font-mono text-[15.84px] text-inkmuted transition-colors duration-300">Usługi</a>
@@ -762,19 +794,20 @@
       <div class="flex flex-wrap items-center justify-between gap-6">
         <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
         <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
-          <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
-          <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
-          <a href="jak-pracujemy.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
-          <a href="realizacje.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
-          <a href="o-nas.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
-          <a href="kontakt.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
+          <a href="index.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
+          <a href="oferta.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
+          <a href="jak-pracujemy.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
+          <a href="realizacje.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
+          <a href="o-nas.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
+          <a href="kontakt.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
         </nav>
       </div>
       <div class="mt-8 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-3">
         <span class="font-mono text-[16.56px] text-inkmuted">&copy; 2026 TechGrow Studio</span>
         <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
           <span class="font-mono text-[15.84px] text-inkmuted">Piła i okolice</span>
-          <a href="polityka-prywatnosci.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+          <a href="polityka-prywatnosci.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+          <button type="button" id="cookie-settings" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Ustawienia cookies</button>
         </div>
       </div>
     </div>
@@ -930,7 +963,7 @@
   </script>
 
   <!-- Baner cookies (RODO) -->
-  <div id="cookie-banner" class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:inset-x-6 sm:bottom-6">
+  <div id="cookie-banner" role="region" aria-label="Zgoda na pliki cookie" tabindex="-1" class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:inset-x-6 sm:bottom-6">
     <div class="rounded-[1.4rem] bg-white/95 backdrop-blur-xl ring-1 ring-ink/10 shadow-[0_20px_60px_rgba(15,27,51,0.18)] p-5 sm:p-6">
       <p class="text-inkmuted text-[15.5px] leading-relaxed">
         Używamy plików cookie technicznych (niezbędnych) oraz — po Twojej zgodzie — Google Analytics do anonimowych statystyk ruchu. Więcej w
@@ -947,7 +980,8 @@
       var KEY = 'tg-cookie-consent';
       var banner = document.getElementById('cookie-banner');
       var saved = localStorage.getItem(KEY);
-      if (!saved) {
+      if (!saved) show();
+      function show() {
         requestAnimationFrame(function () {
           banner.classList.remove('translate-y-[150%]', 'opacity-0');
         });
@@ -955,24 +989,39 @@
       function hide() {
         banner.classList.add('translate-y-[150%]', 'opacity-0');
       }
+
+      // RODO art. 7 ust. 3: wycofanie zgody musi być tak samo łatwe jak jej udzielenie.
+      // Link w stopce kasuje zapamiętany wybór i przywraca baner.
+      // (w stopce oraz — na stronie polityki — w treści punktu o cookies)
+      var ustawienia = document.querySelectorAll('[id^="cookie-settings"]');
+      for (var u = 0; u < ustawienia.length; u++) {
+        ustawienia[u].addEventListener('click', function () {
+          try { localStorage.removeItem(KEY); } catch (e) { /* localStorage zablokowany */ }
+          show();
+          banner.scrollIntoView({ block: 'nearest' });
+          banner.focus();   // czytnik ekranu i klawiatura ladują od razu w banerze
+        });
+      }
       document.getElementById('cookie-accept').addEventListener('click', function () {
         localStorage.setItem(KEY, 'granted');
-        if (typeof gtag === 'function') {
-          gtag('consent', 'update', {
-            'ad_storage': 'granted',
-            'ad_user_data': 'granted',
-            'ad_personalization': 'granted',
-            'analytics_storage': 'granted'
-          });
-        }
-        // Skrypt Google pobieramy DOPIERO tutaj — bez zgody zero kontaktu z ich serwerami.
-        if (typeof window.wczytajGoogleAnalytics === 'function') {
-          window.wczytajGoogleAnalytics();
-        }
+        // Ta sama funkcja co przy powrocie na stronę — skrypt Google pobieramy
+        // DOPIERO tutaj, bez zgody zero kontaktu z ich serwerami.
+        if (typeof window.tgUdzielZgody === 'function') window.tgUdzielZgody();
         hide();
       });
       document.getElementById('cookie-reject').addEventListener('click', function () {
         localStorage.setItem(KEY, 'denied');
+        // Jeśli ktoś wycofuje zgodę udzieloną wcześniej, gtag.js jest już wczytany —
+        // trzeba mu powiedzieć, że od teraz obowiązuje odmowa. Przy pierwszej wizycie
+        // to nic nie zmienia, bo domyślnie i tak wszystko jest zabronione.
+        if (typeof gtag === 'function') {
+          gtag('consent', 'update', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+          });
+        }
         hide();
       });
     })();

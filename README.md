@@ -22,6 +22,18 @@ po każdym zapisie pliku:
 npm run watch:css
 ```
 
+### ⚠️ Po zmianie CSS podbij `?v=` w każdym pliku HTML
+
+Arkusz jest linkowany jako `css/style.css?v=1` i ma **roczny cache** (`vercel.json`).
+Bez podbicia numeru stały odwiedzający dostanie nowy HTML ze starym arkuszem —
+czyli rozjechany układ. Przy każdej zmianie w `src/`:
+
+```bash
+npm run build:css && sed -i '' 's/style\.css?v=[0-9]*/style.css?v=2/' *.html
+```
+
+(podstaw kolejny numer; sprawdź `grep -c 'style.css?v=' *.html` — musi być 8 trafień).
+
 **Nie edytuj `css/style.css` ręcznie** — przy najbliższym budowaniu zmiany znikną.
 Źródła są w `src/`:
 

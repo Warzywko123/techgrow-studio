@@ -26,3 +26,22 @@
   border-radius: 0 0 6px 0;
 }
 .skip-link:focus { left: 0; }
+
+/* --- Powiekszone pole dotyku w stopce (WCAG 2.5.8 Target Size) ---
+   Linki w stopce to jedna linijka tekstu, czyli 24 px wysokosci. Zamiast
+   powiekszac je wizualnie (rozjechalaby sie stopka), rozciagamy sam obszar
+   klikalny niewidzialnym prostokatem. Palec trafia w ~44 px, oko widzi to samo. */
+.footer-link {
+  position: relative;
+}
+.footer-link::after {
+  content: '';
+  position: absolute;
+  inset: -10px -8px;
+}
+
+/* Uwaga na przyszlosc: NIE ustawiac tu `display: inline-block` na .ph-light,
+   zeby zarezerwowac miejsce na ikone. Wyglada to na naprawe przeskoku ukladu
+   przy dogrywaniu fontu ikon, ale inline-block inaczej liczy wysokosc wiersza
+   i przesuwa sasiednie elementy o 1-18 px na kazdej podstronie (sprawdzone
+   odciskiem palca stylow). Przyczyne rozwiazuje preload fontu ikon w <head>. */

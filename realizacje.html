@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#DCE8F7">
   <title>Realizacje | TechGrow Studio</title>
-  <meta name="description" content="Zobacz strony internetowe zrealizowane przez TechGrow Studio dla lokalnych firm z Piły — gabinet psychoterapii i biura rachunkowe.">
+  <meta name="description" content="Zobacz realizacje TechGrow Studio dla lokalnych firm z Piły — strony gabinetów i biur rachunkowych oraz system rezerwacji wizyt online.">
   <meta property="og:title" content="Realizacje | TechGrow Studio">
-  <meta property="og:description" content="Cztery działające projekty dla lokalnych firm. Każdy możesz obejrzeć na żywo.">
+  <meta property="og:description" content="Sześć działających projektów dla lokalnych firm. Każdy możesz obejrzeć na żywo.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TechGrow Studio">
+  <meta property="og:locale" content="pl_PL">
   <meta property="og:url" content="https://techgrowstudio.pl/realizacje.html">
   <link rel="canonical" href="https://techgrowstudio.pl/realizacje.html">
   <meta property="og:image" content="https://techgrowstudio.pl/img/og-image.jpg">
@@ -49,23 +52,52 @@
       document.head.appendChild(s);
     };
 
+    // Jedno miejsce, które definiuje, co znaczy „odwiedzający się zgodził".
+    // Wywołują je OBIE ścieżki — kliknięcie w banerze i powrót z zapisaną zgodą —
+    // żeby nie dało się ich rozjechać (wcześniej baner dawał zgodę reklamową,
+    // a powrót na stronę już nie).
+    window.tgUdzielZgody = function () {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+      window.wczytajGoogleAnalytics();
+    };
+
     // Zgoda z poprzedniej wizyty — wczytaj od razu, bez czekania na baner.
     try {
       if (localStorage.getItem('tg-cookie-consent') === 'granted') {
-        gtag('consent', 'update', {
-          'analytics_storage': 'granted',
-          'ad_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied'
-        });
-        window.wczytajGoogleAnalytics();
+        window.tgUdzielZgody();
       }
     } catch (e) { /* localStorage zablokowany — zostaje odmowa */ }
+
+    // Konwersje: kliknięcia w telefon i e-mail (delegacja — łapie wszystkie
+    // linki tel:/mailto: na stronie). Bez zgody gtag.js w ogóle się nie wczytuje,
+    // więc zdarzenie tylko czeka w dataLayer i nigdzie nie wychodzi.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href^="mailto:"]') : null;
+      if (!a) return;
+      var isTel = a.getAttribute('href').indexOf('tel:') === 0;
+      gtag('event', isTel ? 'phone_click' : 'mail_click', {
+        link_url: a.getAttribute('href'),
+        page_path: location.pathname
+      });
+    });
   </script>
 
   <!-- Arkusz stylow zbudowany lokalnie (Tailwind + kroje pisma + ikony).
        Zrodlo: src/input.css, budowanie: npm run build:css -->
-  <link rel="stylesheet" href="css/style.css">
+  <!-- Kroje nad linią zgięcia: bez preloadu przeglądarka odkrywa je dopiero
+       po sparsowaniu arkusza, czyli o jedną rundę do serwera za późno.
+       latin-ext jest tak samo obowiązkowy jak latin — siedzą w nim polskie ą ć ę ł ń ś ź ż. -->
+  <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/space-grotesk-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/phosphor-light-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=1">
 
 
   <style>
@@ -205,6 +237,19 @@
               "@type": "ListItem",
               "position": 2,
               "item": {
+                "@type": "WebApplication",
+                "name": "Rezerwacja wizyt online dla gabinetu DARD",
+                "url": "https://psychoterapeuta-pila.pl/rezerwacja.html",
+                "creator": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                },
+                "applicationCategory": "BusinessApplication"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
                 "@type": "WebSite",
                 "name": "Biuro Rachunkowe Lauterbach",
                 "url": "https://ksiegowosc-pila.pl",
@@ -215,7 +260,7 @@
             },
             {
               "@type": "ListItem",
-              "position": 3,
+              "position": 4,
               "item": {
                 "@type": "WebSite",
                 "name": "Biuro Rachunkowe Bagiński",
@@ -227,7 +272,7 @@
             },
             {
               "@type": "ListItem",
-              "position": 4,
+              "position": 5,
               "item": {
                 "@type": "WebSite",
                 "name": "Księgowa Danuta Lauterbach",
@@ -236,8 +281,21 @@
                   "@id": "https://techgrowstudio.pl/#organizacja"
                 }
               }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "WebSite",
+                "name": "Gabinet Pomocy Psychologicznej — mgr Joanna Grochowska",
+                "url": "https://pilapsycholog.pl",
+                "creator": {
+                  "@id": "https://techgrowstudio.pl/#organizacja"
+                }
+              }
             }
-          ]
+          ],
+          "numberOfItems": 6
         }
       }
     ]
@@ -267,23 +325,23 @@
     <span class="btn-orb inline-flex items-center justify-center w-9 h-9 rounded-full bg-black/15 text-ink text-base" aria-hidden="true">&rarr;</span>
   </a>
 
-  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden min-[1500px]:block">
-    <nav class="flex items-center gap-12 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-9 py-[15px]"
+  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden xl:block">
+    <nav class="flex items-center gap-8 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-7 py-[15px]"
          aria-label="Nawigacja główna">
-      <a href="index.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
-      <a href="oferta.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
-      <a href="jak-pracujemy.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
-      <a href="realizacje.html" class="nav-link active font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
-      <a href="o-nas.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
-      <a href="kontakt.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
+      <a href="index.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
+      <a href="oferta.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
+      <a href="jak-pracujemy.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
+      <a href="realizacje.html" class="nav-link active font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
+      <a href="o-nas.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
+      <a href="kontakt.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
     </nav>
   </header>
 
-  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 min-[1500px]:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
+  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 xl:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
     <i class="ph-light ph-list text-2xl text-ink" aria-hidden="true"></i>
   </button>
 
-  <div id="mobile-menu" class="fixed inset-0 z-[70] min-[1500px]:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
+  <div id="mobile-menu" class="fixed inset-0 z-[70] xl:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
     <div class="absolute inset-0 bg-ink/50 backdrop-blur-sm" data-menu-close></div>
     <div class="mobile-panel absolute top-0 right-0 h-full w-[82%] max-w-[380px] bg-paper shadow-2xl flex flex-col px-8 pt-10 pb-10 translate-x-full transition-transform duration-[400ms]" style="transition-timing-function: cubic-bezier(.32,.72,0,1)">
       <button data-menu-close class="self-end w-11 h-11 rounded-full flex items-center justify-center hover:bg-ink/5" aria-label="Zamknij menu">
@@ -340,17 +398,17 @@
           <div class="pf-head max-w-3xl">
             <span class="font-mono text-[15.84px] tracking-[0.18em] text-goldtext uppercase">Realizacje</span>
             <h1 class="word-reveal mt-3 font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
-              Te strony już pracują.
+              Strony internetowe dla firm z&nbsp;Piły i&nbsp;okolic.
             </h1>
             <p class="mt-5 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[52ch]">
-              Cztery działające projekty dla lokalnych firm. Każdy możesz obejrzeć na żywo.
+              Te strony już pracują. Sześć działających projektów dla lokalnych firm — każdy możesz obejrzeć na żywo.
             </p>
           </div>
 
           <div class="mt-14 space-y-16 md:space-y-20">
 
             <article class="pf-row grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-              <a href="https://psychoterapeuta-pila.pl" target="_blank" rel="noopener"
+              <a href="https://psychoterapeuta-pila.pl" target="_blank" aria-label="psychoterapeuta-pila.pl — otwiera się w nowej karcie" rel="noopener"
                  class="group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
                 <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
                   <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
@@ -377,31 +435,64 @@
                   <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">SEO + wizytówka Google</span>
                   <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Google Ads</span>
                 </div>
-                <a href="https://psychoterapeuta-pila.pl" target="_blank" rel="noopener"
+                <a href="https://psychoterapeuta-pila.pl" target="_blank" aria-label="psychoterapeuta-pila.pl — otwiera się w nowej karcie" rel="noopener"
                    class="mt-6 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-4 py-2 font-mono text-[18px] text-bp transition-colors duration-300">
                   Zobacz na żywo &nearr;
                 </a>
               </div>
             </article>
-
             <article class="pf-row grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div class="md:order-2">
-                <a href="https://ksiegowosc-pila.pl" target="_blank" rel="noopener"
+  <a href="https://psychoterapeuta-pila.pl/rezerwacja.html" target="_blank" aria-label="psychoterapeuta-pila.pl/rezerwacja — otwiera się w nowej karcie" rel="noopener"
                    class="group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
                   <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
                     <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
                       <span class="w-2 h-2 rounded-full bg-ink/15"></span>
                       <span class="w-2 h-2 rounded-full bg-ink/15"></span>
                       <span class="w-2 h-2 rounded-full bg-ink/15"></span>
-                      <span class="ml-3 font-mono text-[15.84px] text-inkmuted">ksiegowosc-pila.pl</span>
+                      <span class="ml-3 font-mono text-[15.84px] text-inkmuted">psychoterapeuta-pila.pl/rezerwacja</span>
                     </div>
-                    <img src="img/portfolio/lauterbach.webp" width="1280" height="800" loading="lazy"
-                         alt="Strona główna biura rachunkowego: elegancki nagłówek o księgowości prowadzonej z głową i sercem oraz monogram DL"
+                    <img src="img/portfolio/dard-panel.webp" width="1280" height="800" loading="lazy"
+                         alt="Panel rezerwacji wizyt online: kalendarz z wolnymi terminami, nawigacja po tygodniach i informacje o wizycie"
                          class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
                   </div>
                 </a>
               </div>
               <div class="md:order-1">
+                <span class="font-mono text-[16.56px] text-inkmuted">Aplikacja &middot; system rezerwacji</span>
+                <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Rezerwacja wizyt online dla gabinetu DARD</h2>
+                <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
+                  Pacjent wybiera wolny termin z kalendarza i rezerwuje go sam — o dowolnej porze, bez
+                  dzwonienia. Terminarz pilnuje kolizji, potwierdzenia i przypomnienia wychodzą
+                  automatycznie, a gabinet ma własny panel do zarządzania grafikiem i urlopami.
+                </p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Aplikacja webowa</span>
+                  <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Rezerwacje online</span>
+                  <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Panel administracyjny</span>
+                </div>
+                <a href="https://psychoterapeuta-pila.pl/rezerwacja.html" target="_blank" aria-label="psychoterapeuta-pila.pl/rezerwacja — otwiera się w nowej karcie" rel="noopener"
+                   class="mt-6 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-4 py-2 font-mono text-[18px] text-bp transition-colors duration-300">
+                  Zobacz na żywo &nearr;
+                </a>
+              </div>
+            </article>
+            <article class="pf-row grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                            <a href="https://ksiegowosc-pila.pl" target="_blank" aria-label="ksiegowosc-pila.pl — otwiera się w nowej karcie" rel="noopener"
+                 class="group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
+                <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+                  <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
+                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                    <span class="ml-3 font-mono text-[15.84px] text-inkmuted">ksiegowosc-pila.pl</span>
+                  </div>
+                  <img src="img/portfolio/lauterbach.webp" width="1280" height="800" loading="lazy"
+                       alt="Strona główna biura rachunkowego: elegancki nagłówek o księgowości prowadzonej z głową i sercem oraz monogram DL"
+                       class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+                </div>
+              </a>
+              <div>
                 <span class="font-mono text-[16.56px] text-inkmuted">Księgowość &middot; Piła</span>
                 <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Biuro Rachunkowe Lauterbach</h2>
                 <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
@@ -414,29 +505,30 @@
                   <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Identyfikacja wizualna</span>
                   <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">SEO lokalne</span>
                 </div>
-                <a href="https://ksiegowosc-pila.pl" target="_blank" rel="noopener"
+                <a href="https://ksiegowosc-pila.pl" target="_blank" aria-label="ksiegowosc-pila.pl — otwiera się w nowej karcie" rel="noopener"
                    class="mt-6 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-4 py-2 font-mono text-[18px] text-bp transition-colors duration-300">
                   Zobacz na żywo &nearr;
                 </a>
               </div>
             </article>
-
             <article class="pf-row grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-              <a href="https://biurorachunkowe-pila.pl" target="_blank" rel="noopener"
-                 class="group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
-                <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
-                  <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
-                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
-                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
-                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
-                    <span class="ml-3 font-mono text-[15.84px] text-inkmuted">biurorachunkowe-pila.pl</span>
+              <div class="md:order-2">
+  <a href="https://biurorachunkowe-pila.pl" target="_blank" aria-label="biurorachunkowe-pila.pl — otwiera się w nowej karcie" rel="noopener"
+                   class="group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
+                  <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+                    <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
+                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                      <span class="ml-3 font-mono text-[15.84px] text-inkmuted">biurorachunkowe-pila.pl</span>
+                    </div>
+                    <img src="img/portfolio/baginski.webp" width="1280" height="800" loading="lazy"
+                         alt="Strona główna biura rachunkowego Bagiński: nagłówek o finansach w dobrych rękach i panel ze statusami rozliczeń VAT, ZUS i PIT"
+                         class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
                   </div>
-                  <img src="img/portfolio/baginski.webp" width="1280" height="800" loading="lazy"
-                       alt="Strona główna biura rachunkowego Bagiński: nagłówek o finansach w dobrych rękach i panel ze statusami rozliczeń VAT, ZUS i PIT"
-                       class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
-                </div>
-              </a>
-              <div>
+                </a>
+              </div>
+              <div class="md:order-1">
                 <span class="font-mono text-[16.56px] text-inkmuted">Księgowość &middot; Piła</span>
                 <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Biuro Rachunkowe Bagiński</h2>
                 <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
@@ -449,31 +541,28 @@
                   <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Grafiki i branding</span>
                   <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">SEO lokalne</span>
                 </div>
-                <a href="https://biurorachunkowe-pila.pl" target="_blank" rel="noopener"
+                <a href="https://biurorachunkowe-pila.pl" target="_blank" aria-label="biurorachunkowe-pila.pl — otwiera się w nowej karcie" rel="noopener"
                    class="mt-6 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-4 py-2 font-mono text-[18px] text-bp transition-colors duration-300">
                   Zobacz na żywo &nearr;
                 </a>
               </div>
             </article>
-
             <article class="pf-row grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-              <div class="md:order-2">
-                <a href="https://pilaksiegowa.pl" target="_blank" rel="noopener"
-                   class="group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
-                  <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
-                    <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
-                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
-                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
-                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
-                      <span class="ml-3 font-mono text-[15.84px] text-inkmuted">pilaksiegowa.pl</span>
-                    </div>
-                    <img src="img/portfolio/pilaksiegowa.webp" width="1280" height="800" loading="lazy"
-                         alt="Strona główna księgowej Danuty Lauterbach: nagłówek o księgowości, na której możesz polegać, na tle otwartej księgi, poniżej doświadczenie i certyfikat Ministra Finansów"
-                         class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+                            <a href="https://pilaksiegowa.pl" target="_blank" aria-label="pilaksiegowa.pl — otwiera się w nowej karcie" rel="noopener"
+                 class="group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
+                <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+                  <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
+                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                    <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                    <span class="ml-3 font-mono text-[15.84px] text-inkmuted">pilaksiegowa.pl</span>
                   </div>
-                </a>
-              </div>
-              <div class="md:order-1">
+                  <img src="img/portfolio/pilaksiegowa.webp" width="1280" height="800" loading="lazy"
+                       alt="Strona główna księgowej Danuty Lauterbach: nagłówek o księgowości, na której możesz polegać, na tle otwartej księgi, poniżej doświadczenie i certyfikat Ministra Finansów"
+                       class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+                </div>
+              </a>
+              <div>
                 <span class="font-mono text-[16.56px] text-inkmuted">Księgowość &middot; Piła</span>
                 <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Księgowa Danuta Lauterbach</h2>
                 <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
@@ -487,7 +576,43 @@
                   <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Druga domena</span>
                   <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">SEO lokalne</span>
                 </div>
-                <a href="https://pilaksiegowa.pl" target="_blank" rel="noopener"
+                <a href="https://pilaksiegowa.pl" target="_blank" aria-label="pilaksiegowa.pl — otwiera się w nowej karcie" rel="noopener"
+                   class="mt-6 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-4 py-2 font-mono text-[18px] text-bp transition-colors duration-300">
+                  Zobacz na żywo &nearr;
+                </a>
+              </div>
+            </article>
+            <article class="pf-row grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div class="md:order-2">
+  <a href="https://pilapsycholog.pl" target="_blank" aria-label="pilapsycholog.pl — otwiera się w nowej karcie" rel="noopener"
+                   class="group block rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 transition-transform duration-500 hover:-translate-y-1">
+                  <div class="svc-core rounded-[calc(1.4rem-0.375rem)] overflow-hidden bg-white/85">
+                    <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-ink/10">
+                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                      <span class="w-2 h-2 rounded-full bg-ink/15"></span>
+                      <span class="ml-3 font-mono text-[15.84px] text-inkmuted">pilapsycholog.pl</span>
+                    </div>
+                    <img src="img/portfolio/pilapsycholog.webp" width="1280" height="800" loading="lazy"
+                         alt="Strona główna gabinetu pomocy psychologicznej: fotografia gabinetu, hasło przewodnie i przyciski umówienia wizyty"
+                         class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+                  </div>
+                </a>
+              </div>
+              <div class="md:order-1">
+                <span class="font-mono text-[16.56px] text-inkmuted">Psychologia &middot; Piła</span>
+                <h2 class="mt-2 font-display font-semibold text-2xl md:text-3xl text-ink">Gabinet Pomocy Psychologicznej</h2>
+                <p class="mt-4 text-inkmuted text-[18px] md:text-[19.2px] leading-relaxed max-w-[54ch]">
+                  Druga strona tej samej specjalistki, tym razem wokół konsultacji psychologicznych.
+                  Osobna domena i osobne treści poszerzają widoczność w wyszukiwarce o zapytania,
+                  w których pacjent szuka psychologa, a nie psychoterapeuty.
+                </p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Strona</span>
+                  <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">Druga domena</span>
+                  <span class="rounded-full ring-1 ring-ink/15 px-3 py-1 font-mono text-[15.84px] text-inkmuted">SEO lokalne</span>
+                </div>
+                <a href="https://pilapsycholog.pl" target="_blank" aria-label="pilapsycholog.pl — otwiera się w nowej karcie" rel="noopener"
                    class="mt-6 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-4 py-2 font-mono text-[18px] text-bp transition-colors duration-300">
                   Zobacz na żywo &nearr;
                 </a>
@@ -521,19 +646,20 @@
       <div class="flex flex-wrap items-center justify-between gap-6">
         <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
         <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
-          <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
-          <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
-          <a href="jak-pracujemy.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
-          <a href="realizacje.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
-          <a href="o-nas.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
-          <a href="kontakt.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
+          <a href="index.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
+          <a href="oferta.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
+          <a href="jak-pracujemy.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
+          <a href="realizacje.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
+          <a href="o-nas.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
+          <a href="kontakt.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
         </nav>
       </div>
       <div class="mt-8 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-3">
         <span class="font-mono text-[16.56px] text-inkmuted">&copy; 2026 TechGrow Studio</span>
         <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
           <span class="font-mono text-[15.84px] text-inkmuted">Piła i okolice</span>
-          <a href="polityka-prywatnosci.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+          <a href="polityka-prywatnosci.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+          <button type="button" id="cookie-settings" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Ustawienia cookies</button>
         </div>
       </div>
     </div>
@@ -669,7 +795,7 @@
   </script>
 
   <!-- Baner cookies (RODO) -->
-  <div id="cookie-banner" class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:inset-x-6 sm:bottom-6">
+  <div id="cookie-banner" role="region" aria-label="Zgoda na pliki cookie" tabindex="-1" class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:inset-x-6 sm:bottom-6">
     <div class="rounded-[1.4rem] bg-white/95 backdrop-blur-xl ring-1 ring-ink/10 shadow-[0_20px_60px_rgba(15,27,51,0.18)] p-5 sm:p-6">
       <p class="text-inkmuted text-[15.5px] leading-relaxed">
         Używamy plików cookie technicznych (niezbędnych) oraz — po Twojej zgodzie — Google Analytics do anonimowych statystyk ruchu. Więcej w
@@ -686,7 +812,8 @@
       var KEY = 'tg-cookie-consent';
       var banner = document.getElementById('cookie-banner');
       var saved = localStorage.getItem(KEY);
-      if (!saved) {
+      if (!saved) show();
+      function show() {
         requestAnimationFrame(function () {
           banner.classList.remove('translate-y-[150%]', 'opacity-0');
         });
@@ -694,24 +821,39 @@
       function hide() {
         banner.classList.add('translate-y-[150%]', 'opacity-0');
       }
+
+      // RODO art. 7 ust. 3: wycofanie zgody musi być tak samo łatwe jak jej udzielenie.
+      // Link w stopce kasuje zapamiętany wybór i przywraca baner.
+      // (w stopce oraz — na stronie polityki — w treści punktu o cookies)
+      var ustawienia = document.querySelectorAll('[id^="cookie-settings"]');
+      for (var u = 0; u < ustawienia.length; u++) {
+        ustawienia[u].addEventListener('click', function () {
+          try { localStorage.removeItem(KEY); } catch (e) { /* localStorage zablokowany */ }
+          show();
+          banner.scrollIntoView({ block: 'nearest' });
+          banner.focus();   // czytnik ekranu i klawiatura ladują od razu w banerze
+        });
+      }
       document.getElementById('cookie-accept').addEventListener('click', function () {
         localStorage.setItem(KEY, 'granted');
-        if (typeof gtag === 'function') {
-          gtag('consent', 'update', {
-            'ad_storage': 'granted',
-            'ad_user_data': 'granted',
-            'ad_personalization': 'granted',
-            'analytics_storage': 'granted'
-          });
-        }
-        // Skrypt Google pobieramy DOPIERO tutaj — bez zgody zero kontaktu z ich serwerami.
-        if (typeof window.wczytajGoogleAnalytics === 'function') {
-          window.wczytajGoogleAnalytics();
-        }
+        // Ta sama funkcja co przy powrocie na stronę — skrypt Google pobieramy
+        // DOPIERO tutaj, bez zgody zero kontaktu z ich serwerami.
+        if (typeof window.tgUdzielZgody === 'function') window.tgUdzielZgody();
         hide();
       });
       document.getElementById('cookie-reject').addEventListener('click', function () {
         localStorage.setItem(KEY, 'denied');
+        // Jeśli ktoś wycofuje zgodę udzieloną wcześniej, gtag.js jest już wczytany —
+        // trzeba mu powiedzieć, że od teraz obowiązuje odmowa. Przy pierwszej wizycie
+        // to nic nie zmienia, bo domyślnie i tak wszystko jest zabronione.
+        if (typeof gtag === 'function') {
+          gtag('consent', 'update', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+          });
+        }
         hide();
       });
     })();

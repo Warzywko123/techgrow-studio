@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#DCE8F7">
   <title>TechGrow Studio | Nowoczesne strony internetowe dla lokalnych firm</title>
   <meta name="description" content="TechGrow Studio projektuje, buduje i wdraża nowoczesne strony internetowe, które przyciągają klientów do lokalnych firm.">
   <meta property="og:title" content="TechGrow Studio">
   <meta property="og:description" content="Nowoczesne strony internetowe dla lokalnych firm. Od projektu po wdrożenie i SEO.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TechGrow Studio">
+  <meta property="og:locale" content="pl_PL">
   <meta property="og:url" content="https://techgrowstudio.pl/">
   <link rel="canonical" href="https://techgrowstudio.pl/">
   <meta property="og:image" content="https://techgrowstudio.pl/img/og-image.jpg">
@@ -49,23 +52,52 @@
       document.head.appendChild(s);
     };
 
+    // Jedno miejsce, które definiuje, co znaczy „odwiedzający się zgodził".
+    // Wywołują je OBIE ścieżki — kliknięcie w banerze i powrót z zapisaną zgodą —
+    // żeby nie dało się ich rozjechać (wcześniej baner dawał zgodę reklamową,
+    // a powrót na stronę już nie).
+    window.tgUdzielZgody = function () {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+      window.wczytajGoogleAnalytics();
+    };
+
     // Zgoda z poprzedniej wizyty — wczytaj od razu, bez czekania na baner.
     try {
       if (localStorage.getItem('tg-cookie-consent') === 'granted') {
-        gtag('consent', 'update', {
-          'analytics_storage': 'granted',
-          'ad_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied'
-        });
-        window.wczytajGoogleAnalytics();
+        window.tgUdzielZgody();
       }
     } catch (e) { /* localStorage zablokowany — zostaje odmowa */ }
+
+    // Konwersje: kliknięcia w telefon i e-mail (delegacja — łapie wszystkie
+    // linki tel:/mailto: na stronie). Bez zgody gtag.js w ogóle się nie wczytuje,
+    // więc zdarzenie tylko czeka w dataLayer i nigdzie nie wychodzi.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href^="mailto:"]') : null;
+      if (!a) return;
+      var isTel = a.getAttribute('href').indexOf('tel:') === 0;
+      gtag('event', isTel ? 'phone_click' : 'mail_click', {
+        link_url: a.getAttribute('href'),
+        page_path: location.pathname
+      });
+    });
   </script>
 
   <!-- Arkusz stylow zbudowany lokalnie (Tailwind + kroje pisma + ikony).
        Zrodlo: src/input.css, budowanie: npm run build:css -->
-  <link rel="stylesheet" href="css/style.css">
+  <!-- Kroje nad linią zgięcia: bez preloadu przeglądarka odkrywa je dopiero
+       po sparsowaniu arkusza, czyli o jedną rundę do serwera za późno.
+       latin-ext jest tak samo obowiązkowy jak latin — siedzą w nim polskie ą ć ę ł ń ś ź ż. -->
+  <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/space-grotesk-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/phosphor-light-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=1">
 
 
   <script type="importmap">
@@ -163,12 +195,34 @@
       background: radial-gradient(circle, rgba(255, 255, 255, .55) 0%, rgba(219, 234, 254, 0) 65%);
     }
 
-    /* Fallback bez WebGL: gradientowe tlo zamiast sceny */
+    /* Fallback bez sceny 3D (telefon albo brak WebGL): zamiast kresek zostaje
+       samo tlo, wiec siatka "papieru milimetrowego" musi byc wyrazniejsza —
+       inaczej hero jest plaska plama gradientu. */
     body.no-webgl #scene-canvas { display: none; }
     body.no-webgl .hero-glow {
       background:
         radial-gradient(ellipse 70% 55% at 65% 40%, rgba(29, 78, 216, .16), transparent 70%),
         radial-gradient(ellipse 50% 40% at 25% 80%, rgba(8, 145, 178, .08), transparent 70%);
+    }
+    /* Siatka w hero ma z-index:-1, wiec bez wlasnego kontekstu ukladania chowa sie
+       ZA tlem <body> i jest niewidoczna (sekcje .paper-field robia to samo przez
+       `isolation: isolate`). Dopoki byla scena 3D, nikt tego nie zauwazyl. */
+    body.no-webgl #hero { isolation: isolate; }
+    body.no-webgl #hero .paper-grid {
+      background-image:
+        linear-gradient(to right, rgba(29, 78, 216, .07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .07) 1px, transparent 1px),
+        linear-gradient(to right, rgba(29, 78, 216, .16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 78, 216, .16) 1px, transparent 1px);
+      -webkit-mask-image: linear-gradient(to bottom, black 62%, transparent);
+      mask-image: linear-gradient(to bottom, black 62%, transparent);
+    }
+    /* Poswiata slabsza niz w wariancie "brak WebGL na desktopie" — na telefonie
+       zjadala siatke i hero robilo sie plaska plama. */
+    body.no-webgl .hero-glow {
+      background:
+        radial-gradient(ellipse 70% 45% at 70% 30%, rgba(29, 78, 216, .10), transparent 70%),
+        radial-gradient(ellipse 55% 40% at 20% 85%, rgba(8, 145, 178, .07), transparent 70%);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -282,24 +336,24 @@
     <span class="btn-orb inline-flex items-center justify-center w-9 h-9 rounded-full bg-black/15 text-ink text-base" aria-hidden="true">&rarr;</span>
   </a>
 
-  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden min-[1500px]:block">
-    <nav class="flex items-center gap-12 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-9 py-[15px]"
+  <header class="fixed top-[30px] left-1/2 -translate-x-1/2 z-50 w-max hidden xl:block">
+    <nav class="flex items-center gap-8 rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] px-7 py-[15px]"
          aria-label="Nawigacja główna">
-      <a href="index.html" class="nav-link active font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
-      <a href="oferta.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
-      <a href="jak-pracujemy.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
-      <a href="realizacje.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
-      <a href="o-nas.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
-      <a href="kontakt.html" class="nav-link font-mono text-[18.75px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
+      <a href="index.html" class="nav-link active font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Start</a>
+      <a href="oferta.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Oferta</a>
+      <a href="jak-pracujemy.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Jak pracujemy</a>
+      <a href="realizacje.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Realizacje</a>
+      <a href="o-nas.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">O nas</a>
+      <a href="kontakt.html" class="nav-link font-mono text-[17px] text-inkmuted hover:text-ink whitespace-nowrap">Kontakt</a>
     </nav>
   </header>
 
   <!-- Hamburger (mobile/tablet) -->
-  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 min-[1500px]:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
+  <button id="mobile-menu-btn" class="fixed top-[30px] right-[30px] md:top-9 md:right-12 z-50 xl:hidden flex items-center justify-center w-[52px] h-[52px] rounded-full bg-white/70 backdrop-blur-xl ring-1 ring-ink/10" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
     <i class="ph-light ph-list text-2xl text-ink" aria-hidden="true"></i>
   </button>
 
-  <div id="mobile-menu" class="fixed inset-0 z-[70] min-[1500px]:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
+  <div id="mobile-menu" class="fixed inset-0 z-[70] xl:hidden invisible opacity-0 transition-opacity duration-300" aria-hidden="true">
     <div class="absolute inset-0 bg-ink/50 backdrop-blur-sm" data-menu-close></div>
     <div class="mobile-panel absolute top-0 right-0 h-full w-[82%] max-w-[380px] bg-paper shadow-2xl flex flex-col px-8 pt-10 pb-10 translate-x-full transition-transform duration-[400ms]" style="transition-timing-function: cubic-bezier(.32,.72,0,1)">
       <button data-menu-close class="self-end w-11 h-11 rounded-full flex items-center justify-center hover:bg-ink/5" aria-label="Zamknij menu">
@@ -332,10 +386,10 @@
       <div id="hero-copy" class="relative z-10 flex flex-col justify-center min-h-[100dvh] px-6 md:px-14 lg:px-20 max-w-[1400px] mx-auto pointer-events-none">
         <div class="max-w-2xl pointer-events-auto">
           <h1 class="font-display font-bold tracking-tight leading-[1.04] text-ink text-[clamp(2.5rem,5.4vw,4.4rem)]">
-            Strona, która <span id="hero-rotator" class="text-bp">pracuje na&nbsp;Twoją firmę.</span>
+            Strona internetowa, która <span id="hero-rotator" class="text-bp">pracuje na&nbsp;Twoją firmę.</span>
           </h1>
           <p class="mt-6 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[46ch]">
-            Projektujemy, budujemy i wdrażamy nowoczesne strony internetowe oraz aplikacje, które przyciągają klientów do lokalnych firm.
+            Projektujemy, budujemy i wdrażamy nowoczesne strony internetowe oraz aplikacje dla firm z&nbsp;Piły i&nbsp;okolic.
           </p>
           <div class="mt-9 flex flex-wrap items-center gap-4">
             <a href="tel:+48730393493"
@@ -570,10 +624,10 @@
                 <span class="w-2 h-2 rounded-full bg-ink/15"></span>
                 <span class="w-2 h-2 rounded-full bg-ink/15"></span>
                 <span class="w-2 h-2 rounded-full bg-ink/15"></span>
-                <span class="ml-3 font-mono text-[15.84px] text-inkmuted">biurorachunkowe-pila.pl</span>
+                <span class="ml-3 font-mono text-[15.84px] text-inkmuted">psychoterapeuta-pila.pl/rezerwacja</span>
               </div>
-              <img src="img/portfolio/baginski.webp" width="1280" height="800" loading="lazy"
-                   alt="Strona główna biura rachunkowego Bagiński"
+              <img src="img/portfolio/dard-panel.webp" width="1280" height="800" loading="lazy"
+                   alt="Panel rezerwacji wizyt online zbudowany dla gabinetu psychoterapii"
                    class="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]">
             </div>
           </a>
@@ -646,19 +700,20 @@
       <div class="flex flex-wrap items-center justify-between gap-6">
         <img src="img/logo-nav.webp" width="560" height="227" alt="TechGrow Studio" class="h-11 md:h-14 w-auto opacity-90">
         <nav class="flex flex-wrap gap-x-7 gap-y-2" aria-label="Nawigacja w stopce">
-          <a href="index.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
-          <a href="oferta.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
-          <a href="jak-pracujemy.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
-          <a href="realizacje.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
-          <a href="o-nas.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
-          <a href="kontakt.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
+          <a href="index.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Start</a>
+          <a href="oferta.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Oferta</a>
+          <a href="jak-pracujemy.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Jak pracujemy</a>
+          <a href="realizacje.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Realizacje</a>
+          <a href="o-nas.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">O nas</a>
+          <a href="kontakt.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Kontakt</a>
         </nav>
       </div>
       <div class="mt-8 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-3">
         <span class="font-mono text-[16.56px] text-inkmuted">&copy; 2026 TechGrow Studio</span>
         <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
           <span class="font-mono text-[15.84px] text-inkmuted">Piła i okolice</span>
-          <a href="polityka-prywatnosci.html" class="font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+          <a href="polityka-prywatnosci.html" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Polityka prywatności</a>
+          <button type="button" id="cookie-settings" class="footer-link font-mono text-[15.84px] text-inkmuted hover:text-ink transition-colors duration-300">Ustawienia cookies</button>
         </div>
       </div>
     </div>
@@ -858,12 +913,56 @@
           'rośnie w aplikację, kiedy jej potrzebujesz.',
         ];
         var phraseIndex = 0;
+
+        // Rezerwacja miejsca na najdluzsza fraze. Bez tego nagłówek rosnie i maleje
+        // co 3,6 s, spychajac akapit i przyciski w dol — to widoczny przeskok i
+        // rosnacy CLS (na 320 px bylo 0,075 po 20 s i przybywalo z kazdym obrotem).
+        var naglowek = rotator.closest('h1') || rotator.parentElement;
+        var aktywne = phrases;
+        function zarezerwujWysokosc() {
+          var oryginal = rotator.textContent;
+          naglowek.style.minHeight = '';
+          var wysokosci = [];
+          for (var i = 0; i < phrases.length; i++) {
+            rotator.textContent = phrases[i];
+            wysokosci.push(naglowek.getBoundingClientRect().height);
+          }
+          rotator.textContent = oryginal;
+
+          // Na waskim ekranie najdluzsza fraza zajmuje o caly wiersz wiecej niz
+          // reszta — rezerwa pod nia zostawialaby widoczna dziure pod naglowkiem
+          // przez wiekszosc czasu. Wtedy tej frazy po prostu nie pokazujemy.
+          var min = Math.min.apply(null, wysokosci);
+          aktywne = window.innerWidth < 480
+            ? phrases.filter(function (_, i) { return wysokosci[i] === min; })
+            : phrases;
+          if (!aktywne.length) aktywne = phrases;
+
+          var max = 0;
+          for (var j = 0; j < phrases.length; j++) {
+            if (aktywne.indexOf(phrases[j]) !== -1) max = Math.max(max, wysokosci[j]);
+          }
+          naglowek.style.minHeight = Math.ceil(max) + 'px';
+          if (aktywne.indexOf(rotator.textContent) === -1) {
+            phraseIndex = 0;
+            rotator.textContent = aktywne[0];
+          }
+        }
+        zarezerwujWysokosc();
+        // Po dogranich krojow pisma litery zmieniaja szerokosc — przeliczamy jeszcze raz
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(zarezerwujWysokosc);
+        var czekaNaResize;
+        window.addEventListener('resize', function () {
+          clearTimeout(czekaNaResize);
+          czekaNaResize = setTimeout(zarezerwujWysokosc, 150);
+        });
+
         setInterval(function () {
           gsap.to(rotator, {
             autoAlpha: 0, duration: 0.38, ease: 'power2.in', overwrite: 'auto',
             onComplete: function () {
-              phraseIndex = (phraseIndex + 1) % phrases.length;
-              rotator.textContent = phrases[phraseIndex];
+              phraseIndex = (phraseIndex + 1) % aktywne.length;
+              rotator.textContent = aktywne[phraseIndex];
               gsap.to(rotator, { autoAlpha: 1, duration: 0.55, ease: 'power2.out', overwrite: 'auto' });
             },
           });
@@ -875,10 +974,15 @@
 
   <!-- ==================== SCENA 3D + CHOREOGRAFIA SCROLLA ==================== -->
   <script type="module">
-    import * as THREE from 'three';
-
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isMobile = window.innerWidth < 768;
+
+    // Na telefonie NIE sciagamy three.js (675 KB, ponad polowa wagi tej strony).
+    // Scena 3D to ozdoba hero, a na waskim ekranie i tak byla tylko tlem tekstu.
+    // Bez niej hero jest zwyklym ekranem, hero nie jest przypinane, wiec uzytkownik
+    // dojezdza do tresci ~2,6 ekranu wczesniej. Reszta strony dziala bez zmian:
+    // ponizej i tak jest gotowa sciezka awaryjna `no-webgl` (brak WebGL w przegladarce).
+    const THREE = isMobile ? null : await import('three');
 
     // ---------- Paleta sceny ----------
     const COL = {
@@ -892,12 +996,16 @@
       ring: 0xC77E10,
     };
 
-    // ---------- Renderer (z fallbackiem gdy brak WebGL) ----------
+    // ---------- Renderer (z fallbackiem gdy telefon albo brak WebGL) ----------
     const canvas = document.getElementById('scene-canvas');
     let renderer;
-    try {
-      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    } catch (e) {
+    if (THREE) {
+      try {
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      } catch (e) {
+        document.body.classList.add('no-webgl');
+      }
+    } else {
       document.body.classList.add('no-webgl');
     }
 
@@ -1003,8 +1111,10 @@
         // Rozrzut poczatkowy w przestrzeni (szerszy na panoramicznych ekranach)
         const spread = isMobile ? 0.55 : 1;
         const spreadX = isMobile ? 1 : Math.min(1.7, Math.max(1, (window.innerWidth / window.innerHeight) * 0.62));
-        // X przesuniete od tekstu: mniej fragmentow zalewa lewa kolumne z naglowkiem
-        outer.position.set(rng(isMobile ? -8 : -3, 8) * spread * spreadX, rng(-6.2, 7.4) * spread, rng(-6, 2.5));
+        // X przesuniete od tekstu: mniej fragmentow zalewa lewa kolumne z naglowkiem.
+        // Dolna granica podniesiona z -3 do 2.2, bo naglowek "Strona internetowa, ktora..."
+        // jest szerszy od poprzedniego i kreski zaczely przecinac litery.
+        outer.position.set(rng(isMobile ? -8 : 2.2, 8) * spread * spreadX, rng(-6.2, 7.4) * spread, rng(-6, 2.5));
         outer.rotation.set(rng(-0.5, 0.5), rng(-0.7, 0.7), rng(-0.45, 0.45));
 
         const frag = {
@@ -1107,7 +1217,8 @@
           inner.add(buildLines(positions, mat));
           outer.add(inner);
           const sx = (window.innerWidth / window.innerHeight) > 1.6 ? 12 : 9;
-          outer.position.set(rng(-sx * 0.4, sx), rng(-6.8, 7.6), rng(-7, 2));
+          // Luzne szkice tez trzymamy z dala od kolumny z naglowkiem (bylo -sx*0.4).
+          outer.position.set(rng(1.5, sx), rng(-6.8, 7.6), rng(-7, 2));
           outer.rotation.set(rng(-0.5, 0.5), rng(-0.8, 0.8), rng(-0.5, 0.5));
           debris.push({
             outer, inner, mat,
@@ -1250,6 +1361,20 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
 
+      // ---------- Czytelnosc naglowka na telefonie ----------
+      // Na desktopie scena jest odsunieta w prawo, wiec omija kolumne z tekstem.
+      // Na waskim ekranie tekst zajmuje cala szerokosc i kreski przecinaja litery.
+      // Rozwiazanie: na starcie scena jest bladym znakiem wodnym i dochodzi do
+      // pelnej sily dokladnie wtedy, kiedy tekst hero odjezdza (pozycja 2-10 osi czasu).
+      const krycieSceny = { moc: isMobile ? 0.3 : 1 };
+      const bazoweKrycie = lineMats.map(m => m.opacity);
+      function odswiezKrycieSceny() {
+        for (let i = 0; i < lineMats.length; i++) {
+          lineMats[i].opacity = bazoweKrycie[i] * krycieSceny.moc;
+        }
+      }
+      odswiezKrycieSceny();
+
       // ============================================================
       // WARIANT STATYCZNY: prefers-reduced-motion
       // Scena zlozona, bez pinu i bez animacji scrollem
@@ -1313,6 +1438,10 @@
           },
         }, 3);
         tl.to('#hero-copy', { autoAlpha: 0, y: -36, duration: 8, ease: 'power2.in' }, 2);
+        // Telefon: scena rozjasnia sie w tym samym momencie, w ktorym tekst odjezdza
+        if (isMobile) {
+          tl.to(krycieSceny, { moc: 1, duration: 8, ease: 'power2.in', onUpdate: odswiezKrycieSceny }, 2);
+        }
 
         // Etykieta 1
         tl.fromTo('#phase-1', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 6);
@@ -1458,7 +1587,7 @@
   </script>
 
   <!-- Baner cookies (RODO) -->
-  <div id="cookie-banner" class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:inset-x-6 sm:bottom-6">
+  <div id="cookie-banner" role="region" aria-label="Zgoda na pliki cookie" tabindex="-1" class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:inset-x-6 sm:bottom-6">
     <div class="rounded-[1.4rem] bg-white/95 backdrop-blur-xl ring-1 ring-ink/10 shadow-[0_20px_60px_rgba(15,27,51,0.18)] p-5 sm:p-6">
       <p class="text-inkmuted text-[15.5px] leading-relaxed">
         Używamy plików cookie technicznych (niezbędnych) oraz — po Twojej zgodzie — Google Analytics do anonimowych statystyk ruchu. Więcej w
@@ -1475,7 +1604,8 @@
       var KEY = 'tg-cookie-consent';
       var banner = document.getElementById('cookie-banner');
       var saved = localStorage.getItem(KEY);
-      if (!saved) {
+      if (!saved) show();
+      function show() {
         requestAnimationFrame(function () {
           banner.classList.remove('translate-y-[150%]', 'opacity-0');
         });
@@ -1483,24 +1613,39 @@
       function hide() {
         banner.classList.add('translate-y-[150%]', 'opacity-0');
       }
+
+      // RODO art. 7 ust. 3: wycofanie zgody musi być tak samo łatwe jak jej udzielenie.
+      // Link w stopce kasuje zapamiętany wybór i przywraca baner.
+      // (w stopce oraz — na stronie polityki — w treści punktu o cookies)
+      var ustawienia = document.querySelectorAll('[id^="cookie-settings"]');
+      for (var u = 0; u < ustawienia.length; u++) {
+        ustawienia[u].addEventListener('click', function () {
+          try { localStorage.removeItem(KEY); } catch (e) { /* localStorage zablokowany */ }
+          show();
+          banner.scrollIntoView({ block: 'nearest' });
+          banner.focus();   // czytnik ekranu i klawiatura ladują od razu w banerze
+        });
+      }
       document.getElementById('cookie-accept').addEventListener('click', function () {
         localStorage.setItem(KEY, 'granted');
-        if (typeof gtag === 'function') {
-          gtag('consent', 'update', {
-            'ad_storage': 'granted',
-            'ad_user_data': 'granted',
-            'ad_personalization': 'granted',
-            'analytics_storage': 'granted'
-          });
-        }
-        // Skrypt Google pobieramy DOPIERO tutaj — bez zgody zero kontaktu z ich serwerami.
-        if (typeof window.wczytajGoogleAnalytics === 'function') {
-          window.wczytajGoogleAnalytics();
-        }
+        // Ta sama funkcja co przy powrocie na stronę — skrypt Google pobieramy
+        // DOPIERO tutaj, bez zgody zero kontaktu z ich serwerami.
+        if (typeof window.tgUdzielZgody === 'function') window.tgUdzielZgody();
         hide();
       });
       document.getElementById('cookie-reject').addEventListener('click', function () {
         localStorage.setItem(KEY, 'denied');
+        // Jeśli ktoś wycofuje zgodę udzieloną wcześniej, gtag.js jest już wczytany —
+        // trzeba mu powiedzieć, że od teraz obowiązuje odmowa. Przy pierwszej wizycie
+        // to nic nie zmienia, bo domyślnie i tak wszystko jest zabronione.
+        if (typeof gtag === 'function') {
+          gtag('consent', 'update', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+          });
+        }
         hide();
       });
     })();
