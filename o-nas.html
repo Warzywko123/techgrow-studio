@@ -97,7 +97,7 @@
   <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/phosphor-light-subset.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
 
 
   <style>
@@ -334,28 +334,41 @@
               <h1 class="word-reveal mt-3 font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
                 Poznajmy się.
               </h1>
-              <p class="about-el mt-6 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[58ch]">
+              <p class="about-el mt-6 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[46ch]">
                 Nazywam się Tymon Grochowski. Studiuję informatykę na Politechnice Poznańskiej
                 i buduję strony internetowe dla firm z Piły i okolic. TechGrow Studio to moje
                 autorskie studio: każdy projekt prowadzę osobiście, od pierwszej rozmowy po wdrożenie
                 i opiekę po starcie.
               </p>
-              <p class="about-el mt-4 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[58ch]">
+              <p class="about-el mt-4 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[46ch]">
                 To, że wciąż studiuję, to mój atut: jestem na bieżąco z najnowszymi technologiami
                 i możliwościami sieci, zanim staną się standardem. I potrafię je wykorzystać tak,
                 żeby Twoja strona wyprzedzała konkurencję, a nie ją goniła. A ponieważ jestem na
                 miejscu, zawsze możemy po prostu usiąść i porozmawiać o Twoim projekcie.
               </p>
+              <p class="about-el mt-4 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[46ch]">
+                Do tej pory powstało sześć projektów dla lokalnych firm: strony gabinetów
+                psychoterapii i&nbsp;biur rachunkowych oraz system rezerwacji wizyt online.
+                Wszystkie działają i&nbsp;wszystkie możesz obejrzeć w&nbsp;<a href="realizacje.html" class="text-bp underline underline-offset-2 hover:text-bpbright">Realizacjach</a>.
+              </p>
 
-              <h2 class="word-reveal about-el mt-14 font-display font-bold tracking-tight leading-[1.1] text-ink text-2xl md:text-3xl">
+            </div>
+
+          </div>
+
+          <!-- Powody wyjete spod kolumny z tekstem: w siatce 12-kolumnowej mialy
+               tylko 236 px szerokosci (155 px przy 1024 px), czyli ok. 17 znakow
+               w wierszu. Na pelnej szerokosci sekcji wypada ok. dwa razy tyle. -->
+          <div class="mt-16 md:mt-20">
+              <h2 class="word-reveal about-el font-display font-bold tracking-tight leading-[1.1] text-ink text-2xl md:text-3xl">
                 Dlaczego warto wybrać TechGrow Studio?
               </h2>
-              <p class="about-el mt-3 text-inkmuted text-[19.2px] leading-relaxed max-w-[58ch]">
+              <p class="about-el mt-3 text-inkmuted text-[19.2px] leading-relaxed max-w-[51ch]">
                 Kilka powodów, dla których lokalne firmy decydują się na współpracę ze mną.
               Najlepiej widać to na <a href="realizacje.html" class="text-bp underline underline-offset-2 hover:text-bpbright">stronach, które już działają</a>.
               </p>
 
-              <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8">
+              <div class="mt-8 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-8">
                 <div class="about-el border-t border-ink/10 pt-5">
                   <i class="ph-light ph-handshake text-[30px] text-bp" aria-hidden="true"></i>
                   <h3 class="mt-3 font-display font-semibold text-lg md:text-xl text-ink">Jedna osoba od A do Z</h3>
@@ -413,8 +426,6 @@
                   </a>
                 </div>
               </div>
-            </div>
-
           </div>
         </div>
       </section>
