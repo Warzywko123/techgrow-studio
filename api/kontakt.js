@@ -77,6 +77,9 @@ function chceJson(req) {
 }
 
 function odpowiedz(req, res, kod, tresc) {
+  // Odpowiedzi endpointu nie sa cachowalne: niosa tresc zalezna od tego, co
+  // przyszlo w zgloszeniu. Domyslnie Vercel daje tu `public, max-age=0`.
+  res.setHeader('Cache-Control', 'no-store');
   if (chceJson(req)) return res.status(kod).json(tresc);
 
   // Sciezka bez JavaScriptu: przegladarka wyslala zwykly POST i oczekuje strony.

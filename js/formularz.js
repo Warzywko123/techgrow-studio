@@ -31,8 +31,17 @@
 
     function pokazBlad(tekst) {
       if (!status) return;
+      if (!tekst) {
+        status.textContent = '';
+        status.hidden = true;
+        return;
+      }
+      // Kolejnosc ma znaczenie: `role="alert"` jest ogłaszany przez czytnik
+      // ekranu dopiero, gdy tresc zmienia sie w obszarze JUZ widocznym.
+      // Przy odwrotnej kolejnosci (najpierw tekst, potem odkrycie) komunikat
+      // potrafi zostac przemilczany.
+      status.hidden = false;
       status.textContent = tekst;
-      status.hidden = !tekst;
     }
 
     form.addEventListener('submit', function (zdarzenie) {
@@ -68,10 +77,16 @@
         przycisk.textContent = 'Wysyłam…';
       }
 
+      // Bez tego przy zawieszonym polaczeniu przycisk zostaje na „Wysyłam…"
+      // w nieskonczonosc. Funkcja na Vercelu i tak konczy sie po 10 s.
+      var kontroler = typeof AbortController === 'function' ? new AbortController() : null;
+      var stoper = kontroler ? setTimeout(function () { kontroler.abort(); }, 15000) : null;
+
       fetch('/api/kontakt', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(dane)
+        body: JSON.stringify(dane),
+        signal: kontroler ? kontroler.signal : undefined
       })
         .then(function (odpowiedz) {
           return odpowiedz
@@ -81,7 +96,9 @@
             })
             .then(function (tresc) {
               if (!odpowiedz.ok || tresc.ok !== true) {
-                throw new Error(tresc.blad || AWARIA);
+                var blad = new Error(tresc.blad || AWARIA);
+                blad.odSerwera = true;   // odroznia komunikat dla czlowieka od bledu technicznego
+                throw blad;
               }
             });
         })
@@ -102,9 +119,13 @@
           }
         })
         .catch(function (blad) {
-          pokazBlad(blad && blad.message ? blad.message : AWARIA);
+          // Tylko komunikaty od naszego endpointu nadaja sie do pokazania.
+          // Blad sieci niesie tekst prosto z przegladarki — po angielsku
+          // („Failed to fetch") i bez zadnej wartosci dla odwiedzajacego.
+          pokazBlad(blad && blad.odSerwera ? blad.message : AWARIA);
         })
         .then(function () {
+          if (stoper) clearTimeout(stoper);
           form.setAttribute('data-wysylam', '0');
           if (przycisk) {
             przycisk.disabled = false;
