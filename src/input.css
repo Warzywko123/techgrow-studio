@@ -40,6 +40,46 @@
   inset: -10px -8px;
 }
 
+/* --- Formularz kontaktowy (kontakt.html, oferta.html) ---
+   Pola powtarzaja sie kilkanascie razy na dwoch podstronach, wiec zamiast
+   przepisywac te same dziesiec klas Tailwinda przy kazdym <input>, siedza tutaj.
+   Obramowanie w fokusie jest grubsze, nie tylko kolorowe - samo przejscie
+   z ink/15 na bp bylo nizej niz wymagane 3:1 (WCAG 1.4.11 Non-text Contrast). */
+.pole-etykieta {
+  @apply block font-mono text-[15.84px] text-inkmuted;
+}
+.pole {
+  @apply mt-1.5 w-full rounded-xl border border-ink/20 bg-white px-4 py-3;
+  @apply text-ink text-[17px] leading-normal;
+  @apply transition-colors duration-200;
+}
+/* /80, nie mniej: przy /55 podpowiedz w polu miala kontrast 2,6:1, a niesie
+   realna tresc („Jak sie do Ciebie zwracac?"), wiec obowiazuje ja prog 4,5:1. */
+.pole::placeholder {
+  @apply text-inkmuted/80;
+}
+.pole:hover {
+  @apply border-ink/35;
+}
+.pole:focus {
+  @apply outline-none border-bp ring-2 ring-bp/30;
+}
+.pole:user-invalid {
+  @apply border-red-600/60;
+}
+textarea.pole {
+  @apply resize-y min-h-[7.5rem];
+}
+/* Pulapka na boty: pole musi byc dostepne dla przegladarki (boty pomijaja
+   display:none), ale niewidoczne i poza kolejnoscia Taba dla czlowieka. */
+.pulapka {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* Uwaga na przyszlosc: NIE ustawiac tu `display: inline-block` na .ph-light,
    zeby zarezerwowac miejsce na ikone. Wyglada to na naprawe przeskoku ukladu
    przy dogrywaniu fontu ikon, ale inline-block inaczej liczy wysokosc wiersza

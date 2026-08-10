@@ -98,7 +98,7 @@
   <link rel="preload" href="fonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/phosphor-light-subset.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 
 
   <script type="importmap">
@@ -1633,13 +1633,25 @@
       var banner = document.getElementById('cookie-banner');
       var saved = localStorage.getItem(KEY);
       if (!saved) show();
+      // Baner jest przyklejony do dolu ekranu, wiec na waskich ekranach przykrywa
+      // to, co konczy strone — sprawdzone: na 320-390 px lezal na przycisku
+      // „Wyslij wiadomosc" w formularzu i nie dalo sie go dotknac przy pierwszej
+      // wizycie. Dlatego na czas widocznosci banera dokladamy dol strony o jego
+      // wysokosc; po zamknieciu odstep wraca do zera.
+      function odsunDol() {
+        document.body.style.paddingBottom = (banner.offsetHeight + 32) + 'px';
+      }
       function show() {
         requestAnimationFrame(function () {
           banner.classList.remove('translate-y-[150%]', 'opacity-0');
+          odsunDol();
         });
+        window.addEventListener('resize', odsunDol);
       }
       function hide() {
         banner.classList.add('translate-y-[150%]', 'opacity-0');
+        window.removeEventListener('resize', odsunDol);
+        document.body.style.paddingBottom = '';
       }
 
       // RODO art. 7 ust. 3: wycofanie zgody musi być tak samo łatwe jak jej udzielenie.

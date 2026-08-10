@@ -1,6 +1,44 @@
 # TechGrow Studio — strona firmowa
 
-Statyczny HTML. Zero frameworków, zero backendu. Vercel serwuje pliki tak, jak leżą.
+Statyczny HTML. Zero frameworków. Vercel serwuje pliki tak, jak leżą — jedynym
+wyjątkiem jest `api/kontakt.js` (obsługa formularza), opisany niżej.
+
+## Formularz kontaktowy
+
+Formularz jest na `kontakt.html` i `oferta.html`. Front to `js/formularz.js`
+(wysyłka fetchem, bez przeładowania), backend to `api/kontakt.js` — jedna funkcja
+serverless, którą Vercel wystawia automatycznie z katalogu `api/`. Maila wysyła
+[Resend](https://resend.com) przez zwykły `fetch` do ich HTTP API, więc **nie ma
+tu żadnej zależności npm** i `node_modules` na produkcji dalej nie istnieje.
+
+### Zmienne środowiskowe (Vercel → Settings → Environment Variables)
+
+| zmienna | wymagana | domyślnie | uwagi |
+|---|---|---|---|
+| `RESEND_API_KEY` | **tak** | — | klucz z resend.com; bez niego endpoint zwraca 500 |
+| `KONTAKT_TO` | nie | `techgrowstudio@gmail.com` | adres, na który idą zgłoszenia |
+| `KONTAKT_FROM` | nie | `Formularz TechGrow <onboarding@resend.dev>` | patrz niżej |
+
+⚠️ **Dopóki domena nie jest zweryfikowana w Resendzie**, nadawcą musi zostać
+`onboarding@resend.dev`, a odbiorcą **wyłącznie adres właściciela konta Resend**.
+Czyli: konto w Resendzie trzeba założyć na `techgrowstudio@gmail.com`. Dopiero po
+dodaniu rekordów DNS domeny w Resendzie można ustawić `KONTAKT_FROM` na własny
+adres (np. `kontakt@techgrowstudio.pl`) i wysyłać gdziekolwiek.
+
+### Zabezpieczenia (bez CAPTCHY, bo ta wysyłałaby dane do Google przed zgodą)
+
+- **honeypot** — pole `firma` ukryte klasą `.pulapka`; wypełnione = udawany sukces,
+  mail nie leci;
+- **pomiar czasu** — formularz wysłany szybciej niż 3 s od wczytania strony jest
+  traktowany jak bot (też udawany sukces);
+- **limit 3 zgłoszeń / 10 minut na adres IP** — pamięć procesu, więc przy
+  wygaszaniu funkcji bywa resetowana; to sito, nie zapora;
+- walidacja po stronie serwera niezależna od tej w przeglądarce, usuwanie znaków
+  sterujących (CRLF) i `reply_to` tylko z adresu, który przeszedł walidację.
+
+Testy funkcji odpalisz bez Vercela — `node` z podstawionym `fetch`, patrz historia
+zmian. Lokalny `npx serve` **nie uruchamia** katalogu `api/`, więc na `localhost`
+formularz pokaże komunikat o błędzie wysyłki. To normalne.
 
 ## Ważne: CSS się buduje
 
@@ -29,7 +67,7 @@ Bez podbicia numeru stały odwiedzający dostanie nowy HTML ze starym arkuszem �
 czyli rozjechany układ. Przy każdej zmianie w `src/`:
 
 ```bash
-npm run build:css && sed -i '' 's/style\.css?v=[0-9]*/style.css?v=2/' *.html
+npm run build:css && sed -i '' 's/style\.css?v=[0-9]*/style.css?v=7/' *.html
 ```
 
 (podstaw kolejny numer; sprawdź `grep -c 'style.css?v=' *.html` — musi być 8 trafień).
