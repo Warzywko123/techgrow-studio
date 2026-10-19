@@ -97,8 +97,8 @@
   <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/phosphor-light-subset.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="preload" href="fonts/phosphor-light-subset.woff2?v=d2b84d2f" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=7">
 
 
   <style>
@@ -533,136 +533,97 @@
             </nav>
           </div>
 
-          <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-5" style="grid-auto-flow: dense;">
+          <!-- Karty maja ten sam rozmiar, zeby siatka nie robila dziur. Kotwice (#kampanie,
+               #sklepy, #social-media) sa celami linkow z kampanii Google Ads.
+               Nie nazywac zadnej "google-ads" ani "reklama": blokery reklam
+               ukrywaja takie elementy i karta znika odwiedzajacym z AdBlockiem. -->
+          <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
 
-            <div class="svc-card md:col-span-2 rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
-              <div class="svc-core card-grid-bg h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7 md:p-9">
+            <div class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+              <div class="svc-core card-grid-bg h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-browsers text-[26px]"></i>
                 </span>
-                <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Nowoczesne strony internetowe</h2>
-                <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[46ch]">
-                  Projektuję i buduję strony, które dobrze wyglądają na każdym ekranie, ładują się
-                  błyskawicznie i prowadzą klienta prosto do kontaktu. Od pierwszego szkicu po gotową,
-                  działającą stronę.
-                </p>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Nowoczesne strony internetowe</h2>
+                <p class="mt-3 flex-1 text-inkmuted text-[16.56px] leading-relaxed">Strony, które dobrze wyglądają na każdym ekranie, ładują się błyskawicznie i&nbsp;prowadzą klienta prosto do kontaktu.</p>
+                <div class="mt-6 pt-4 border-t border-ink/10 font-mono text-[15.84px] text-bp">od 1000 zł</div>
               </div>
             </div>
 
-            <div class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
-              <div class="svc-core h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
+            <div id="social-media" class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+              <div class="svc-core card-grid-bg h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
-                  <i class="ph-light ph-magic-wand text-[26px]"></i>
+                  <i class="ph-light ph-share-network text-[26px]"></i>
                 </span>
-                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Grafiki nowej generacji</h2>
-                <p class="mt-3 text-inkmuted text-[18px] leading-relaxed">
-                  Loga, identyfikacja wizualna, grafiki na stronę, do social mediów i reklam.
-                  Tworzone najnowszymi narzędziami, dopasowane do charakteru Twojej marki.
-                </p>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Prowadzenie social mediów</h2>
+                <p class="mt-3 flex-1 text-inkmuted text-[16.56px] leading-relaxed">Facebook i&nbsp;Instagram prowadzone regularnie: plan postów, grafiki, teksty, publikacja i&nbsp;odpowiedzi na komentarze.</p>
+                <div class="mt-6 pt-4 border-t border-ink/10 font-mono text-[15.84px] text-bp">od 400 zł / mies.</div>
               </div>
             </div>
 
             <div class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
-              <div class="svc-core h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
+              <div class="svc-core card-grid-bg h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-map-pin text-[26px]"></i>
                 </span>
                 <h2 class="mt-5 font-display font-semibold text-xl text-ink">Pozycjonowanie i wizytówka Google</h2>
-                <p class="mt-3 text-inkmuted text-[18px] leading-relaxed">
-                  Optymalizuję stronę i&nbsp;profil Google Twojej firmy tak, żeby klienci
-                  z&nbsp;Piły i&nbsp;okolic znajdowali Cię pierwsi. Lokalna widoczność to moja specjalność.
-                </p>
+                <p class="mt-3 flex-1 text-inkmuted text-[16.56px] leading-relaxed">Optymalizuję stronę i&nbsp;profil Google firmy tak, żeby klienci z&nbsp;Piły i&nbsp;okolic znajdowali Cię pierwsi.</p>
+                <div class="mt-6 pt-4 border-t border-ink/10 font-mono text-[15.84px] text-bp">w każdym pakiecie</div>
               </div>
             </div>
 
-            <!-- id="google-ads" jest celem linku do podstrony w kampanii Ads
-                 („Google Ads i wizytowka"). Tak samo jak przy #sklepy: bez kotwicy
-                 klikniecie ladowalo na gorze Oferty. scroll-padding-top: 120px
-                 juz jest, wiec naglowek nie schowa sie pod belka nawigacji. -->
-            <div id="google-ads" class="svc-card md:col-span-2 rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
-              <div class="svc-core h-full rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white/85 to-bp/[0.06] p-7 md:p-9">
+            <div id="kampanie" class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+              <div class="svc-core card-grid-bg h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-chart-line-up text-[26px]"></i>
                 </span>
-                <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Kampanie Google Ads</h2>
-                <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[46ch]">
-                  Ustawiam i&nbsp;prowadzę kampanie reklamowe, które ściągają na stronę osoby
-                  z&nbsp;Piły i&nbsp;okolic faktycznie szukające Twoich usług. Budżet pod kontrolą,
-                  wyniki czarno na białym.
-                </p>
-              </div>
-            </div>
-
-            <div class="svc-card md:col-span-2 rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
-              <div class="svc-core card-grid-bg h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7 md:p-9">
-                <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
-                  <i class="ph-light ph-app-window text-[26px]"></i>
-                </span>
-                <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Aplikacje internetowe na miarę</h2>
-                <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[46ch]">
-                  Gdy Excel i papierowe notatki przestają wystarczać, buduję aplikacje, które
-                  realnie usprawniają pracę w Twojej firmie — mniej ręcznej roboty, mniej pomyłek,
-                  więcej czasu na to, co ważne. Panel klienta, system do zarządzania zamówieniami
-                  czy wewnętrzne narzędzie — szyte dokładnie pod to, jak pracujesz na co dzień.
-                </p>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Kampanie Google Ads</h2>
+                <p class="mt-3 flex-1 text-inkmuted text-[16.56px] leading-relaxed">Reklamy, które ściągają na stronę osoby z&nbsp;Piły i&nbsp;okolic szukające Twoich usług. Budżet pod kontrolą.</p>
+                <div class="mt-6 pt-4 border-t border-ink/10 font-mono text-[15.84px] text-bp">pakiet Biznes i VIP</div>
               </div>
             </div>
 
             <div class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
-              <div class="svc-core h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
+              <div class="svc-core card-grid-bg h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
+                <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                  <i class="ph-light ph-magic-wand text-[26px]"></i>
+                </span>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Grafiki i logo</h2>
+                <p class="mt-3 flex-1 text-inkmuted text-[16.56px] leading-relaxed">Logo, identyfikacja wizualna, grafiki na stronę, do social mediów i&nbsp;reklam — dopasowane do charakteru marki.</p>
+                <div class="mt-6 pt-4 border-t border-ink/10 font-mono text-[15.84px] text-bp">w każdym pakiecie</div>
+              </div>
+            </div>
+
+            <div class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+              <div class="svc-core card-grid-bg h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
                 <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                   <i class="ph-light ph-calendar-check text-[26px]"></i>
                 </span>
                 <h2 class="mt-5 font-display font-semibold text-xl text-ink">Systemy rezerwacji wizyt</h2>
-                <p class="mt-3 text-inkmuted text-[18px] leading-relaxed">
-                  Klienci umawiają się sami — online, o&nbsp;dowolnej porze. Kalendarz wolnych terminów,
-                  automatyczne potwierdzenia i&nbsp;przypomnienia. Mniej telefonów, mniej pustych okienek
-                  w&nbsp;grafiku. Taki system działa już w&nbsp;gabinecie psychoterapii w&nbsp;Pile.
-                </p>
+                <p class="mt-3 flex-1 text-inkmuted text-[16.56px] leading-relaxed">Klienci umawiają się sami, o&nbsp;dowolnej porze. Potwierdzenia i&nbsp;przypomnienia wychodzą automatycznie.</p>
+                <div class="mt-6 pt-4 border-t border-ink/10 font-mono text-[15.84px] text-bp">wycena indywidualna</div>
               </div>
             </div>
 
-            <div id="social-media" class="svc-card md:col-span-3 rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
-              <div class="svc-core h-full rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white/85 to-bp/[0.06] p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-6">
-                <div class="flex-1">
-                  <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
-                    <i class="ph-light ph-share-network text-[26px]"></i>
-                  </span>
-                  <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Prowadzenie social mediów</h2>
-                  <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[62ch]">
-                    Facebook i&nbsp;Instagram prowadzone regularnie, bez Twojego udziału. Planuję posty,
-                    przygotowuję grafiki i&nbsp;teksty, publikuję je i&nbsp;odpowiadam na komentarze.
-                    Klienci z&nbsp;Piły i&nbsp;okolic widzą, że firma działa — a&nbsp;Ty masz czas na swoją pracę.
-                  </p>
-                </div>
-                <span class="shrink-0 self-start md:self-center inline-flex items-center rounded-full ring-1 ring-bp/30 bg-bp/5 px-4 py-2 font-mono text-[15.84px] text-bp whitespace-nowrap">
-                  od 400 zł / mies.
+            <div class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+              <div class="svc-core card-grid-bg h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
+                <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                  <i class="ph-light ph-app-window text-[26px]"></i>
                 </span>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Aplikacje internetowe na miarę</h2>
+                <p class="mt-3 flex-1 text-inkmuted text-[16.56px] leading-relaxed">Panele klienta, systemy zamówień i&nbsp;narzędzia wewnętrzne, które zastępują Excela i&nbsp;papierowe notatki.</p>
+                <div class="mt-6 pt-4 border-t border-ink/10 font-mono text-[15.84px] text-bp">wycena indywidualna</div>
               </div>
             </div>
 
-            <!-- id, zeby dalo sie kierowac reklame na fraze „sklep internetowy pila"
-                 prosto tutaj (adres koncowy na poziomie slowa kluczowego), zamiast
-                 na gore Oferty. Strona ma juz scroll-padding-top: 120px, wiec
-                 kotwica nie schowa sie pod belka nawigacji. -->
-            <div id="sklepy" class="svc-card md:col-span-3 rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
-              <div class="svc-core card-grid-bg h-full rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-6">
-                <div class="flex-1">
-                  <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
-                    <i class="ph-light ph-storefront text-[26px]"></i>
-                  </span>
-                  <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Sklepy internetowe</h2>
-                  <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[62ch]">
-                    Sklep internetowy to strona, która musi jeszcze przyjmować płatności, liczyć stany
-                    magazynowe i&nbsp;dogadywać się z&nbsp;kurierem. Buduję takie sklepy dla firm z&nbsp;Piły
-                    i&nbsp;okolic — od katalogu na kilkanaście produktów po większy asortyment z&nbsp;wariantami.
-                    Płatności online, wysyłka, faktury i&nbsp;panel, w&nbsp;którym sam dodasz towar bez mojej pomocy.
-                    Zakres bywa bardzo różny, dlatego każdy sklep wyceniam indywidualnie.
-                  </p>
-                </div>
-                <span class="shrink-0 self-start md:self-center inline-flex items-center rounded-full ring-1 ring-bp/30 bg-bp/5 px-4 py-2 font-mono text-[15.84px] text-bp whitespace-nowrap">
-                  Wycena indywidualna
+            <div id="sklepy" class="svc-card rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+              <div class="svc-core card-grid-bg h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-white/85 p-7">
+                <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                  <i class="ph-light ph-storefront text-[26px]"></i>
                 </span>
+                <h2 class="mt-5 font-display font-semibold text-xl text-ink">Sklepy internetowe</h2>
+                <p class="mt-3 flex-1 text-inkmuted text-[16.56px] leading-relaxed">Płatności online, wysyłka, faktury i&nbsp;panel, w&nbsp;którym sam dodasz towar — od kilkunastu produktów wzwyż.</p>
+                <div class="mt-6 pt-4 border-t border-ink/10 font-mono text-[15.84px] text-bp">wycena indywidualna</div>
               </div>
             </div>
 
@@ -1011,6 +972,14 @@
       });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
     })();
+  </script>
+
+  <script>
+    // Stare linki z reklam wskazuja na #google-ads; ta kotwica zniknela, bo blokery ja ukrywaly.
+    if (location.hash === '#google-ads') {
+      history.replaceState(null, '', '#kampanie');
+      addEventListener('load', function () { document.getElementById('kampanie').scrollIntoView(); });
+    }
   </script>
 
   <!-- ==================== ANIMACJE ==================== -->
