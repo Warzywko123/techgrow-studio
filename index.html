@@ -98,7 +98,7 @@
   <link rel="preload" href="fonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/phosphor-light-subset.woff2?v=d2b84d2f" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=9">
 
 
   <script type="importmap">
@@ -232,6 +232,28 @@
         transition-duration: .01ms !important;
       }
     }
+    /* Reflektor pod kursorem na kartach uslug (wspolrzedne ustawia skrypt) */
+    .spot::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+      background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(199, 126, 16, .14), transparent 65%);
+      transition: opacity .4s ease;
+    }
+    .spot:hover::after { opacity: 1; }
+    /* Fala wokol plywajacego telefonu: dwa impulsy, potem pauza */
+    .call-wave {
+      position: absolute; inset: 0; border-radius: 9999px; background: #C77E10;
+      animation: callWave 3.2s ease-out infinite; pointer-events: none;
+    }
+    .call-wave.d2 { animation-delay: .45s; }
+    @keyframes callWave {
+      0% { transform: scale(1); opacity: .45; }
+      45%, 100% { transform: scale(1.9); opacity: 0; }
+    }
+    /* Kreska laczaca kroki na desktopie: rysuje sie od lewej */
+    .steps-line { transform-origin: left center; }
+    @media (prefers-reduced-motion: reduce) {
+      .call-wave { display: none; }
+    }
   </style>
   <!-- Dane strukturalne (schema.org) — opisują firmę i stronę w formie zrozumiałej dla Google -->
   <script type="application/ld+json">
@@ -336,11 +358,21 @@
   <div id="scroll-progress" class="fixed top-0 left-0 w-full h-[3px] bg-gold z-[60] origin-left" style="transform: scaleX(0)" aria-hidden="true"></div>
 
   <!-- Plywajacy przycisk telefonu (pojawia sie po zjechaniu ponizej hero) -->
-  <a href="tel:+48730393493" id="float-call"
-     class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-gold hover:bg-goldhover text-white shadow-[0_8px_24px_rgba(199,126,16,0.35)]"
-     aria-label="Zadzwoń: +48 730 393 493">
-    <i class="ph-light ph-phone-call text-2xl" aria-hidden="true"></i>
-  </a>
+  <div id="float-call-wrap" class="fixed bottom-6 right-6 z-50">
+    <div id="call-bubble" class="absolute bottom-full right-0 mb-3 w-max max-w-[230px] rounded-2xl rounded-br-md bg-white ring-1 ring-ink/10 shadow-[0_10px_30px_rgba(15,27,51,0.14)] pl-4 pr-9 py-3 text-ink text-[15px] leading-snug invisible opacity-0 translate-y-2 transition-all duration-500" role="status">
+      Masz pytanie? Zadzwoń — odbieram codziennie <span class="font-semibold whitespace-nowrap">8:00–20:00</span>.
+      <button type="button" id="call-bubble-close" class="absolute top-1.5 right-1.5 inline-flex items-center justify-center w-7 h-7 rounded-full text-inkmuted hover:text-ink hover:bg-ink/5" aria-label="Zamknij podpowiedź">
+        <i class="ph-light ph-x text-base" aria-hidden="true"></i>
+      </button>
+    </div>
+    <a href="tel:+48730393493" id="float-call"
+       class="relative flex items-center justify-center w-14 h-14 rounded-full bg-gold hover:bg-goldhover text-white shadow-[0_8px_24px_rgba(199,126,16,0.35)]"
+       aria-label="Zadzwoń: +48 730 393 493">
+      <span class="call-wave" aria-hidden="true"></span>
+      <span class="call-wave d2" aria-hidden="true"></span>
+      <i class="relative ph-light ph-phone-call text-2xl" aria-hidden="true"></i>
+    </a>
+  </div>
 
   <!-- ==================== NAWIGACJA: plywajaca szklana pigulka ==================== -->
   <a href="index.html" class="fixed top-[30px] left-[30px] md:top-9 md:left-12 z-50 flex items-center whitespace-nowrap">
@@ -422,6 +454,10 @@
               Zobacz, co robię
             </a>
           </div>
+          <p class="mt-5 flex items-start gap-2 text-inkmuted text-[16.56px] leading-snug max-w-[46ch]">
+            <i class="ph-light ph-check-circle text-goldtext text-[20px] shrink-0" aria-hidden="true"></i>
+            <span>Projekt strony głównej przygotuję za darmo — zaliczkę płacisz dopiero, gdy Ci się spodoba.</span>
+          </p>
         </div>
       </div>
 
@@ -441,7 +477,7 @@
       </svg>
 
       <!-- Szkice blueprint w tle (delikatny parallax) -->
-      <svg class="bp-accent hidden md:block absolute right-[5%] top-[4%] w-80 opacity-[0.28]" viewBox="0 0 200 90" fill="none" aria-hidden="true" data-speed="-22">
+      <svg class="bp-accent hidden md:block absolute right-[5%] top-[8%] w-80 opacity-[0.28]" viewBox="0 0 200 90" fill="none" aria-hidden="true" data-speed="-22">
         <g stroke="#1D4ED8" stroke-width="1.4">
           <rect x="30" y="10" width="150" height="70"/>
           <line x1="30" y1="26" x2="180" y2="26"/>
@@ -450,19 +486,43 @@
           <line x1="6" y1="10" x2="14" y2="10"/><line x1="6" y1="80" x2="14" y2="80"/>
         </g>
       </svg>
-      <svg class="bp-accent hidden md:block absolute left-[3%] top-[46%] w-64 opacity-[0.24]" viewBox="0 0 160 90" fill="none" aria-hidden="true" data-speed="18">
+      <svg class="bp-accent hidden md:block absolute right-[6%] top-[37%] w-64 opacity-[0.24]" viewBox="0 0 160 90" fill="none" aria-hidden="true" data-speed="18">
         <g stroke="#1D4ED8" stroke-width="1.4">
           <rect x="10" y="10" width="140" height="70"/>
           <line x1="10" y1="10" x2="150" y2="80"/><line x1="150" y1="10" x2="10" y2="80"/>
         </g>
       </svg>
-      <svg class="bp-accent hidden md:block absolute right-[7%] top-[75%] w-72 opacity-[0.26]" viewBox="0 0 200 60" fill="none" aria-hidden="true" data-speed="-14">
+      <svg class="bp-accent hidden md:block absolute right-[7%] top-[57%] w-72 opacity-[0.26]" viewBox="0 0 200 60" fill="none" aria-hidden="true" data-speed="-14">
         <g stroke="#1D4ED8" stroke-width="1.4">
           <line x1="10" y1="30" x2="190" y2="30" stroke-dasharray="6 5"/>
           <line x1="10" y1="20" x2="10" y2="40"/>
           <line x1="190" y1="20" x2="190" y2="40"/>
         </g>
       </svg>
+
+    <!-- ==================== LICZBY (licza od zera po wejsciu na ekran) ==================== -->
+    <section id="liczby" class="relative pt-16 md:pt-20 px-6" aria-label="TechGrow Studio w liczbach">
+      <div class="max-w-[1400px] mx-auto rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+        <dl class="grid grid-cols-2 md:grid-cols-4 rounded-[calc(1.4rem-0.375rem)] bg-white/95 divide-ink/10 md:divide-x">
+          <div class="stat flex flex-col-reverse justify-end p-5 md:p-8 text-center">
+            <dt class="mt-1 font-mono text-[13.5px] md:text-[15.84px] text-inkmuted">działających projektów</dt>
+            <dd class="font-display font-bold text-ink text-4xl md:text-5xl"><span data-count="6">6</span></dd>
+          </div>
+          <div class="stat flex flex-col-reverse justify-end p-5 md:p-8 text-center">
+            <dt class="mt-1 font-mono text-[13.5px] md:text-[15.84px] text-inkmuted">strona od</dt>
+            <dd class="font-display font-bold text-ink text-4xl md:text-5xl"><span data-count="1000">1000</span>&nbsp;zł</dd>
+          </div>
+          <div class="stat flex flex-col-reverse justify-end p-5 md:p-8 text-center border-t md:border-t-0 border-ink/10">
+            <dt class="mt-1 font-mono text-[13.5px] md:text-[15.84px] text-inkmuted">maks. czas odpowiedzi</dt>
+            <dd class="font-display font-bold text-ink text-4xl md:text-5xl"><span data-count="24">24</span>&nbsp;h</dd>
+          </div>
+          <div class="stat flex flex-col-reverse justify-end p-5 md:p-8 text-center border-t md:border-t-0 border-ink/10">
+            <dt class="mt-1 font-mono text-[13.5px] md:text-[15.84px] text-inkmuted">codziennie pod telefonem</dt>
+            <dd class="font-display font-bold text-ink text-4xl md:text-5xl">8–20</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
 
     <!-- ==================== CO ROBIMY (skrot uslug) ==================== -->
     <section id="co-robimy" class="relative py-20 md:py-28 px-6" aria-label="Co robimy">
@@ -479,7 +539,7 @@
 
         <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
           <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
-            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+            <div class="spot svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
               <i class="ph-light ph-browsers pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
               <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                 <i class="ph-light ph-browsers text-[24px]"></i>
@@ -492,7 +552,7 @@
             </div>
           </a>
           <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
-            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+            <div class="spot svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
               <i class="ph-light ph-magic-wand pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
               <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                 <i class="ph-light ph-magic-wand text-[24px]"></i>
@@ -505,7 +565,7 @@
             </div>
           </a>
           <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
-            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+            <div class="spot svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
               <i class="ph-light ph-map-pin pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
               <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                 <i class="ph-light ph-map-pin text-[24px]"></i>
@@ -518,7 +578,7 @@
             </div>
           </a>
           <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
-            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+            <div class="spot svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
               <i class="ph-light ph-chart-line-up pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
               <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                 <i class="ph-light ph-chart-line-up text-[24px]"></i>
@@ -531,7 +591,7 @@
             </div>
           </a>
           <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
-            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+            <div class="spot svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
               <i class="ph-light ph-app-window pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
               <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                 <i class="ph-light ph-app-window text-[24px]"></i>
@@ -544,7 +604,7 @@
             </div>
           </a>
           <a href="oferta.html" class="teaser-chip svc-card group rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5 block">
-            <div class="svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
+            <div class="spot svc-core relative overflow-hidden h-full flex flex-col rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white to-bp/[0.07] p-6">
               <i class="ph-light ph-calendar-check pointer-events-none absolute -top-6 -right-6 text-[112px] leading-none text-bp/[0.06] group-hover:text-bp/10 transition-colors duration-500" aria-hidden="true"></i>
               <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
                 <i class="ph-light ph-calendar-check text-[24px]"></i>
@@ -560,6 +620,60 @@
 
         <a href="oferta.html" class="mt-10 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-5 py-2.5 font-mono text-[18px] text-bp transition-colors duration-300">
           Zobacz pełną ofertę i cennik &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== 3 KROKI ==================== -->
+    <section id="kroki" class="relative py-20 md:py-28 px-6" aria-label="Jak wygląda współpraca">
+      <div class="max-w-[1400px] mx-auto">
+        <div class="kroki-head max-w-3xl">
+          <h2 class="word-reveal font-display font-bold tracking-tight leading-[1.06] text-ink text-[clamp(2rem,4.2vw,3.4rem)]">
+            Od rozmowy do strony w&nbsp;3&nbsp;krokach.
+          </h2>
+          <p class="mt-5 text-inkmuted text-[19.2px] md:text-[21.6px] leading-relaxed max-w-[52ch]">
+            Bez technicznego żargonu i&nbsp;bez ryzyka. Ty prowadzisz firmę, ja zajmuję się resztą.
+          </p>
+        </div>
+
+        <ol class="relative mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+          <span class="steps-line hidden md:block absolute left-[3.5rem] right-[calc(33.333%-0.5rem)] top-7 h-px border-t border-dashed border-bp/40" aria-hidden="true"></span>
+          <li class="krok relative flex md:block gap-5">
+            <span class="steps-link md:hidden absolute left-7 top-14 -bottom-10 border-l border-dashed border-bp/40" aria-hidden="true"></span>
+            <span class="relative z-10 shrink-0 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white ring-1 ring-ink/10 text-bp shadow-sm" aria-hidden="true">
+              <i class="ph-light ph-phone-call text-[28px]"></i>
+            </span>
+            <div class="md:mt-6">
+              <span class="font-mono text-[15.84px] tracking-[0.22em] text-goldtext font-semibold">KROK 01</span>
+              <h3 class="mt-1.5 font-display font-semibold text-xl md:text-2xl text-ink">Rozmowa</h3>
+              <p class="mt-2 text-inkmuted text-[17.28px] leading-relaxed max-w-[38ch]">Dzwonisz albo piszesz. W kilkanaście minut ustalamy, czego potrzebuje Twoja firma i ile to będzie kosztować. Bez zobowiązań.</p>
+            </div>
+          </li>
+          <li class="krok relative flex md:block gap-5">
+            <span class="steps-link md:hidden absolute left-7 top-14 -bottom-10 border-l border-dashed border-bp/40" aria-hidden="true"></span>
+            <span class="relative z-10 shrink-0 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white ring-1 ring-ink/10 text-bp shadow-sm" aria-hidden="true">
+              <i class="ph-light ph-palette text-[28px]"></i>
+            </span>
+            <div class="md:mt-6">
+              <span class="font-mono text-[15.84px] tracking-[0.22em] text-goldtext font-semibold">KROK 02</span>
+              <h3 class="mt-1.5 font-display font-semibold text-xl md:text-2xl text-ink">Projekt za darmo</h3>
+              <p class="mt-2 text-inkmuted text-[17.28px] leading-relaxed max-w-[38ch]">Przygotowuję projekt strony głównej. Zaliczkę wpłacasz dopiero wtedy, gdy projekt Ci się spodoba.</p>
+            </div>
+          </li>
+          <li class="krok relative flex md:block gap-5">
+            <span class="relative z-10 shrink-0 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white ring-1 ring-ink/10 text-bp shadow-sm" aria-hidden="true">
+              <i class="ph-light ph-rocket-launch text-[28px]"></i>
+            </span>
+            <div class="md:mt-6">
+              <span class="font-mono text-[15.84px] tracking-[0.22em] text-goldtext font-semibold">KROK 03</span>
+              <h3 class="mt-1.5 font-display font-semibold text-xl md:text-2xl text-ink">Strona w sieci</h3>
+              <p class="mt-2 text-inkmuted text-[17.28px] leading-relaxed max-w-[38ch]">Buduję całość, podpinam domenę, Google i wizytówkę. Strona trafia do sieci, a Ty dostajesz klientów, nie problemy.</p>
+            </div>
+          </li>
+        </ol>
+
+        <a href="jak-pracujemy.html" class="mt-12 inline-flex items-center rounded-full border border-bp/30 hover:border-bp hover:bg-bp/5 px-5 py-2.5 font-mono text-[18px] text-bp transition-colors duration-300">
+          Szczegóły i FAQ &rarr;
         </a>
       </div>
     </section>
@@ -1543,8 +1657,34 @@
         });
       });
 
+      // ---------- Liczby licza od zera, gdy pasek wjedzie na ekran ----------
+      gsap.utils.toArray('#liczby [data-count]').forEach(function (el) {
+        var cel = parseInt(el.getAttribute('data-count'), 10);
+        var licznik = { v: 0 };
+        el.textContent = '0';
+        gsap.to(licznik, {
+          v: cel, duration: 1.6, ease: 'power2.out',
+          scrollTrigger: { trigger: '#liczby', start: 'top 85%', once: true },
+          onUpdate: function () { el.textContent = Math.round(licznik.v); },
+        });
+      });
+      gsap.from('#liczby .stat', {
+        autoAlpha: 0, y: 24, duration: 0.8, ease: 'power3.out', stagger: 0.1,
+        scrollTrigger: { trigger: '#liczby', start: 'top 85%', once: true },
+      });
+
+      // ---------- 3 kroki: kreska rysuje sie, kroki wchodza po kolei ----------
+      var kroki = gsap.timeline({ scrollTrigger: { trigger: '#kroki ol', start: 'top 80%', once: true } });
+      kroki.from('#kroki .steps-line', { scaleX: 0, duration: 1.4, ease: 'power2.inOut' }, 0);
+      kroki.from('#kroki .steps-link', { scaleY: 0, transformOrigin: 'center top', duration: 0.6, ease: 'power2.inOut', stagger: 0.35 }, 0.4);
+      kroki.from('#kroki .krok', { autoAlpha: 0, y: 30, duration: 0.8, ease: 'power3.out', stagger: 0.35 }, 0.1);
+      gsap.from('#kroki .kroki-head p', {
+        autoAlpha: 0, y: 28, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: '#kroki', start: 'top 80%', once: true },
+      });
+
       // ---------- Plywajacy przycisk telefonu (widoczny po zjechaniu ponizej hero) ----------
-      var floatCall = document.getElementById('float-call');
+      var floatCall = document.getElementById('float-call-wrap');
       if (floatCall) {
         gsap.set(floatCall, { autoAlpha: 0 });
         ScrollTrigger.create({
@@ -1554,6 +1694,46 @@
         });
       }
     }
+
+    // ---------- Reflektor pod kursorem na kartach uslug ----------
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      document.querySelectorAll('.spot').forEach(function (el) {
+        el.addEventListener('mousemove', function (e) {
+          var r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        });
+      });
+    }
+
+    // ---------- Dymek przy telefonie: raz na wizyte, po 20 s, gdy przycisk jest widoczny ----------
+    (function () {
+      var dymek = document.getElementById('call-bubble');
+      var przycisk = document.getElementById('float-call-wrap');
+      if (!dymek || !przycisk) return;
+      var KLUCZ = 'tg-call-bubble';
+      try { if (sessionStorage.getItem(KLUCZ)) return; } catch (e) {}
+      function schowaj() {
+        dymek.classList.add('invisible', 'opacity-0', 'translate-y-2');
+        try { sessionStorage.setItem(KLUCZ, '1'); } catch (e) {}
+      }
+      document.getElementById('call-bubble-close').addEventListener('click', schowaj);
+      przycisk.querySelector('a').addEventListener('click', schowaj);
+      var proby = 0;
+      function pokaz() {
+        // Przycisk pokazuje sie dopiero ponizej hero; czekamy, az bedzie widoczny
+        // (i az zniknie baner cookies, ktory na telefonie lezy w tym samym rogu).
+        var baner = document.getElementById('cookie-banner');
+        var banerWidoczny = baner && !baner.classList.contains('opacity-0');
+        if (getComputedStyle(przycisk).visibility === 'hidden' || banerWidoczny) {
+          if (++proby < 60) setTimeout(pokaz, 3000);
+          return;
+        }
+        dymek.classList.remove('invisible', 'opacity-0', 'translate-y-2');
+        setTimeout(schowaj, 12000);
+      }
+      setTimeout(pokaz, 20000);
+    })();
   </script>
 
   <!-- Baner cookies (RODO) -->
