@@ -27,7 +27,10 @@
     });
 
     gtag('js', new Date());
-    gtag('config', 'G-C57C89N57B', { 'anonymize_ip': true });
+    // Bez automatycznego page_view: config wykonuje sie przed aktualizacja zgody,
+    // wiec wejscie szloby do Google jako „bez zgody" i nie trafialo do raportow.
+    // page_view wysyla tgUdzielZgody(), juz po przyznaniu zgody.
+    gtag('config', 'G-C57C89N57B', { 'anonymize_ip': true, 'send_page_view': false });
 
     // Dociąga gtag.js. Polecenia powyżej czekają w dataLayer i wykonają się
     // dopiero po wczytaniu — dlatego można je kolejkować przed pobraniem skryptu.
@@ -51,6 +54,7 @@
         'ad_personalization': 'granted',
         'analytics_storage': 'granted'
       });
+      gtag('event', 'page_view');
       window.wczytajGoogleAnalytics();
     };
 
