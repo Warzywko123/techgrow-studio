@@ -1,5 +1,5 @@
 /* Ikony Phosphor - tylko te, ktorych uzywamy (font odchudzony lokalnie).
-   Wygenerowane przez tools/zbuduj-ikony.py. Ikon: 33. */
+   Wygenerowane przez tools/zbuduj-ikony.py. Ikon: 34. */
 
 @font-face {
   font-family: 'Phosphor-Light';
@@ -51,6 +51,7 @@
 .ph-light.ph-plus:before { content: "\e3d4"; }
 .ph-light.ph-question:before { content: "\e3e8"; }
 .ph-light.ph-rocket-launch:before { content: "\e3fe"; }
+.ph-light.ph-share-network:before { content: "\e408"; }
 .ph-light.ph-stack:before { content: "\e466"; }
 .ph-light.ph-storefront:before { content: "\e470"; }
 .ph-light.ph-x:before { content: "\e4f6"; }

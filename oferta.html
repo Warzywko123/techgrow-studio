@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#DCE8F7">
   <title>Strony internetowe Piła i Poznań — cennik | TechGrow Studio</title>
-  <meta name="description" content="Strony i sklepy internetowe, aplikacje, systemy rezerwacji wizyt, grafiki, SEO i Google Ads dla lokalnych firm. Pełna oferta i przejrzysty cennik TechGrow Studio.">
+  <meta name="description" content="Strony i sklepy internetowe, aplikacje, systemy rezerwacji wizyt, grafiki, social media, SEO i Google Ads dla lokalnych firm. Pełna oferta i przejrzysty cennik TechGrow Studio.">
   <meta property="og:title" content="Strony internetowe Piła i Poznań — cennik | TechGrow Studio">
-  <meta property="og:description" content="Strony i sklepy internetowe, aplikacje, systemy rezerwacji wizyt, grafiki, SEO i Google Ads dla lokalnych firm — pełna oferta i cennik pakietów.">
+  <meta property="og:description" content="Strony i sklepy internetowe, aplikacje, systemy rezerwacji wizyt, grafiki, social media, SEO i Google Ads dla lokalnych firm — pełna oferta i cennik pakietów.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TechGrow Studio">
   <meta property="og:locale" content="pl_PL">
@@ -283,6 +283,32 @@
                   "@type": "Service",
                   "name": "Kampanie Google Ads",
                   "description": "Prowadzenie płatnych kampanii w wyszukiwarce Google dla lokalnych firm.",
+                  "provider": {
+                    "@id": "https://techgrowstudio.pl/#organizacja"
+                  },
+                  "areaServed": {
+                    "@type": "City",
+                    "name": "Piła"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Prowadzenie social mediów",
+                  "description": "Prowadzenie profili firmy na Facebooku i Instagramie: plan, grafiki, teksty i publikacja postów.",
+                  "offers": {
+                    "@type": "Offer",
+                    "priceCurrency": "PLN",
+                    "priceSpecification": {
+                      "@type": "UnitPriceSpecification",
+                      "minPrice": "400",
+                      "priceCurrency": "PLN",
+                      "billingIncrement": 1,
+                      "unitCode": "MON"
+                    }
+                  },
                   "provider": {
                     "@id": "https://techgrowstudio.pl/#organizacja"
                   },
@@ -596,6 +622,25 @@
               </div>
             </div>
 
+            <div id="social-media" class="svc-card md:col-span-3 rounded-[1.4rem] bg-ink/[0.04] ring-1 ring-ink/10 p-1.5">
+              <div class="svc-core h-full rounded-[calc(1.4rem-0.375rem)] bg-gradient-to-br from-white/85 to-bp/[0.06] p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-6">
+                <div class="flex-1">
+                  <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bp/10 text-bp" aria-hidden="true">
+                    <i class="ph-light ph-share-network text-[26px]"></i>
+                  </span>
+                  <h2 class="mt-5 font-display font-semibold text-xl md:text-2xl text-ink">Prowadzenie social mediów</h2>
+                  <p class="mt-3 text-inkmuted text-[18px] leading-relaxed max-w-[62ch]">
+                    Facebook i&nbsp;Instagram prowadzone regularnie, bez Twojego udziału. Planuję posty,
+                    przygotowuję grafiki i&nbsp;teksty, publikuję je i&nbsp;odpowiadam na komentarze.
+                    Klienci z&nbsp;Piły i&nbsp;okolic widzą, że firma działa — a&nbsp;Ty masz czas na swoją pracę.
+                  </p>
+                </div>
+                <span class="shrink-0 self-start md:self-center inline-flex items-center rounded-full ring-1 ring-bp/30 bg-bp/5 px-4 py-2 font-mono text-[15.84px] text-bp whitespace-nowrap">
+                  od 400 zł / mies.
+                </span>
+              </div>
+            </div>
+
             <!-- id, zeby dalo sie kierowac reklame na fraze „sklep internetowy pila"
                  prosto tutaj (adres koncowy na poziomie slowa kluczowego), zamiast
                  na gore Oferty. Strona ma juz scroll-padding-top: 120px, wiec
@@ -835,6 +880,7 @@
                     <option>Aplikacja lub system rezerwacji</option>
                     <option>Google Ads i wizytówka Google</option>
                     <option>Grafiki i logo</option>
+                    <option>Prowadzenie social mediów</option>
                     <option>Coś innego</option>
                   </select>
                 </div>
@@ -1080,16 +1126,14 @@
   </script>
 
   <!-- Baner cookies (RODO) -->
-  <div id="cookie-banner" role="region" aria-label="Zgoda na pliki cookie" tabindex="-1" class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:inset-x-6 sm:bottom-6">
-    <div class="rounded-[1.4rem] bg-white/95 backdrop-blur-xl ring-1 ring-ink/10 shadow-[0_20px_60px_rgba(15,27,51,0.18)] p-5 sm:p-6">
-      <p class="text-inkmuted text-[15.5px] leading-relaxed">
-        Używam plików cookie technicznych (niezbędnych) oraz — po Twojej zgodzie — Google Analytics do anonimowych statystyk ruchu. Więcej w
-        <a href="polityka-prywatnosci.html" class="text-bp underline underline-offset-2 hover:text-bpbright">polityce prywatności</a>.
+  <div id="cookie-banner" role="region" aria-label="Zgoda na pliki cookie" tabindex="-1" class="fixed inset-x-3 bottom-3 z-[70] mx-auto max-w-xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:bottom-5">
+    <div class="rounded-2xl bg-white/95 backdrop-blur-xl ring-1 ring-ink/10 shadow-[0_10px_30px_rgba(15,27,51,0.14)] px-4 py-3 flex items-center gap-3">
+      <p class="flex-1 text-inkmuted text-[13.5px] leading-snug">
+        Cookies i&nbsp;Google Analytics — tylko za zgodą.
+        <a href="polityka-prywatnosci.html" class="text-bp underline underline-offset-2 hover:text-bpbright">Szczegóły</a>
       </p>
-      <div class="mt-4 flex flex-col sm:flex-row gap-3">
-        <button id="cookie-accept" type="button" class="btn-primary flex-1 sm:flex-none rounded-full bg-gold hover:bg-goldhover px-6 py-2.5 text-white font-semibold text-[15.5px]">Akceptuję</button>
-        <button id="cookie-reject" type="button" class="btn-ghost flex-1 sm:flex-none rounded-full border border-ink/25 hover:border-ink/45 hover:bg-white/60 px-6 py-2.5 text-ink font-medium text-[15.5px]">Tylko niezbędne</button>
-      </div>
+      <button id="cookie-reject" type="button" class="btn-ghost shrink-0 rounded-full px-3 py-1.5 text-inkmuted hover:text-ink font-medium text-[13.5px]">Odrzuć</button>
+      <button id="cookie-accept" type="button" class="btn-primary shrink-0 rounded-full bg-gold hover:bg-goldhover px-4 py-1.5 text-white font-semibold text-[13.5px]">Akceptuję</button>
     </div>
   </div>
   <script>
