@@ -6,7 +6,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url('../fonts/phosphor-light-subset.woff2') format('woff2');
+  src: url('../fonts/phosphor-light-subset.woff2?v=d2b84d2f') format('woff2');
 }
 
 .ph-light {

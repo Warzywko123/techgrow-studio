@@ -9,6 +9,7 @@ Uruchom z katalogu projektu:
 
 Wynik: fonts/phosphor-light-subset.woff2 + src/ikony.css
 """
+import hashlib
 import pathlib
 import re
 import shutil
@@ -60,6 +61,14 @@ subprocess.run([pyftsubset, str(ttf), f"--unicodes={punkty}", "--flavor=woff2",
                 "--layout-features=", "--no-hinting", "--desubroutinize",
                 f"--output-file={wyjscie}"], check=True)
 
+# Font idzie z Cache-Control: immutable (vercel.json), wiec nowa wersja musi
+# miec nowy adres. Ten sam adres musi stac w preloadzie, inaczej pobierze sie dwa razy.
+wersja = hashlib.sha256(wyjscie.read_bytes()).hexdigest()[:8]
+adres = f"fonts/phosphor-light-subset.woff2?v={wersja}"
+for p in BAZA.glob("*.html"):
+    t = p.read_text(encoding="utf-8")
+    p.write_text(re.sub(r'fonts/phosphor-light-subset\.woff2(\?v=[0-9a-f]+)?"', adres + '"', t), encoding="utf-8")
+
 # 4. Minimalny CSS
 linie = [
     "/* Ikony Phosphor - tylko te, ktorych uzywamy (font odchudzony lokalnie).",
@@ -70,7 +79,7 @@ linie = [
     "  font-style: normal;",
     "  font-weight: 400;",
     "  font-display: block;",
-    "  src: url('../fonts/phosphor-light-subset.woff2') format('woff2');",
+    f"  src: url('../{adres}') format('woff2');",
     "}",
     "",
     ".ph-light {",
@@ -92,4 +101,4 @@ shutil.rmtree(tmp, ignore_errors=True)
 
 print(f"Font: {wyjscie.stat().st_size / 1024:.1f} KB")
 print("Ikony:", ", ".join(wybrane))
-print("\nTeraz uruchom: npm run build:css")
+print("\nTeraz uruchom: npm run build:css i podbij ?v= przy css/style.css w plikach HTML")
