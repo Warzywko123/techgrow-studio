@@ -98,7 +98,7 @@
   <link rel="preload" href="fonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/phosphor-light-subset.woff2?v=d2b84d2f" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=8">
 
 
   <script type="importmap">
@@ -146,7 +146,6 @@
     .nav-link.active { color: #0F1B33; }
     .nav-link.active::after { transform: scaleX(1); }
 
-    .phase-label { opacity: 0; visibility: hidden; }
 
     a:focus-visible, button:focus-visible {
       outline: 2px solid #A96A0C; outline-offset: 3px; border-radius: 4px;
@@ -401,7 +400,7 @@
       <div class="hero-glow" aria-hidden="true"></div>
 
       <!-- Tresc hero: lewa kolumna -->
-      <div id="hero-copy" class="relative z-10 flex flex-col justify-center min-h-[100dvh] px-6 md:px-14 lg:px-20 max-w-[1400px] mx-auto pointer-events-none">
+      <div id="hero-copy" class="relative z-10 flex flex-col justify-center min-h-[100dvh] pt-28 pb-12 px-6 md:px-14 lg:px-20 max-w-[1400px] mx-auto pointer-events-none">
         <div class="max-w-2xl pointer-events-auto">
           <h1 class="font-display font-bold tracking-tight leading-[1.04] text-ink text-[clamp(2.5rem,5.4vw,4.4rem)]">
             Strona internetowa, która <span id="hero-rotator" class="text-bp">pracuje na&nbsp;Twoją firmę.</span>
@@ -426,42 +425,6 @@
         </div>
       </div>
 
-      <!-- Etykiety faz animacji (HUD) -->
-      <div class="absolute bottom-12 md:bottom-14 left-6 md:left-14 lg:left-20 z-10 pointer-events-none" aria-hidden="true">
-        <div class="relative h-32 md:h-36 lg:h-40 w-[300px] sm:w-[380px] md:w-[440px] lg:w-[500px]">
-          <div id="phase-1" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
-            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-goldtext font-semibold">FAZA 01 / 04</span>
-            <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Projekt i architektura</h2>
-            <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Każdy projekt zaczynam od przemyślanej struktury strony.</p>
-          </div>
-          <div id="phase-2" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
-            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-goldtext font-semibold">FAZA 02 / 04</span>
-            <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Budowa interfejsu</h2>
-            <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Elementy trafiają dokładnie tam, gdzie będą pracować.</p>
-          </div>
-          <div id="phase-3" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
-            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-goldtext font-semibold">FAZA 03 / 04</span>
-            <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Animacje i treść</h2>
-            <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Projekt nabiera koloru, ruchu i charakteru.</p>
-          </div>
-          <div id="phase-4" class="phase-label absolute inset-0 pl-5 border-l-2 border-gold/70">
-            <span class="block font-mono text-[15.84px] md:text-[17.28px] tracking-[0.22em] text-goldtext font-semibold">FAZA 04 / 04</span>
-            <h2 class="mt-2 font-display font-bold tracking-tight leading-[1.05] text-ink text-2xl md:text-3xl lg:text-4xl">Wdrożenie i SEO</h2>
-            <p class="mt-2.5 text-[19.2px] md:text-[21.6px] text-inkmuted leading-snug">Strona trafia do sieci, szybka i widoczna w Google.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pionowa szyna postepu (desktop) -->
-      <div class="hidden md:block absolute right-8 lg:right-12 top-1/2 -translate-y-1/2 z-10 pointer-events-none" aria-hidden="true">
-        <div class="relative h-52 w-px bg-ink/15">
-          <div id="progress-fill" class="absolute top-0 left-0 w-px bg-gold" style="height: 0%"></div>
-          <div class="progress-tick absolute -left-[2.5px] w-1.5 h-1.5 rounded-full bg-ink/25" style="top: 0%"></div>
-          <div class="progress-tick absolute -left-[2.5px] w-1.5 h-1.5 rounded-full bg-ink/25" style="top: 33%"></div>
-          <div class="progress-tick absolute -left-[2.5px] w-1.5 h-1.5 rounded-full bg-ink/25" style="top: 66%"></div>
-          <div class="progress-tick absolute -left-[2.5px] w-1.5 h-1.5 rounded-full bg-ink/25" style="top: 100%"></div>
-        </div>
-      </div>
     </section>
 
     <!-- ==================== POLE PAPIERU: wspolne tlo sekcji uslug i kontaktu ==================== -->
@@ -826,9 +789,8 @@
       });
 
       // Uwaga: podswietlanie nav, pasek postepu, naglowki "word-reveal", parallax zdjecia
-      // i plywajacy telefon zaleza od finalnej (dlugiej) wysokosci strony po przypieciu
-      // hero w scenie 3D - ich kod znajduje sie w drugim skrypcie (module), uruchamianym
-      // po ustawieniu pina, zeby ScrollTrigger liczyl pozycje na poprawnym layoucie.
+      // i plywajacy telefon sa w drugim skrypcie (module), uruchamianym po zbudowaniu
+      // sceny 3D, zeby ScrollTrigger liczyl pozycje na gotowym layoucie.
 
       var hoverFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -1335,6 +1297,9 @@
       let timelineProgress = 0;
       let particlesOn = true; // drobinki plyna od startu (widocznosc steruje opacity materialu)
 
+      const oddalenie = isMobile ? 1 : 1.45;
+      const przesuniecie = isMobile ? 0 : 0.23;
+
       function render() {
         const t = clock.getElapsedTime();
         const dt = Math.min(clock.getDelta ? 0.016 : 0.016, 0.05);
@@ -1381,8 +1346,14 @@
           attr.needsUpdate = true;
         }
 
-        camera.position.set(camPos.x, camPos.y, camPos.z);
+        camera.position.set(camPos.x, camPos.y, camPos.z * oddalenie);
         camera.lookAt(camLook.x, camLook.y, 0);
+        // Tekst hero zostaje na ekranie przez cala animacje, wiec na desktopie
+        // obraz sceny jest przesuniety w prawo o czesc szerokosci kadru.
+        if (przesuniecie) {
+          const w = window.innerWidth, h = window.innerHeight;
+          camera.setViewOffset(w, h, -w * przesuniecie, 0, w, h);
+        }
         renderer.render(scene, camera);
       }
 
@@ -1426,7 +1397,9 @@
         window.addEventListener('resize', render);
       } else {
         // ============================================================
-        // PELNA CHOREOGRAFIA: Lenis + GSAP ScrollTrigger (pin + scrub)
+        // PELNA CHOREOGRAFIA: scena sklada sie sama po wejsciu na strone
+        // (wczesniej napedzal ja scroll z przypietym hero — tekst i przyciski
+        // znikaly, a do reszty strony trzeba bylo przewinac kilka ekranow)
         // ============================================================
         gsap.registerPlugin(ScrollTrigger);
 
@@ -1436,27 +1409,16 @@
         gsap.ticker.lagSmoothing(0);
         window.lenis = lenis;
 
-        const pinLength = isMobile ? 260 : 420; // % wysokosci ekranu napedzajace scene
-
         const drawProxy = { p: 0 };
         const colorProxy = { t: 0 };
         const blue = new THREE.Color(COL.line);
         const cyan = new THREE.Color(COL.lineBright);
 
         const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#hero',
-            start: 'top top',
-            end: '+=' + pinLength + '%',
-            scrub: 1,
-            pin: true,
-            onUpdate(self) {
-              timelineProgress = self.progress;
-              const fill = document.getElementById('progress-fill');
-              if (fill) fill.style.height = (self.progress * 100) + '%';
-            },
-          },
+          paused: true,
+          onUpdate() { timelineProgress = tl.progress(); },
         });
+        tl.timeScale(100 / 11); // cala choreografia (100 jednostek) w ~11 s
 
         // ---------- FAZA A (0-25): kamera wjezdza, szkielet sie kresli ----------
         tl.to(camPos, { y: 0.9, z: isMobile ? 18 : 17, duration: 24, ease: 'power2.out' }, 0);
@@ -1468,15 +1430,6 @@
             skeleton.geometry.setDrawRange(0, Math.floor(skeletonVertexCount * drawProxy.p));
           },
         }, 3);
-        tl.to('#hero-copy', { autoAlpha: 0, y: -36, duration: 8, ease: 'power2.in' }, 2);
-        // Telefon: scena rozjasnia sie w tym samym momencie, w ktorym tekst odjezdza
-        if (isMobile) {
-          tl.to(krycieSceny, { moc: 1, duration: 8, ease: 'power2.in', onUpdate: odswiezKrycieSceny }, 2);
-        }
-
-        // Etykieta 1
-        tl.fromTo('#phase-1', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 6);
-        tl.to('#phase-1', { autoAlpha: 0, y: -16, duration: 3.5, ease: 'power2.in' }, 23);
 
         // ---------- FAZA B (25-52): fragmenty dokuja ----------
         fragments.forEach((f, i) => {
@@ -1499,9 +1452,6 @@
         });
         tl.to(camPos, { x: isMobile ? 0 : 1.1, z: isMobile ? 17 : 15.8, duration: 24, ease: 'power1.inOut' }, 26);
 
-        // Etykieta 2
-        tl.fromTo('#phase-2', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 28);
-        tl.to('#phase-2', { autoAlpha: 0, y: -16, duration: 3.5, ease: 'power2.in' }, 49);
 
         // ---------- FAZA C (52-76): strona ozywa ----------
         tl.to(colorProxy, {
@@ -1519,9 +1469,6 @@
         }
         tl.to(camPos, { z: isMobile ? 16 : 14.8, y: 0.5, duration: 20, ease: 'power1.inOut' }, 54);
 
-        // Etykieta 3
-        tl.fromTo('#phase-3', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 56);
-        tl.to('#phase-3', { autoAlpha: 0, y: -16, duration: 3.5, ease: 'power2.in' }, 73);
 
         // ---------- FAZA D (76-100): publikacja ----------
         tl.to(browserMat, { opacity: 0.9, duration: 6, ease: 'power2.out' }, 77);
@@ -1531,32 +1478,21 @@
           x: isMobile ? 0.44 : 0.72, y: isMobile ? 0.44 : 0.72, z: isMobile ? 0.44 : 0.72,
           duration: 13, ease: 'power2.inOut',
         }, 79);
-        tl.to(pageGroup.position, { x: 0, y: 0.15, duration: 13, ease: 'power2.inOut' }, 79);
-        tl.to(browserGroup.position, { x: 0, duration: 13, ease: 'power2.inOut' }, 79);
+        tl.to(pageGroup.position, { x: isMobile ? 0 : pageX, y: 0.15, duration: 13, ease: 'power2.inOut' }, 79);
+        tl.to(browserGroup.position, { x: isMobile ? 0 : pageX, duration: 13, ease: 'power2.inOut' }, 79);
         tl.to(browserGroup.scale, {
           x: isMobile ? 0.62 : 1, y: isMobile ? 0.62 : 1, z: isMobile ? 0.62 : 1,
           duration: 13, ease: 'power2.inOut',
         }, 79);
-        tl.to(ring.position, { x: 0, duration: 13, ease: 'power2.inOut' }, 79);
-        tl.to(camPos, { x: 0, y: 0.9, z: isMobile ? 23 : 21, duration: 20, ease: 'power2.inOut' }, 79);
-        tl.to(camLook, { x: 0, y: 0.15, duration: 20, ease: 'power2.inOut' }, 79);
+        tl.to(ring.position, { x: isMobile ? 0 : pageX, duration: 13, ease: 'power2.inOut' }, 79);
+        tl.to(camPos, { x: isMobile ? 0 : 0.9, y: 0.9, z: isMobile ? 23 : 21, duration: 20, ease: 'power2.inOut' }, 79);
+        tl.to(camLook, { x: isMobile ? 0 : pageX, y: 0.15, duration: 20, ease: 'power2.inOut' }, 79);
         // Impuls publikacji
         tl.fromTo(ring.scale, { x: 0.82, y: 0.82, z: 0.82 }, { x: 2.1, y: 2.1, z: 2.1, duration: 9, ease: 'power2.out' }, 89);
         tl.to(ringMat, { opacity: 0.55, duration: 2.5, ease: 'power2.out' }, 89);
         tl.to(ringMat, { opacity: 0, duration: 6, ease: 'power2.in' }, 92);
         // Wyciszenie sceny na sam koniec
         tl.to(grid.material, { opacity: 0.18, duration: 8, ease: 'power1.inOut' }, 91);
-
-        // Etykieta 4 (zostaje do konca)
-        tl.fromTo('#phase-4', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 4, ease: 'power2.out' }, 82);
-
-        // Podswietlanie tickow szyny postepu wg fazy
-        const ticks = document.querySelectorAll('.progress-tick');
-        [6, 28, 56, 82].forEach((at, i) => {
-          if (ticks[i]) {
-            tl.to(ticks[i], { backgroundColor: '#C77E10', scale: 1.5, duration: 2 }, at);
-          }
-        });
 
         // ---------- Sekwencja wejscia sceny: fragmenty wlatuja z glebi ----------
         // (pomijana, gdy przegladarka przywrocila scroll w glab strony)
@@ -1572,6 +1508,9 @@
           if (particleSystem) {
             intro.to(particleSystem.material, { opacity: 0.45, duration: 1.4 }, 0.7);
           }
+          intro.call(() => tl.play());
+        } else {
+          tl.play();
         }
       }
     } else {
