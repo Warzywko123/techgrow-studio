@@ -522,16 +522,14 @@
   </script>
 
   <!-- Baner cookies (RODO) -->
-  <div id="cookie-banner" role="region" aria-label="Zgoda na pliki cookie" tabindex="-1" class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:inset-x-6 sm:bottom-6">
-    <div class="rounded-[1.4rem] bg-white/95 backdrop-blur-xl ring-1 ring-ink/10 shadow-[0_20px_60px_rgba(15,27,51,0.18)] p-5 sm:p-6">
-      <p class="text-inkmuted text-[15.5px] leading-relaxed">
-        Używam plików cookie technicznych (niezbędnych) oraz — po Twojej zgodzie — Google Analytics do anonimowych statystyk ruchu. Więcej w
-        <a href="polityka-prywatnosci.html" class="text-bp underline underline-offset-2 hover:text-bpbright">polityce prywatności</a>.
+  <div id="cookie-banner" role="region" aria-label="Zgoda na pliki cookie" tabindex="-1" class="fixed inset-x-3 bottom-3 z-[70] mx-auto max-w-xl translate-y-[150%] opacity-0 transition-all duration-500 ease-out sm:bottom-5">
+    <div class="rounded-2xl bg-white/95 backdrop-blur-xl ring-1 ring-ink/10 shadow-[0_10px_30px_rgba(15,27,51,0.14)] px-4 py-3 flex items-center gap-3">
+      <p class="flex-1 text-inkmuted text-[13.5px] leading-snug">
+        Cookies i&nbsp;Google Analytics — tylko za zgodą.
+        <a href="polityka-prywatnosci.html" class="text-bp underline underline-offset-2 hover:text-bpbright">Szczegóły</a>
       </p>
-      <div class="mt-4 flex flex-col sm:flex-row gap-3">
-        <button id="cookie-accept" type="button" class="btn-primary flex-1 sm:flex-none rounded-full bg-gold hover:bg-goldhover px-6 py-2.5 text-white font-semibold text-[15.5px]">Akceptuję</button>
-        <button id="cookie-reject" type="button" class="btn-ghost flex-1 sm:flex-none rounded-full border border-ink/25 hover:border-ink/45 hover:bg-white/60 px-6 py-2.5 text-ink font-medium text-[15.5px]">Tylko niezbędne</button>
-      </div>
+      <button id="cookie-reject" type="button" class="btn-ghost shrink-0 rounded-full px-3 py-1.5 text-inkmuted hover:text-ink font-medium text-[13.5px]">Odrzuć</button>
+      <button id="cookie-accept" type="button" class="btn-primary shrink-0 rounded-full bg-gold hover:bg-goldhover px-4 py-1.5 text-white font-semibold text-[13.5px]">Akceptuję</button>
     </div>
   </div>
   <script>
