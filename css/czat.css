@@ -1,0 +1,170 @@
+/* Asystent czatu (AI) — js/czat.js. Osobny plik, zeby nie przebudowywac Tailwinda. */
+.czat-przycisk {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 55;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  border: 0;
+  border-radius: 9999px;
+  background: #0F1B33;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 15.5px;
+  line-height: 1.2;
+  box-shadow: 0 10px 28px rgba(15, 27, 51, 0.28);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(.32, .72, 0, 1), background-color 0.3s ease;
+}
+.czat-przycisk:hover { background: #1D4ED8; transform: translateY(-2px); }
+.czat-przycisk:focus-visible { outline: 2px solid #A96A0C; outline-offset: 3px; }
+.czat-przycisk-ikona { font-size: 1.1rem; line-height: 1; }
+
+.czat-panel {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 5.5rem;
+  z-index: 65;
+  width: min(390px, calc(100vw - 3rem));
+  height: min(580px, calc(100vh - 7.5rem));
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 1.4rem;
+  box-shadow: 0 0 0 1px rgba(15, 27, 51, 0.1), 0 20px 60px rgba(15, 27, 51, 0.22);
+  overflow: hidden;
+  font-family: inherit;
+  color: #0F1B33;
+}
+.czat-panel[hidden] { display: none; }
+
+.czat-naglowek {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  background: #0F1B33;
+  color: #fff;
+}
+.czat-naglowek strong { display: block; font-size: 16px; }
+.czat-podtytul { display: block; font-size: 13px; opacity: 0.75; }
+.czat-zamknij {
+  border: 0; background: transparent; color: #fff; cursor: pointer;
+  width: 2.25rem; height: 2.25rem; border-radius: 9999px; font-size: 1.6rem; line-height: 1;
+}
+.czat-zamknij:hover { background: rgba(255, 255, 255, 0.12); }
+
+.czat-lista {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: #F2F6FC;
+}
+.czat-dymek {
+  max-width: 86%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 1rem;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.czat-assistant { align-self: flex-start; background: #fff; box-shadow: 0 0 0 1px rgba(15, 27, 51, 0.08); border-bottom-left-radius: 0.3rem; }
+.czat-user { align-self: flex-end; background: #1D4ED8; color: #fff; border-bottom-right-radius: 0.3rem; }
+.czat-assistant a { color: #1D4ED8; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.czat-user a { color: #fff; }
+.czat-pisze { color: #5B6478; font-style: italic; }
+
+.czat-sugestie { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 1rem; background: #F2F6FC; }
+.czat-sugestie:not(:empty) { padding-bottom: 0.8rem; }
+.czat-sugestia {
+  border: 1px solid rgba(29, 78, 216, 0.35);
+  background: #fff;
+  color: #1D4ED8;
+  border-radius: 9999px;
+  padding: 0.35rem 0.8rem;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 13.5px;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.czat-sugestia:hover { background: #1D4ED8; color: #fff; }
+
+.czat-formularz { display: flex; gap: 0.5rem; padding: 0.75rem; border-top: 1px solid rgba(15, 27, 51, 0.08); }
+.czat-pole {
+  flex: 1;
+  resize: none;
+  border: 1px solid rgba(15, 27, 51, 0.15);
+  border-radius: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #0F1B33;
+  max-height: 6rem;
+}
+.czat-pole:focus { outline: 2px solid #1D4ED8; border-color: transparent; }
+.czat-wyslij {
+  border: 0;
+  border-radius: 0.8rem;
+  padding: 0 1.1rem;
+  background: #A96A0C;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 1;
+  cursor: pointer;
+}
+.czat-wyslij:hover { background: #8F5A0A; }
+.czat-wyslij:disabled { opacity: 0.6; cursor: wait; }
+
+.czat-uwaga { margin: 0; padding: 0 0.9rem 0.75rem; font-size: 12px; line-height: 1.45; color: #5B6478; }
+.czat-uwaga a { color: #1D4ED8; text-decoration: underline; }
+
+/* Prawy dolny rog zajmuje czat, wiec plywajacy przycisk telefonu stoi nad nim.
+   Na stronie glownej telefon siedzi w #float-call-wrap (razem z dymkiem), na
+   podstronach #float-call sam jest elementem fixed — stad dwa selektory. */
+#float-call-wrap,
+#float-call.fixed { bottom: 5.5rem; }
+
+/* Telefon: sama ikona, a otwarty panel zajmuje caly ekran. */
+@media (max-width: 767px) {
+  .czat-przycisk { right: 1rem; bottom: 1rem; padding: 0.95rem; }
+  #float-call-wrap,
+  #float-call.fixed { right: 1rem; bottom: 5rem; }
+  .czat-przycisk-tekst { display: none; }
+  .czat-panel { inset: 0; width: 100%; height: 100%; border-radius: 0; }
+  /* iPhone powieksza strone po dotknieciu pola z czcionka mniejsza niz 16 px. */
+  .czat-pole { font-size: 16px; }
+  body.czat-otwarty { overflow: hidden; }
+  /* Baner cookies zajmuje na telefonie caly dol ekranu i przykrywal plywajacy
+     telefon (przy 360 px nie dalo sie go kliknac) — do decyzji telefon czeka. */
+  body.czat-baner-otwarty #float-call-wrap,
+  body.czat-baner-otwarty #float-call.fixed { display: none; }
+}
+
+/* Otwarty panel czatu stoi dokladnie tam, gdzie plywajacy telefon, i przykrywal
+   go — na czas rozmowy telefon znika (numer jest w stopce panelu). */
+body.czat-otwarty #float-call-wrap,
+body.czat-otwarty #float-call.fixed { display: none; }
+
+/* Do szerokosci 1023 px wysrodkowany baner cookies nachodzi na przycisk czatu
+   (na tablecie 768 px przykrywal go calkiem) — do decyzji przycisk czeka.
+   Szerzej baner konczy sie przed prawym rogiem. */
+@media (max-width: 1023px) {
+  body.czat-baner-otwarty .czat-przycisk { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .czat-przycisk { transition: none; }
+}
