@@ -131,19 +131,37 @@
 .czat-uwaga { margin: 0; padding: 0 0.9rem 0.75rem; font-size: 12px; line-height: 1.45; color: #5B6478; }
 .czat-uwaga a { color: #1D4ED8; text-decoration: underline; }
 
-/* Prawy dolny rog zajmuje czat, wiec plywajacy przycisk telefonu (strona glowna)
-   stoi nad nim, zamiast pod spodem. */
-#float-call-wrap { bottom: 5.5rem; }
+/* Prawy dolny rog zajmuje czat, wiec plywajacy przycisk telefonu stoi nad nim.
+   Na stronie glownej telefon siedzi w #float-call-wrap (razem z dymkiem), na
+   podstronach #float-call sam jest elementem fixed — stad dwa selektory. */
+#float-call-wrap,
+#float-call.fixed { bottom: 5.5rem; }
 
 /* Telefon: sama ikona, a otwarty panel zajmuje caly ekran. */
 @media (max-width: 767px) {
   .czat-przycisk { right: 1rem; bottom: 1rem; padding: 0.95rem; }
-  #float-call-wrap { right: 1rem; bottom: 5rem; }
+  #float-call-wrap,
+  #float-call.fixed { right: 1rem; bottom: 5rem; }
   .czat-przycisk-tekst { display: none; }
   .czat-panel { inset: 0; width: 100%; height: 100%; border-radius: 0; }
+  /* iPhone powieksza strone po dotknieciu pola z czcionka mniejsza niz 16 px. */
+  .czat-pole { font-size: 16px; }
   body.czat-otwarty { overflow: hidden; }
-  body.czat-otwarty #float-call-wrap { display: none; }
-  /* Na telefonie baner cookies zajmuje caly dol ekranu — do decyzji czat czeka. */
+  /* Baner cookies zajmuje na telefonie caly dol ekranu i przykrywal plywajacy
+     telefon (przy 360 px nie dalo sie go kliknac) — do decyzji telefon czeka. */
+  body.czat-baner-otwarty #float-call-wrap,
+  body.czat-baner-otwarty #float-call.fixed { display: none; }
+}
+
+/* Otwarty panel czatu stoi dokladnie tam, gdzie plywajacy telefon, i przykrywal
+   go — na czas rozmowy telefon znika (numer jest w stopce panelu). */
+body.czat-otwarty #float-call-wrap,
+body.czat-otwarty #float-call.fixed { display: none; }
+
+/* Do szerokosci 1023 px wysrodkowany baner cookies nachodzi na przycisk czatu
+   (na tablecie 768 px przykrywal go calkiem) — do decyzji przycisk czeka.
+   Szerzej baner konczy sie przed prawym rogiem. */
+@media (max-width: 1023px) {
   body.czat-baner-otwarty .czat-przycisk { display: none; }
 }
 
