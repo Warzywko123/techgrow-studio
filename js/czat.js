@@ -8,6 +8,7 @@
   var SUGESTIE = ['Ile kosztuje strona?', 'Czym różnią się pakiety?', 'Jak wygląda współpraca?', 'Ile trwa realizacja?'];
   var historia = []; // [{ role: 'user'|'assistant', text }]
   var wysylanie = false;
+  var ZACHETA_PO_MS = 8000; // po tylu ms od wejscia czat sam sie zglasza (raz na wizyte)
 
   var KLUCZ = 'tg-czat';
   var zapisany = {};
@@ -21,10 +22,12 @@
     // Pytanie wyslane tuz przed zmiana podstrony nie dostalo odpowiedzi — nie zostawiamy go.
     while (historia.length && historia[historia.length - 1].role === 'user') historia.pop();
   }
+  // Czy czat juz sam sie zglosil w tej karcie — wtedy na kolejnych podstronach nie nachodzi.
+  var zachecono = !!zapisany.zachecono;
 
   function zapisz() {
     try {
-      sessionStorage.setItem(KLUCZ, JSON.stringify({ historia: historia, otwarty: !panel.hidden }));
+      sessionStorage.setItem(KLUCZ, JSON.stringify({ historia: historia, otwarty: !panel.hidden, zachecono: zachecono }));
     } catch (e) { /* bez pamieci karty czat dziala dalej, tylko nie przetrwa zmiany podstrony */ }
   }
 
@@ -96,6 +99,13 @@
     uwaga,
   ]);
 
+  // Zacheta na telefonie: maly dymek obok ikonki zamiast pelnoekranowego panelu.
+  var zachetaTekst = el('button', { type: 'button', class: 'czat-zacheta-tekst', text: 'Masz pytanie o stronę? Zapytaj 👋' });
+  var zachetaZamknij = el('button', { type: 'button', class: 'czat-zacheta-zamknij', 'aria-label': 'Zamknij podpowiedź', text: '×' });
+  var zacheta = el('div', { class: 'czat-zacheta', hidden: '' }, [zachetaTekst, zachetaZamknij]);
+
+  function schowajZachete() { zacheta.hidden = true; }
+
   function dodajDymek(rola, tekst) {
     var d = el('div', { class: 'czat-dymek czat-' + rola });
     wstawTekst(d, tekst);
@@ -104,7 +114,8 @@
     return d;
   }
 
-  function otworz(bezFokusu) {
+  function otworz(bezFokusu, zrodlo) {
+    schowajZachete();
     panel.hidden = false;
     przycisk.setAttribute('aria-expanded', 'true');
     document.body.classList.add('czat-otwarty');
@@ -117,7 +128,7 @@
           b.addEventListener('click', function () { zapytaj(s); });
           sugestie.appendChild(b);
         });
-        sledz('chat_open');
+        sledz(zrodlo === 'auto' ? 'chat_auto_open' : 'chat_open');
       }
     }
     zapisz();
@@ -178,6 +189,8 @@
   }
 
   przycisk.addEventListener('click', function () { panel.hidden ? otworz() : zamknijPanel(); });
+  zachetaTekst.addEventListener('click', function () { otworz(); });
+  zachetaZamknij.addEventListener('click', schowajZachete);
   zamknij.addEventListener('click', zamknijPanel);
   formularz.addEventListener('submit', function (e) { e.preventDefault(); zapytaj(pole.value); });
   pole.addEventListener('keydown', function (e) {
@@ -195,9 +208,36 @@
   if (baner) new MutationObserver(sprawdzBaner).observe(baner, { attributes: true, attributeFilter: ['class'] });
   sprawdzBaner();
 
-  document.body.append(przycisk, panel);
+  document.body.append(przycisk, panel, zacheta);
 
   // Na komputerze okienko otwarte na poprzedniej podstronie zostaje otwarte.
   // Na telefonie nie — tam panel zajmuje caly ekran i zaslonilby nowa podstrone.
   if (zapisany.otwarty && window.matchMedia('(min-width: 768px)').matches) otworz(true);
+
+  // Czat sam sie zglasza raz na wizyte: od 768 px otwiera okienko w rogu (bez
+  // zabierania fokusu), na telefonie pokazuje dymek obok ikonki. Nie na polityce
+  // prywatnosci i stronie 404, i nie gdy ktos juz z czatu korzystal.
+  var stronaBezZachety = /polityka-prywatnosci/.test(location.pathname) || /^Strona nie znaleziona/.test(document.title);
+  if (!zachecono && !historia.length && !stronaBezZachety) {
+    var proby = 0;
+    var zachec = function () {
+      if (zachecono || !panel.hidden) return;
+      // Dopoki baner cookies czeka na decyzje, przycisk czatu na wezszych ekranach
+      // jest schowany — zglaszamy sie dopiero po decyzji.
+      if (document.body.classList.contains('czat-baner-otwarty') && !window.matchMedia('(min-width: 1024px)').matches) {
+        if (++proby < 90) setTimeout(zachec, 2000);
+        return;
+      }
+      zachecono = true;
+      if (window.matchMedia('(min-width: 768px)').matches) {
+        otworz(true, 'auto');
+      } else {
+        zacheta.hidden = false;
+        sledz('chat_teaser');
+        zapisz();
+        setTimeout(schowajZachete, 12000);
+      }
+    };
+    setTimeout(zachec, ZACHETA_PO_MS);
+  }
 })();
