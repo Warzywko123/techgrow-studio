@@ -60,7 +60,9 @@
     '.'
   );
 
-  var panel = el('div', { id: 'czat-panel', class: 'czat-panel', role: 'dialog', 'aria-label': 'Asystent TechGrow Studio', hidden: '' }, [
+  // data-lenis-prevent: strona glowna przewija sie przez Lenis, ktory lapie kolko
+  // myszy na calej stronie — bez tego lista wiadomosci w czacie sie nie przewija.
+  var panel = el('div', { id: 'czat-panel', class: 'czat-panel', role: 'dialog', 'aria-label': 'Asystent TechGrow Studio', 'data-lenis-prevent': '', hidden: '' }, [
     el('div', { class: 'czat-naglowek' }, [
       el('div', {}, [
         el('strong', { text: 'Asystent TechGrow Studio' }),
