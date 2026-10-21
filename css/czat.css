@@ -137,6 +137,34 @@
 #float-call-wrap,
 #float-call.fixed { bottom: 5.5rem; }
 
+/* Dymek-zacheta obok ikonki czatu (tylko telefon, raz na wizyte). */
+.czat-zacheta {
+  position: fixed;
+  right: 4.75rem;
+  bottom: 1.15rem;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  max-width: calc(100vw - 6rem);
+  background: #fff;
+  border-radius: 1rem 1rem 0.3rem 1rem;
+  box-shadow: 0 0 0 1px rgba(15, 27, 51, 0.08), 0 10px 28px rgba(15, 27, 51, 0.18);
+  animation: czatZacheta 0.4s cubic-bezier(.32, .72, 0, 1);
+}
+.czat-zacheta[hidden] { display: none; }
+.czat-zacheta-tekst {
+  border: 0; background: transparent; cursor: pointer; text-align: left;
+  padding: 0.6rem 0.25rem 0.6rem 0.9rem;
+  font-family: inherit; font-size: 14px; font-weight: 600; line-height: 1.3; color: #0F1B33;
+}
+.czat-zacheta-zamknij {
+  border: 0; background: transparent; cursor: pointer; color: #5B6478;
+  width: 2rem; height: 2rem; margin-right: 0.25rem; border-radius: 9999px; font-size: 1.2rem; line-height: 1;
+}
+@keyframes czatZacheta { from { opacity: 0; transform: translateY(8px); } }
+@media (min-width: 768px) { .czat-zacheta { display: none; } }
+body.czat-baner-otwarty .czat-zacheta, body.czat-otwarty .czat-zacheta { display: none; }
+
 /* Telefon: sama ikona, a otwarty panel zajmuje caly ekran. */
 @media (max-width: 767px) {
   .czat-przycisk { right: 1rem; bottom: 1rem; padding: 0.95rem; }
@@ -167,4 +195,5 @@ body.czat-otwarty #float-call.fixed { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .czat-przycisk { transition: none; }
+  .czat-zacheta { animation: none; }
 }
