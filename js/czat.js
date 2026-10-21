@@ -1,12 +1,32 @@
 /* Okienko asystenta czatu (AI) — pyta /api/czat o oferte, ceny i wspolprace.
-   Rozmowa jest trzymana tylko w pamieci tej karty: po odswiezeniu znika,
-   nic nie trafia do localStorage ani na serwer poza samym pytaniem. */
+   Rozmowa jest trzymana w sessionStorage tej karty: przezywa przejscie na inna
+   podstrone, a znika po zamknieciu karty. Nic nie trafia do localStorage ani
+   na serwer poza samym pytaniem. */
 (function () {
   'use strict';
 
   var SUGESTIE = ['Ile kosztuje strona?', 'Czym różnią się pakiety?', 'Jak wygląda współpraca?', 'Ile trwa realizacja?'];
   var historia = []; // [{ role: 'user'|'assistant', text }]
   var wysylanie = false;
+
+  var KLUCZ = 'tg-czat';
+  var zapisany = {};
+  try {
+    zapisany = JSON.parse(sessionStorage.getItem(KLUCZ)) || {};
+  } catch (e) { /* storage zablokowany albo uszkodzony — zaczynamy od zera */ }
+  if (Array.isArray(zapisany.historia)) {
+    historia = zapisany.historia.filter(function (w) {
+      return w && (w.role === 'user' || w.role === 'assistant') && typeof w.text === 'string';
+    }).slice(-30);
+    // Pytanie wyslane tuz przed zmiana podstrony nie dostalo odpowiedzi — nie zostawiamy go.
+    while (historia.length && historia[historia.length - 1].role === 'user') historia.pop();
+  }
+
+  function zapisz() {
+    try {
+      sessionStorage.setItem(KLUCZ, JSON.stringify({ historia: historia, otwarty: !panel.hidden }));
+    } catch (e) { /* bez pamieci karty czat dziala dalej, tylko nie przetrwa zmiany podstrony */ }
+  }
 
   function el(tag, atrybuty, dzieci) {
     var n = document.createElement(tag);
@@ -84,26 +104,31 @@
     return d;
   }
 
-  function otworz() {
+  function otworz(bezFokusu) {
     panel.hidden = false;
     przycisk.setAttribute('aria-expanded', 'true');
     document.body.classList.add('czat-otwarty');
     if (!lista.childElementCount) {
       dodajDymek('assistant', 'Cześć! Odpowiem na pytania o strony, ceny, pakiety i to, jak wygląda współpraca z TechGrow Studio. O co chcesz zapytać?');
-      SUGESTIE.forEach(function (s) {
-        var b = el('button', { type: 'button', class: 'czat-sugestia', text: s });
-        b.addEventListener('click', function () { zapytaj(s); });
-        sugestie.appendChild(b);
-      });
-      sledz('chat_open');
+      historia.forEach(function (w) { dodajDymek(w.role, w.text); });
+      if (!historia.length) {
+        SUGESTIE.forEach(function (s) {
+          var b = el('button', { type: 'button', class: 'czat-sugestia', text: s });
+          b.addEventListener('click', function () { zapytaj(s); });
+          sugestie.appendChild(b);
+        });
+        sledz('chat_open');
+      }
     }
-    pole.focus();
+    zapisz();
+    if (!bezFokusu) pole.focus();
   }
 
   function zamknijPanel() {
     panel.hidden = true;
     przycisk.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('czat-otwarty');
+    zapisz();
     przycisk.focus();
   }
 
@@ -145,6 +170,7 @@
         dodajDymek('assistant', 'Brak połączenia. Spróbuj ponownie albo zadzwoń: 730 393 493.');
       })
       .then(function () {
+        zapisz();
         wysylanie = false;
         wyslij.disabled = false;
         pole.focus();
@@ -170,4 +196,8 @@
   sprawdzBaner();
 
   document.body.append(przycisk, panel);
+
+  // Na komputerze okienko otwarte na poprzedniej podstronie zostaje otwarte.
+  // Na telefonie nie — tam panel zajmuje caly ekran i zaslonilby nowa podstrone.
+  if (zapisany.otwarty && window.matchMedia('(min-width: 768px)').matches) otworz(true);
 })();
