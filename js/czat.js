@@ -157,8 +157,8 @@
   });
   panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') zamknijPanel(); });
 
-  // Dopoki baner cookies czeka na decyzje, przycisk czatu znika — na telefonie
-  // lezalby w tym samym miejscu co baner.
+  // Dopoki baner cookies czeka na decyzje, na telefonie przycisk czatu znika —
+  // lezalby w tym samym miejscu co baner (samo ukrywanie robi css/czat.css).
   var baner = document.getElementById('cookie-banner');
   function sprawdzBaner() {
     var widoczny = baner && !baner.classList.contains('opacity-0');

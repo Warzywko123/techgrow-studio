@@ -1,9 +1,9 @@
 /* Asystent czatu (AI) — js/czat.js. Osobny plik, zeby nie przebudowywac Tailwinda. */
 .czat-przycisk {
   position: fixed;
-  left: 1.5rem;
+  right: 1.5rem;
   bottom: 1.5rem;
-  z-index: 50;
+  z-index: 55;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -26,7 +26,7 @@
 
 .czat-panel {
   position: fixed;
-  left: 1.5rem;
+  right: 1.5rem;
   bottom: 5.5rem;
   z-index: 65;
   width: min(390px, calc(100vw - 3rem));
@@ -131,16 +131,21 @@
 .czat-uwaga { margin: 0; padding: 0 0.9rem 0.75rem; font-size: 12px; line-height: 1.45; color: #5B6478; }
 .czat-uwaga a { color: #1D4ED8; text-decoration: underline; }
 
+/* Prawy dolny rog zajmuje czat, wiec plywajacy przycisk telefonu (strona glowna)
+   stoi nad nim, zamiast pod spodem. */
+#float-call-wrap { bottom: 5.5rem; }
+
 /* Telefon: sama ikona, a otwarty panel zajmuje caly ekran. */
 @media (max-width: 767px) {
-  .czat-przycisk { left: 1rem; bottom: 1rem; padding: 0.95rem; }
+  .czat-przycisk { right: 1rem; bottom: 1rem; padding: 0.95rem; }
+  #float-call-wrap { right: 1rem; bottom: 5rem; }
   .czat-przycisk-tekst { display: none; }
   .czat-panel { inset: 0; width: 100%; height: 100%; border-radius: 0; }
   body.czat-otwarty { overflow: hidden; }
   body.czat-otwarty #float-call-wrap { display: none; }
+  /* Na telefonie baner cookies zajmuje caly dol ekranu — do decyzji czat czeka. */
+  body.czat-baner-otwarty .czat-przycisk { display: none; }
 }
-
-body.czat-baner-otwarty .czat-przycisk { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .czat-przycisk { transition: none; }
