@@ -5,9 +5,14 @@ grafiki, SEO i reklamy dla lokalnych firm (Piła, Poznań). Projekty to główni
 strony firmowe klientów — mają być szybkie, dobrze widoczne w Google i wyglądać
 jak zaprojektowane przez człowieka, a nie wygenerowane.
 
-Ustalenia konkretnego projektu (stos, kolory, decyzje) trzymaj w `CLAUDE.md`
-tego repozytorium. Nowy projekt bez takiego pliku — załóż go, gdy zapadną
-pierwsze decyzje.
+Techniczne ustalenia projektu (stos, kolory, kroje, decyzje) trzymaj w
+`CLAUDE.md` tego repozytorium. Większość repo jest **publiczna**, więc dane
+klienta (kontakty, ceny, rozmowy, dostępy) nigdy tam nie trafiają — te idą do
+`~/.claude/notatki/`.
+
+Kontrola wyglądu: jeden skill na raz. Jeśli masz starszy własny skill do
+podglądu (np. `/podglad`), przenieś z niego to, czego brakuje, do swoich zasad
+poza tym blokiem, i używaj `kontrola-wygladu`.
 
 ## Komunikacja
 
