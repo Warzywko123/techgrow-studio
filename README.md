@@ -95,8 +95,39 @@ Wszystko poza Google Analytics. Kroje pisma (`fonts/`), ikony i biblioteki JS
 - **Szybkość** — mniej połączeń do obcych serwerów i mniej danych do pobrania.
 
 Jeśli kiedyś podbijesz wersję biblioteki w `vendor/`, pamiętaj, że te pliki mają
-roczny cache (`vercel.json`) — zmień wtedy nazwę pliku, np. `gsap-3.13.min.js`,
-żeby przeglądarki zobaczyły nową wersję.
+roczny cache (`vercel.json`) — zmień wtedy `?v=` przy `<script src>` we wszystkich
+plikach HTML (np. `gsap.min.js?v=3.15.0`), żeby przeglądarki zobaczyły nową
+wersję. Inaczej stały odwiedzający może dostać starą wersję jednego pliku i nową
+drugiego.
+
+GSAP jest w wersji 3.15.0. Od 3.13 wszystkie wtyczki są darmowe, dlatego w
+`vendor/` leży też `SplitText.min.js` (animacja tekstu po literach, słowach i
+liniach). Na razie żadna strona go nie wczytuje — dołącz go po
+`gsap.min.js` tylko tam, gdzie go użyjesz.
+
+## Kontrola wyglądu (zrzuty ekranu)
+
+```bash
+npm install                        # raz
+npx playwright install chromium    # raz, na własnym komputerze
+npm run zrzuty                     # wszystkie podstrony (~2 min)
+npm run zrzuty -- oferta kontakt   # tylko wybrane
+```
+
+`tools/zrzuty.js` serwuje stronę lokalnie, robi zrzut całej strony na komputerze
+(1440 px) i telefonie (390 px) i zapisuje je w `zrzuty/` (poza gitem) razem z
+raportem. Wyłapuje błędy JS, brakujące pliki, poziome przewijanie i obrazki bez
+`alt` — wtedy kończy się kodem 1.
+
+## Skille dla Claude Code (`.claude/skills/`)
+
+| skill | co robi |
+|---|---|
+| `frontend-design` | oficjalny skill Anthropic (Apache 2.0, `anthropics/skills`) — zasady projektowania, które nie wyglądają jak generyczna strona z AI |
+| `kontrola-wygladu` | każe Claude'owi po każdej zmianie wyglądu uruchomić `npm run zrzuty`, obejrzeć zrzuty i poprawić to, co widać |
+
+Aktualizacja skilla Anthropic: podmień `SKILL.md` na nowszy z
+`github.com/anthropics/skills/tree/main/skills/frontend-design`.
 
 ## Ikony
 
