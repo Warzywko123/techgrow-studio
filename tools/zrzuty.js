@@ -125,7 +125,10 @@ async function main() {
 
       const page = await kontekst.newPage();
       const bledy = [];
-      page.on('console', (m) => { if (m.type() === 'error') bledy.push('konsola: ' + m.text()); });
+      page.on('console', (m) => {
+        // 404 na naszych plikach zglasza nizej obsluga odpowiedzi — tu bylby duplikat
+        if (m.type() === 'error' && !/^Failed to load resource/.test(m.text())) bledy.push('konsola: ' + m.text());
+      });
       page.on('pageerror', (e) => bledy.push('wyjatek: ' + e.message));
       page.on('response', (r) => {
         if (r.url().startsWith(adres) && r.status() >= 400) bledy.push(`HTTP ${r.status()}: ${r.url().slice(adres.length)}`);
@@ -135,8 +138,9 @@ async function main() {
       await page.waitForTimeout(CZEKAJ_MS[strona] || CZEKAJ_DOMYSLNIE);
       await przewin(page);
 
-      const pomiary = await page.evaluate(() => {
-        const szer = window.innerWidth;
+      // Szerokosc ekranu z ustawien, nie window.innerWidth: na telefonie Chromium
+      // rozszerza obszar strony do za szerokiej zawartosci i innerWidth rosnie razem z nia.
+      const pomiary = await page.evaluate((szer) => {
         const wystaja = [];
         if (document.documentElement.scrollWidth > szer) {
           document.querySelectorAll('body *').forEach((el) => {
@@ -150,7 +154,7 @@ async function main() {
         }
         const bezAlt = [...document.images].filter((i) => !i.hasAttribute('alt')).map((i) => i.getAttribute('src'));
         return { przewijanieWPoziomie: document.documentElement.scrollWidth - szer, wystaja: wystaja.slice(0, 5), bezAlt };
-      });
+      }, ustawienia.viewport.width);
 
       if (pomiary.przewijanieWPoziomie > 0) {
         bledy.push(`strona przewija sie w poziomie o ${pomiary.przewijanieWPoziomie}px; wystaje m.in.: ${pomiary.wystaja.join(', ') || '?'}`);

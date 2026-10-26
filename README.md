@@ -129,6 +129,25 @@ raportem. Wyłapuje błędy JS, brakujące pliki, poziome przewijanie i obrazki 
 Aktualizacja skilla Anthropic: podmień `SKILL.md` na nowszy z
 `github.com/anthropics/skills/tree/main/skills/frontend-design`.
 
+## Ustawienia Claude dla wszystkich projektów (`claude-globalnie/`)
+
+Ogólne ustalenia (`claude-globalnie/CLAUDE.md`) i oba skille w wersji dla
+dowolnego projektu. `instaluj.sh` kopiuje je do `~/.claude/`, skąd Claude Code
+czyta je w każdym repozytorium:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Warzywko123/techgrow-studio/main/claude-globalnie/instaluj.sh | bash
+```
+
+- **Claude Code w chmurze (claude.ai/code)** — kontener startuje za każdym razem
+  od zera, więc tę linijkę trzeba wpisać w *Setup script* środowiska (menu
+  środowiska → Edit). Wtedy działa w każdej nowej sesji, w każdym repo.
+- **Claude Code na komputerze** — wystarczy raz w terminalu.
+
+Skrypt można odpalać wielokrotnie: w `~/.claude/CLAUDE.md` podmienia tylko swój
+blok, resztę zostawia. Zmiany wprowadzaj w `claude-globalnie/` i scalaj do
+`main` — instalacja pobiera pliki z gałęzi `main`.
+
 ## Ikony
 
 W `fonts/phosphor-light-subset.woff2` jest odchudzony font Phosphor — zawiera
