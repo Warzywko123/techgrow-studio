@@ -4,7 +4,8 @@
   "description": "Strona TechGrow Studio - statyczny HTML + Tailwind budowany lokalnie",
   "scripts": {
     "build:css": "tailwindcss -i src/input.css -o css/style.css --minify",
-    "watch:css": "tailwindcss -i src/input.css -o css/style.css --watch"
+    "watch:css": "tailwindcss -i src/input.css -o css/style.css --watch",
+    "zrzuty": "node tools/zrzuty.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   "homepage": "https://github.com/Warzywko123/techgrow-studio#readme",
   "devDependencies": {
     "autoprefixer": "^10.5.4",
+    "playwright": "1.63.0",
     "postcss-import": "^16.1.1",
     "tailwindcss": "^3.4.19"
   },

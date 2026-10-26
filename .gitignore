@@ -1,3 +1,4 @@
-.claude/
+.claude/settings.local.json
+zrzuty/
 .DS_Store
 node_modules/
